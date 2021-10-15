@@ -1,4 +1,6 @@
-# a1000c-map-client
+# A thousand channels: Map client
+
+A prototype of a map frontend for the A thousand channels project w/Nuxt.js 2
 
 ## Build Setup
 
