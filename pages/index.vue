@@ -1,5 +1,5 @@
 <template>
-  <Tutorial/>
+  <Splash />
 </template>
 
 <script>
