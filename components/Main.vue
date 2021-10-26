@@ -1,6 +1,7 @@
 <style>
     body {
       scroll-behavior: smooth;
+      overflow: hidden;
     }
     #page {
     }
@@ -24,22 +25,26 @@
      }
    .bg-a100c-1 {
       background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
-      width: 99vw;
+      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 100%);
+      width: 100vw;
    }
    .bg-a100c-2 {
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
-      width: 105vw;
+      width: 100vw;
    }
    .bg-a100c-3 {
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
+      width: 100vw;
    }
    h2 {
     display: inline-block;
     background-color: white;
     padding: 0 6px;
+   }
+   .text-white {
+      color: rgba(255,255,255,0.85);
    }
 
 </style>
@@ -47,18 +52,25 @@
 <template>
 <div id="page">
   <div class="flex a1000c-horizontal">
-      <div id="map" class="flex min-h-screen bg-a100c-1 sm:items-center sm:pt-0">
+    <section id="info" class="flex min-h-screen bg-a100c-1 sm:items-center sm:pt-0">
         <div class="flex content items-center justify-center">
-          <h2>Map</h2>
+          <h2>Info</h2>
         </div>
-        <a href="#list" class="nav flex block items-center justify-center text-white font-bold" style="color:white;">&gt;</a>
+        <a href="#map" class="nav flex block items-center justify-center text-white font-bold">&gt;</a>
+    </section>
+    <section id="map" class="flex min-h-screen bg-a100c-2 sm:items-center sm:pt-0">
+      <a href="#info" class="nav flex items-center justify-center text-white font-bold">&lt;</a>
+      <div class="flex content items-center justify-center">
+        <h2>Map</h2>
       </div>
-      <div id="list" class="flex min-h-screen bg-a100c-2 sm:items-center sm:pt-0">
+      <a href="#list" class="nav flex block items-center justify-center text-white font-bold">&gt;</a>
+    </section>
+    <section id="list" class="flex min-h-screen bg-a100c-3 sm:items-center sm:pt-0">
       <a href="#map" class="nav flex items-center justify-center text-white font-bold">&lt;</a>
-        <div class=" content flex items-center justify-center">
-          <h2>List</h2>
-        </div>
+      <div class=" content flex items-center justify-center">
+        <h2>List</h2>
       </div>
+    </section>
   </div>
 </div>
 </template>
