@@ -72,5 +72,23 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  router: {
+    scrollBehaviorx(to) {
+      console.log(to.hash)
+      if (to.hash) {
+        return window.scrollTo({ top: document.querySelector(to.hash).offsetTop + window.innerHeight, behavior: 'smooth' });
+      }
+      // return window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    scrollBehaviorXX (to, from, savedPosition) {
+      console.log('nr 2')
+      console.log(to.hash)
+      if (to.hash) {
+        return {selector: to.hash}
+      } else {
+        return {x: 0, y: 0}
+      }
+    }
+  },
 }

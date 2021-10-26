@@ -12,7 +12,7 @@
      }
      .nav {
       flex-shrink: 1;
-      flex-basis: 5%;
+      flex-basis: 4%;
       background-color: rgba(20,20,20,0.1);
      }
      .nav:hover {
@@ -21,7 +21,11 @@
      }
      .content {
       flex-shrink: 1;
-      flex-basis: 95%;
+      flex-basis: 97%;
+     }
+     #map > .content {
+      flex-shrink: 1;
+      flex-basis: 87%;
      }
    .bg-a100c-1 {
       background: rgb(255,0,249);
@@ -37,11 +41,6 @@
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
       width: 100vw;
-   }
-   h2 {
-    display: inline-block;
-    background-color: white;
-    padding: 0 6px;
    }
    .text-white {
       color: rgba(255,255,255,0.85);
