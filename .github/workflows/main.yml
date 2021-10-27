@@ -11,4 +11,5 @@ jobs:
       with:
         username: 'ut'
         reponame: 'a1000c-map-client'
+        useyarn: true
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
