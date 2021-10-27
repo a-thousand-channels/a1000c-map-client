@@ -45,21 +45,26 @@
     }
    .bg-a100c-1 {
       background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 100%);
+      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
    }
    .bg-a100c-2 {
       background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
+      background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
    }
    .bg-a100c-3 {
       background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
+      background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
    }
    .bg-a100c-white {
       background-color: rgba(255,255,255,0.8);
    }
    .text-white {
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 0 0 #ddd;
+   }
+   .text-white:hover {
+      color: rgba(255,255,255,1);
+      text-shadow: 0 0 3px #bbb;
    }
 
 </style>
