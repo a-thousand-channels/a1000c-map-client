@@ -76,7 +76,7 @@
       <div class="flex content items-center justify-center">
         <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Info</h2>
       </div>
-      <nuxt-link :to="{ path: 'main', hash:'#map'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
+      <nuxt-link :to="{ path: 'main', hash:'map'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
     </section>
     <section id="map" class="flex min-h-screen bg-a100c-2 sm:items-center sm:pt-0">
       <nuxt-link :to="{ path: 'main', hash:'#info'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
