@@ -1,9 +1,9 @@
-name: Build Client w/Vze
+name: Build Client w/VuePagesAction
 on: [push]
 jobs:
   build_vue:
     runs-on: ubuntu-latest
-    name: Build Vue
+    name: Build Vue/Nuxt
     steps:
     - uses: actions/checkout@v2
     - id: Build-Vue
