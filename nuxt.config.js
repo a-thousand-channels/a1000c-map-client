@@ -2,9 +2,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  module.exports = {
-    publicPath: '/a1000c-map-client/'
-  },
+  publicPath: '/a1000c-map-client/',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
