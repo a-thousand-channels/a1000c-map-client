@@ -88,7 +88,7 @@
           <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
         </p>
       </div>
-      <nuxt-link :to="{ path: 'main', hash:'#list'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
+      <nuxt-link :to="{ path: 'main', hash:'list'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
     </section>
     <section id="list" class="flex min-h-screen bg-a100c-3 sm:items-center sm:pt-0">
       <nuxt-link :to="{ path: 'main', hash:'#map'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
