@@ -81,9 +81,10 @@ export default {
     scrollBehavior (to) {
       console.log(to)
       if (to.hash) {
+
         console.log(to.hash)
         location.hash = to.hash
-        // return {selector: to.hash}
+        return {selector: to.hash}
       } else {
         return {x: 0, y: 0}
       }
