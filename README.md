@@ -2,6 +2,9 @@
 
 A prototype of a map frontend for the A thousand channels project w/Nuxt.js 2
 
+Preview:
+**https://a-thousand-channels.github.io/a1000c-map-client/**
+
 ## Build Setup
 
 ```bash
