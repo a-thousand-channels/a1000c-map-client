@@ -3,9 +3,7 @@ export default {
   target: 'static',
 
   publicPath: '/a1000c-map-client/',
-  router: {
-    base: '/a1000c-map-client/'
-  },
+
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -77,5 +75,18 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  router: {
+    base: '/a1000c-map-client/',
+    scrollBehavior (to) {
+      console.log(to)
+      if (to.hash) {
+        console.log(to.hash)
+        location.hash = to.hash
+        // return {selector: to.hash}
+      } else {
+        return {x: 0, y: 0}
+      }
+    }
+  },
 }
