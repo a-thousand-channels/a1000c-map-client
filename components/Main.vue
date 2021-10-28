@@ -71,7 +71,7 @@
 
 <template>
 <div id="page">
-  <div class="flex a1000c-horizontal">
+  <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @mousewheel="scrollX">
     <section id="info" class="flex min-h-screen bg-a100c-1 sm:items-center sm:pt-0">
       <div class="flex content items-center justify-center">
         <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Info</h2>
@@ -111,6 +111,10 @@ export default {
     jumpToMap() {
       console.log("jumpToMap")
       this.$router.push({ name: 'main', hash: '#map' })
+    },
+    scrollX(e) {
+      console.log('scrollx')
+      this.$refs['scroll_container'].scrollLeft += e.deltaY;
     },
     navigate_top() {
       console.log( "<-- top "+this.$route.hash)

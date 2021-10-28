@@ -78,16 +78,39 @@ export default {
   },
   router: {
     base: '/a1000c-map-client/',
-    scrollBehavior (to) {
-      console.log(to)
-      if (to.hash) {
-
-        console.log(to.hash)
-        location.hash = to.hash
-        return {selector: to.hash}
-      } else {
-        return {x: 0, y: 0}
+    scrollBehavior: async (to, from, savedPosition) => {
+      if (savedPosition) {
+        return savedPosition
       }
+
+      const findEl = async (hash, x) => {
+        return document.querySelector(hash) ||
+          new Promise((resolve, reject) => {
+            if (x > 50) {
+              return resolve()
+            }
+            setTimeout(() => { resolve(findEl(hash, ++x || 1)) }, 100)
+          })
+      }
+
+      console.log("scrollBehavior")
+
+      if (to.hash) {
+        console.log(to.hash)
+        let el = await findEl(to.hash)
+        if ('scrollBehavior' in document.documentElement.style) {
+          console.log('smooth')
+          console.log(el)
+          console.log(el.offsetTop)
+          console.log(el.offsetLeft)
+          return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft, behavior: 'smooth' })
+        } else {
+          console.log('non smooth')
+          return document.getElementById('page_inner').scrollTo(0, el.offsetTop, el.offsetLeft)
+        }
+      }
+
+      return { x: 0, y: 0 }
     }
   },
 }
