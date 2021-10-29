@@ -30,7 +30,7 @@
           Welcome to an early prototype of our web map.
         </h2>
         <p class="mt-3 text-gray-600">
-          We are developing a static web map, that can easily be generated and published on the web. You will not need server side technologies for that, just a simple webspace. This prototype is work in progress.
+          We are developing a web map, that can easily be generated and published on the web. You will not need server side technologies for that, just a simple webspace. This prototype is work in progress.
         </p>
         <p
         <p class="mt-4 pt-4 text-gray-800 border-t border-dashed">
