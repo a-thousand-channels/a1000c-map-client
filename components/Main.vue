@@ -39,9 +39,18 @@
     flex-shrink: 1;
     flex-basis: 97%;
     }
+    #map {
+      align-items: stretch;
+
+    }
     #map > .content {
     flex-shrink: 1;
     flex-basis: 93%;
+    }
+    #map #map_inner {
+      height: 90%;
+      width: 95%;
+      align-items: none;
     }
    .bg-a100c-1 {
       background: rgb(255,0,249);
@@ -81,21 +90,30 @@
     <section id="map" class="flex min-h-screen bg-a100c-2 sm:items-center sm:pt-0">
       <nuxt-link :to="{ path: '/main', hash:'info'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
       <div class="flex content items-center justify-center">
-        <h2 class="bg-a100c-white px-2 py-1 rounded">Map</h2>
-        <p>
-          <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">^</button>
-          <button class="hidden" v-shortkey="['arrowleft']" @shortkey="navigate_left()">&lt;</button>
-          <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
-        </p>
+        <div id="map_inner" class="flex items-center justify-center bg-red-100 bg-opacity-30 my-1 mx-5">
+          <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Map</h2>
+          <p>
+            <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">^</button>
+            <button class="hidden" v-shortkey="['arrowleft']" @shortkey="navigate_left()">&lt;</button>
+            <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
+          </p>
+        </div>
       </div>
       <nuxt-link :to="{ path: '/main', hash:'list'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
     </section>
     <section id="list" class="flex min-h-screen bg-a100c-3 sm:items-center sm:pt-0">
       <nuxt-link :to="{ path: '/main', hash:'map'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
-      <div class=" content flex items-center justify-center">
-        <h2 class="bg-a100c-white px-2 py-1 rounded">List</h2>
+      <div class=" content flex items-center justify-center ">
+        <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">List</h2>
       </div>
     </section>
+  </div>
+  <div class="static invisible md:visible">
+    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <p class="text-red-300 items-center">
+        You can navigate with arrow keys (<button @click="navigate_left()">🡸 back</button> | <button @click="navigate_top()">🡱 home</button> | <button @click="navigate_right()">🡲 forward</button>)
+      </p>
+    </div>
   </div>
 </div>
 </template>
