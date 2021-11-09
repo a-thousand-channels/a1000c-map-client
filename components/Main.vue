@@ -8,7 +8,7 @@
     #page {
 
     }
-    .a1000c-horizontal {
+    #page_inner.a1000c-horizontal {
       height: 100%;
       display: flex;
       /* important */
@@ -16,7 +16,7 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
     }
-    .a1000c-horizontal > .flex {
+    #page_inner.a1000c-horizontal > .flex {
       flex-shrink: 0;
       width: 100vw;
 
@@ -30,10 +30,12 @@
       width: 20px;
       background-color: rgba(20,20,20,0);
       color: rgba(255,255,255,0.1);
+      transition: 1.5s all;
     }
     .nav:hover {
-      background-color: rgba(20,20,20,0);
+      background-color: rgba(20,20,20,0.05);
       color: rgba(255,255,255,1);
+      transition: 1s all;
     }
     .content {
     flex-shrink: 1;
@@ -41,7 +43,6 @@
     }
     #map {
       align-items: stretch;
-
     }
     #map > .content {
     flex-shrink: 1;
@@ -83,17 +84,22 @@
 <template>
 <div id="page">
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @mousewheel="scrollX">
-    <section id="info" class="flex min-h-screen bg-a100c-1 sm:pt-0">
-      <div class="">
-        <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
+    <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
+      <div class="content flex items-top">
+        <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
           <h2 class="block bg-a100c-white px-2 py-1 rounded shadow mt-8">Info: {{ this.data.layer.title }}</h2>
-          <p class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></p>
+          <div class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></div>
         </div>
       </div>
-      <nuxt-link :to="{ path: '/main', hash:'map'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
+      <div class="nav flex items-center content-center justify-center">
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="text-white font-bold">&gt;</nuxt-link>
+      </div>
     </section>
-    <section id="map" class="flex min-h-screen bg-a100c-2 sm:items-center sm:pt-0">
-      <nuxt-link :to="{ path: '/main', hash:'info'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
+
+    <section id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
+      <div class="nav flex items-center content-center justify-center">
+        <nuxt-link :to="{ path: '/main', hash:'info'}" class="text-white font-bold">&lt;</nuxt-link>
+      </div>
       <div class="flex content items-center justify-center">
         <div id="map_inner" class="flex items-center justify-center bg-red-100 bg-opacity-30 my-1 mx-5">
           <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Map</h2>
@@ -104,27 +110,28 @@
           </p>
         </div>
       </div>
-      <nuxt-link :to="{ path: '/main', hash:'list'}" class="nav flex block items-center justify-center text-white font-bold">&gt;</nuxt-link>
+      <div class="nav flex items-center content-center justify-center">
+        <nuxt-link :to="{ path: '/main', hash:'list'}" class="text-white font-bold">&gt;</nuxt-link>
+      </div>
     </section>
-    <section id="list" class="flex min-h-screen bg-a100c-3 sm:pt-0">
-      <nuxt-link :to="{ path: '/main', hash:'map'}" class="nav flex items-center justify-center text-white font-bold">&lt;</nuxt-link>
-      <div class="flex content items-center justify-center ">
-        <div class="block">
+
+    <section id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
+      <div class="nav flex items-center content-center justify-center">
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="text-white font-bold">&lt;</nuxt-link>
+      </div>
+      <div class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
             <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">List: {{ this.data.layer.title }}</h2>
             <hr />
-            <div class="">
-              <ul class="">
-                <li v-for="place in this.data.layer.places" class="bg-a100c-white px-2 py-1 rounded shadow mt-8">
-                  <h3 class="font-semibold text-lg px-4  py-4">{{ place.title }}</h3>
-                  <p class="text-gray-500 px-4" v-html="place.teaser"></p>
-                  <footer>
-                    <p class="text-gray-500 px-4 mt-5"><a href="#">> Show on the map</a></p>
-                  </footer>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <ul class="pb-10">
+              <li v-for="place in this.data.layer.places" class="bg-a100c-white px-2 py-1 rounded shadow mt-8">
+                <h3 class="font-semibold text-lg px-4  py-4">{{ place.title }}</h3>
+                <div class="text-gray-500 px-4" v-html="place.teaser"></div>
+                <footer>
+                  <p class="text-gray-500 px-4 mt-5"><a href="#">> Show on the map</a></p>
+                </footer>
+              </li>
+            </ul>
         </div>
       </div>
     </section>
