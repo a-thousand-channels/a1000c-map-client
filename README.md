@@ -5,6 +5,8 @@ A prototype of a map frontend for the A thousand channels project w/Nuxt.js 2
 Preview:
 **https://a-thousand-channels.github.io/a1000c-map-client/**
 
+(It renders map data provided via ORTE Backend. Currently sample map data is shown.)
+
 ## Build Setup
 
 ```bash
