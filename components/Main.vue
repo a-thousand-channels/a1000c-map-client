@@ -87,7 +87,7 @@
     <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
       <div class="content flex items-top">
         <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
-          <h2 class="block bg-a100c-white px-2 py-1 rounded shadow mt-8">Info: {{ this.data.layer.title }}</h2>
+          <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-8">Info: {{ this.data.layer.title }}</h2>
           <div class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></div>
         </div>
       </div>
@@ -101,6 +101,11 @@
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="text-white font-bold">&lt;</nuxt-link>
       </div>
       <div class="flex content items-center justify-center">
+        <p v-if="$fetchState.pending">Fetching places...</p>
+        <p v-else-if="$fetchState.error">An error occurred :(</p>
+        <div v-else>
+            <button @click="$fetch">Refresh</button>
+        </div>
         <div id="map_inner" class="flex items-center justify-center bg-red-100 bg-opacity-30 my-1 mx-5">
           <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Map</h2>
           <p>
@@ -121,11 +126,11 @@
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
-            <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">List: {{ this.data.layer.title }}</h2>
+            <h2 class="font-semibold text-lg bg-a100c-white px-4 py-2 rounded shadow mt-8">List: {{ this.data.layer.title }}</h2>
             <hr />
             <ul class="pb-10">
-              <li v-for="place in this.data.layer.places" class="bg-a100c-white px-2 py-1 rounded shadow mt-8">
-                <h3 class="font-semibold text-lg px-4  py-4">{{ place.title }}</h3>
+              <li v-for="place in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
+                <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
                 <div class="text-gray-500 px-4" v-html="place.teaser"></div>
                 <footer>
                   <p class="text-gray-500 px-4 mt-5"><a href="#">> Show on the map</a></p>
@@ -163,6 +168,7 @@ export default {
     this.data = await axios.get('https://staging.orte.link/public/maps/cities/layers/european-cities.json').then(response =>
       response.data
     )
+    // exposes $fetchState with .pending and .error
   },
   methods: {
     jumpToMap() {
