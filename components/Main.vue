@@ -79,6 +79,41 @@
       text-shadow: 0 0 3px #bbb;
    }
 
+   .leaflet-container {
+      background-color: rgba(255,255,255,0.3);
+      background-color: transparent;
+   }
+   .leaflet-tooltip-top::before {
+        bottom: 0;
+        margin-bottom: -12px;
+        border-top-color: none;
+    }
+   .leaflet-tooltip-bottom::before, .leaflet-tooltip-top::before {
+        left: 50%;
+        margin-left: -6px;
+    }
+   .leaflet-tooltip-top::before, .leaflet-tooltip-bottom::before, .leaflet-tooltip-left::before, .leaflet-tooltip-right::before {
+      position: absolute;
+      pointer-events: none;
+      border: 6px solid transparent;
+      border-top-color: transparent;
+      background: transparent;
+      content: "";
+    }
+    .leaflet-tooltip-top {
+        margin-top: -20px;
+    }
+    .leaflet-tooltip {
+        position: absolute;
+        padding: 3px 8px;
+        background-color: rgba(252, 164, 148, 0.75);
+        border: 0px solid #fff;
+        border-radius: 0;
+        color: #fff;
+        font-family: monospace;
+        white-space: nowrap;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
 </style>
 
 <template>
@@ -100,19 +135,39 @@
       <div class="nav flex items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="text-white font-bold">&lt;</nuxt-link>
       </div>
-      <div class="flex content items-center justify-center">
-        <p v-if="$fetchState.pending">Fetching places...</p>
-        <p v-else-if="$fetchState.error">An error occurred :(</p>
-        <div v-else>
-            <button @click="$fetch">Refresh</button>
-        </div>
-        <div id="map_inner" class="flex items-center justify-center bg-red-100 bg-opacity-30 my-1 mx-5">
-          <h2 class="bg-a100c-white px-2 py-1 rounded shadow mt-8">Map</h2>
+      <div class="content items-center justify-center">
+        <div id="map_header" class="block">
+          <p v-if="$fetchState.pending">Fetching places...</p>
+          <p v-else-if="$fetchState.error">An error occurred :(</p>
+          <div v-else>
+              <button @click="$fetch">Refresh</button>
+          </div>
           <p>
             <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">^</button>
             <button class="hidden" v-shortkey="['arrowleft']" @shortkey="navigate_left()">&lt;</button>
             <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
           </p>
+        </div>
+        <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-5 ">
+          <div id="map_map" class="h-full w-full">
+           <client-only>
+              <l-map :zoom=4 :center="[55.9464418,8.1277591]">
+                <l-tile-layer url="http://{s}.tile.osm.org.localhost/{z}/{x}/{y}.png"></l-tile-layer>
+                 <l-circle-marker
+                  v-for="(place, index) in this.data.layer.places"
+                  :key="'marker-' + index"
+                  :lat-lng="[place.lat,place.lon]"
+                  :radius="circle.radius"
+                  :color="circle.color"
+                  :stroke="circle.stroke"
+                  :fillColor="circle.fillcolor"
+                  :fillOpacity="circle.fillopacity"
+                >
+                  <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
+                </l-circle-marker>
+             </l-map>
+           </client-only>
+          </div>
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
@@ -153,6 +208,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "App",
   mounted: function() {
@@ -161,7 +217,17 @@ export default {
   },
   data() {
       return {
-        data: {}
+        data: {},
+
+        tooltip: {
+        },
+        circle: {
+          radius: 14,
+          color: 'transparent',
+          stroke: 0,
+          fillcolor: 'rgba(242, 71, 38, 1)',
+          fillopacity: 0.85
+        }
       }
   },
   async fetch() {
@@ -169,6 +235,7 @@ export default {
       response.data
     )
     // exposes $fetchState with .pending and .error
+    // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
     jumpToMap() {
