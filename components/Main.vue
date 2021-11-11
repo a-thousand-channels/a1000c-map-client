@@ -239,6 +239,7 @@ export default {
 
         tooltip: {
         },
+        data_url: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
         circle: {
           radius: 14,
           color: 'transparent',
@@ -248,7 +249,11 @@ export default {
       }
   },
   async fetch() {
-    this.data = await axios.get('https://staging.orte.link/public/maps/cities/layers/european-cities.json').then(response =>
+    console.log(this.$route.query.layer)
+    if ( this.$route.query.layer ) {
+      this.data_url = this.$route.query.layer
+    }
+    this.data = await axios.get(this.data_url).then(response =>
       response.data
     )
     // exposes $fetchState with .pending and .error
