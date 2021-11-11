@@ -122,8 +122,12 @@
     <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
       <div class="content flex items-top">
         <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
-          <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-8">Info: {{ this.data.layer.title }}</h2>
-          <div class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></div>
+          <p v-if="$fetchState.pending">Loading...</p>
+          <p v-else-if="$fetchState.error">An error occurred :(</p>
+          <div v-else>
+            <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-8">Info: {{ this.data.layer.title }}</h2>
+            <div class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></div>
+          </div>
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
@@ -137,8 +141,8 @@
       </div>
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
-          <p v-if="$fetchState.pending">Fetching places...</p>
-          <p v-else-if="$fetchState.error">An error occurred :(</p>
+          <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
           <div v-else>
               <button @click="$fetch">Refresh</button>
           </div>
@@ -148,50 +152,54 @@
             <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
           </p>
         </div>
-        <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-5 ">
-          <div id="map_map" class="h-full w-full">
+        <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
+          <div id="map_map" class="h-full w-full border-solid border-2 border-white">
            <client-only>
-              <l-map :zoom=4 :center="[55.9464418,8.1277591]">
-                <l-tile-layer url="http://{s}.tile.osm.org.localhost/{z}/{x}/{y}.png"></l-tile-layer>
-                 <l-circle-marker
-                  v-for="(place, index) in this.data.layer.places"
-                  :key="'marker-' + index"
-                  :lat-lng="[place.lat,place.lon]"
-                  :radius="circle.radius"
-                  :color="circle.color"
-                  :stroke="circle.stroke"
-                  :fillColor="circle.fillcolor"
-                  :fillOpacity="circle.fillopacity"
-                >
-                  <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
-                </l-circle-marker>
-             </l-map>
+                <l-map :zoom=4 :center="[55.9464418,8.1277591]">
+                  <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                   <l-circle-marker
+                    v-for="(place, index) in this.data.layer.places"
+                    :key="'marker-' + index"
+                    :lat-lng="[place.lat,place.lon]"
+                    :radius="circle.radius"
+                    :color="circle.color"
+                    :stroke="circle.stroke"
+                    :fillColor="circle.fillcolor"
+                    :fillOpacity="circle.fillopacity"
+                  >
+                    <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
+                  </l-circle-marker>
+               </l-map>
            </client-only>
           </div>
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'list'}" class="text-white font-bold">&gt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'list'}" class="flex h-full w-full items-center justify-center text-white font-bold">&gt;</nuxt-link>
       </div>
     </section>
 
     <section id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="text-white font-bold">&lt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">&lt;</nuxt-link>
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
             <h2 class="font-semibold text-lg bg-a100c-white px-4 py-2 rounded shadow mt-8">List: {{ this.data.layer.title }}</h2>
             <hr />
-            <ul class="pb-10">
-              <li v-for="place in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
-                <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
-                <div class="text-gray-500 px-4" v-html="place.teaser"></div>
-                <footer>
-                  <p class="text-gray-500 px-4 mt-5"><a href="#">> Show on the map</a></p>
-                </footer>
-              </li>
-            </ul>
+            <p v-if="$fetchState.pending">Loading...</p>
+            <p v-else-if="$fetchState.error">An error occurred :(</p>
+            <div v-else>
+              <ul class="pb-10">
+                <li v-for="place in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
+                  <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
+                  <div class="text-gray-500 px-4" v-html="place.teaser"></div>
+                  <footer>
+                    <p class="text-gray-500 px-4 mt-5"><a href="#">> Show on the map</a></p>
+                  </footer>
+                </li>
+              </ul>
+            </div>
         </div>
       </div>
     </section>
@@ -211,6 +219,9 @@ import axios from "axios";
 
 export default {
   name: "App",
+  watch: {
+    '$route.query': '$fetch'
+  },
   mounted: function() {
     // this.jumpToMap()
     this.$router.push({ name: 'main', hash: '#map' })
