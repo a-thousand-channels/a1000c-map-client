@@ -46,7 +46,7 @@
     }
     #map > .content {
     flex-shrink: 1;
-    flex-basis: 93%;
+    flex-basis: 95%;
     }
     #map #map_inner,
     #info #list_inner,
@@ -77,6 +77,10 @@
    .text-white:hover {
       color: rgba(255,255,255,1);
       text-shadow: 0 0 3px #bbb;
+   }
+   .border-white {
+      border-color: rgba(255,255,255,1);
+
    }
 
    .leaflet-container {
@@ -131,20 +135,23 @@
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="text-white font-bold">&gt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">&gt;</nuxt-link>
       </div>
     </section>
 
     <section id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'info'}" class="text-white font-bold">&lt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full w-full items-center justify-center text-white font-bold">&lt;</nuxt-link>
       </div>
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
           <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
           <div v-else>
-              <button @click="$fetch">Refresh</button>
+            <p class="text-sm text-red-300">
+              <button @click="$fetch" >Refresh</button> //
+              <nuxt-link :to="{ path: '/'}" class="text-red-300">Home</nuxt-link>
+            </p>
           </div>
           <p>
             <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">^</button>
@@ -235,7 +242,6 @@ export default {
         circle: {
           radius: 14,
           color: 'transparent',
-          stroke: 0,
           fillcolor: 'rgba(242, 71, 38, 1)',
           fillopacity: 0.85
         }
