@@ -122,7 +122,7 @@
 
 <template>
 <div id="page">
-  <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @mousewheel="scrollX">
+  <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheel="scrollX">
     <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
       <div class="content flex items-top">
         <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
@@ -265,8 +265,29 @@ export default {
       this.$router.push({ name: 'main', hash: '#map' })
     },
     scrollX(e) {
-      console.log('scrollx')
-      this.$refs['scroll_container'].scrollLeft += e.deltaY;
+      console.log('scrollx: '+e.deltaY)
+      console.log( "from "+this.$route.hash)
+      let to = '';
+      if ( e.deltaY < 0 ) {
+        console.log( "to right")
+        if ( this.$route.hash == '#map' ) {
+          to = '#list'
+        } else if ( this.$route.hash == '#info' ) {
+          to = '#map'
+        }
+
+      } else {
+        console.log( "to left")
+        if ( this.$route.hash == '#map' ) {
+          to = '#info'
+        } else if ( this.$route.hash == '#list' ) {
+          to = '#map'
+        }
+      }
+      if (to) {
+        this.$router.push({ name: 'main', hash: to })
+        location.hash = to;
+      }
     },
     navigate_top() {
       console.log( "<-- top "+this.$route.hash)
