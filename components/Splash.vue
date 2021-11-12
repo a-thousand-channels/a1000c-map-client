@@ -43,7 +43,7 @@
           Give us a shout if you have questions or need help. Please visit the <a href="https://github.com/a-thousand-channels/a1000c-map-client" style="text-decoration: none; background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 100%">Github repository for this project</a>.
         </p>
       </div>
-      <div class="flex justify-center pt-4 space-x-2">
+      <div class="flex justify-center p-4 m-2 space-x-2">
         <a href="https://www.a-thousand-channels.xyz/" target="_blank" style="text-decoration: none; background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 100%">
           A Thousand Channels – a queer 🏳️‍🌈 mapping 🗺 platform 🎁
         </a>
