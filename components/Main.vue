@@ -15,6 +15,7 @@
       overflow-y: hidden;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
+      scroll-snap-stop: always;
     }
     #page_inner.a1000c-horizontal > .flex {
       flex-shrink: 0;
