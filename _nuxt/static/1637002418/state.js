@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002Fa1000c-map-client\u002F_nuxt\u002Fstatic\u002F1637002418",layout:"default",error:a,serverRendered:true,routePath:"\u002F",config:{_app:{basePath:"\u002Fa1000c-map-client\u002F",assetsPath:"\u002Fa1000c-map-client\u002F_nuxt\u002F",cdnURL:a},content:{dbHash:"49b9b6b6"}}}}(null));
