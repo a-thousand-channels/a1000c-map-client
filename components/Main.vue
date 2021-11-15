@@ -245,7 +245,7 @@
           </p>
         </div>
         <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
-          <div id="map_map" class="h-full w-full border-solid border-2 border-white">
+          <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow">
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]">
                   <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -258,6 +258,9 @@
                     :stroke="circle.stroke"
                     :fillColor="circle.fillcolor"
                     :fillOpacity="circle.fillopacity"
+                    @click="handleMapClick"
+                    :id="index"
+                    :options="{ title: 'marker-' + index, id: index}"
                   >
                     <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
                   </l-circle-marker>
@@ -266,6 +269,7 @@
           </div>
         </div>
       </div>
+      <place-modals :list="this.data.layer.places"></place-modals>
       <div class="nav flex items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'list'}" class="flex h-full w-full items-center justify-center text-white font-bold">&gt;</nuxt-link>
       </div>
@@ -306,6 +310,7 @@
 
 <script>
 import axios from "axios";
+import PlaceModals from '~/components/Place-modals.vue';
 
 export default {
   name: "App",
@@ -339,6 +344,16 @@ export default {
     this.data = await axios.get(this.data_url).then(response =>
       response.data
     )
+    console.log('change data')
+    for (let i = 0; i < this.data.layer.places.length; i++) {
+      console.log(this.data.layer.places[i])
+      if ( i=== 0) {
+        this.$set(this.data.layer.places[i], 'state', true)
+      } else {
+        this.$set(this.data.layer.places[i], 'state', false)
+      }
+    }
+    console.log(this.data)
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
@@ -400,6 +415,26 @@ export default {
       if (to) {
         this.$router.push({ name: 'main', hash: to })
         location.hash = to;
+      }
+    },
+    handleMapClick(e) {
+      // toggleModal
+      // we read the click events for all markers from the map object
+
+      console.log(e);
+      console.log(e.originalEvent.target);
+
+      console.log("onclick");
+      console.log(e.target.options.id);
+      console.log(e.target.options.title);
+
+      if ( e.target.options.id ) {
+
+        // set all state to false
+        for (let i = 0; i < this.data.layer.places.length; i++) {
+            this.$set(this.data.layer.places[i], 'state', false)
+        }
+        this.data.layer.places[e.target.options.id].state = !this.data.layer.places[e.target.options.id].state;
       }
     }
   }
