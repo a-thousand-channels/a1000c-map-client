@@ -106,7 +106,6 @@
 
       /* important */
       scroll-snap-align: center;
-      scroll-snap-stop: always;
 
     }
     .nav {
@@ -168,6 +167,10 @@
 
    }
 
+   .vue2leaflet-map {
+      z-index: 39;
+    }
+
    .leaflet-container {
       background-color: rgba(255,255,255,0.3);
       background-color: transparent;
@@ -203,6 +206,9 @@
         white-space: nowrap;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
+
+
+
 </style>
 
 <template>
@@ -245,7 +251,7 @@
           </p>
         </div>
         <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
-          <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow">
+          <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]">
                   <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -344,16 +350,15 @@ export default {
     this.data = await axios.get(this.data_url).then(response =>
       response.data
     )
-    console.log('change data')
+    // add state value to all places
     for (let i = 0; i < this.data.layer.places.length; i++) {
-      console.log(this.data.layer.places[i])
       if ( i=== 0) {
-        this.$set(this.data.layer.places[i], 'state', true)
+        // this.$set(this.data.layer.places[i], 'state', true)
+        this.$set(this.data.layer.places[i], 'state', false)
       } else {
         this.$set(this.data.layer.places[i], 'state', false)
       }
     }
-    console.log(this.data)
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
@@ -383,8 +388,9 @@ export default {
         }
       }
       if (to) {
-        this.$router.push({ name: 'main', hash: to })
-        location.hash = to;
+        // TODO: fix scrolling down in sections
+        // this.$router.push({ name: 'main', hash: to })
+        // location.hash = to;
       }
     },
     navigate_top() {
@@ -419,21 +425,18 @@ export default {
     },
     handleMapClick(e) {
       // toggleModal
-      // we read the click events for all markers from the map object
-
-      console.log(e);
-      console.log(e.originalEvent.target);
-
       console.log("onclick");
       console.log(e.target.options.id);
       console.log(e.target.options.title);
 
-      if ( e.target.options.id ) {
+      if ( e.target.options.title ) {
 
         // set all state to false
         for (let i = 0; i < this.data.layer.places.length; i++) {
             this.$set(this.data.layer.places[i], 'state', false)
         }
+        console.log("Clicked place: "+this.data.layer.places[e.target.options.id].title)
+        console.log("Clicked place ID: "+this.data.layer.places[e.target.options.id].id)
         this.data.layer.places[e.target.options.id].state = !this.data.layer.places[e.target.options.id].state;
       }
     }

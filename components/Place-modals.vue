@@ -9,6 +9,8 @@
   display: block;
 }
 
+
+
 </style>
 
 <template>
@@ -16,7 +18,7 @@
     <div v-for='(place,index) in list'>
       <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + index">
         <div class="modal-background"></div>
-        <div class="modal-content mt-8 p-4 bg-white bg-a100c-white overflow-hidden shadow">
+        <div class="modal-content absolute inset-4 p-4 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow">
           <div class="text-right px-1 py-1 text-2xl">
             <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
           </div>
@@ -34,7 +36,7 @@
             <div class="swiper-pagination"></div>
           </div>
           <div class="modal-header">
-            <h2>{{index+1}} <strong>{{place.title}}</strong> {{place.state}}</h2>
+            <h2>{{index+1}} <strong>{{place.title}}</strong></h2>
           </div>
           <div class="modal-content">
             <div class="text-gray-500 px-4" v-html="place.teaser"></div>
@@ -68,7 +70,6 @@ export default {
   },
   methods: {
     toggleModal(place) {
-      console.log(place.state)
       place.state = !place.state;
     }
   },
