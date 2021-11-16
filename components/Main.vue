@@ -291,11 +291,24 @@
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
               <ul class="pb-10">
-                <li v-for="place in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
+                <li v-for="(place,index) in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
+                  <div v-swiper:[index]="swiperOptions">
+                    <div class="swiper-wrapperX px-4 pt-4" v-if="place.images">
+                      <div v-for="image,iindex in place.images" class="swiper-slideX">
+                        <span v-if="image">
+                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-xs">
+                        </span>
+                        <span v-else>
+                          <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" :alt="iindex">
+                        </span>
+                      </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
                   <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
                   <div class="text-gray-500 px-4" v-html="place.teaser"></div>
                   <footer>
-                    <p class="text-gray-500 px-4 mt-5"><a href="#" class="text-link">Show on the map</a></p>
+                    <p class="text-gray-500 px-4 mt-5"><a href="#" class="text-link">Show on the map (TODO)</a></p>
                   </footer>
                 </li>
               </ul>
@@ -333,12 +346,21 @@ export default {
 
         tooltip: {
         },
-        data_url: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
+        data_url1: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
+        data_url: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar',
         circle: {
           radius: 14,
           color: 'transparent',
           fillcolor: 'rgba(242, 71, 38, 1)',
           fillopacity: 0.85
+        },
+        swiperOptions: {
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          paginationClickable: true,
+          spaceBetween: 50,
         }
       }
   },
