@@ -277,7 +277,7 @@
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
-      <div v-else>
+      <div v-else class="sm:absolute sm:top-4 sm:right-4">
         <place-modals :list="this.data.layer.places"></place-modals>
       </div>
       <div class="nav flex items-center content-center justify-center">
@@ -295,12 +295,12 @@
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
               <ul class="pb-10">
-                <li v-for="(place,index) in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-8">
+                <li v-for="(place,index) in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
                   <div v-swiper:[index]="swiperOptions">
-                    <div class="swiper-wrapperX px-4 pt-4" v-if="place.images">
-                      <div v-for="image,iindex in place.images" class="swiper-slideX">
+                    <div class="swiper-wrapperX" v-if="place.images">
+                      <div v-for="image,iindex in place.images" class="swiper-slideX px-0 pb-4 pt-2 sm:px-4 sm:pt-4">
                         <span v-if="image">
-                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-xs">
+                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-ws">
                         </span>
                         <span v-else>
                           <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" :alt="iindex">

@@ -3,11 +3,24 @@
     margin-top: -6px;
 }
 .modal {
-  display: none;
-}
-.modal.is-active  {
   display: block;
+  transition: all 1s ease-out;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  min-width: none;
+  overflow: hidden;
 }
+.modal.is-active {
+  display: block;
+  transition: all 0.6s ease-in;
+  opacity: 1;
+  height: auto;
+  width: auto;
+  min-width: none;
+}
+
+
 .modal-content {
   min-width: 18em;
 }
@@ -16,7 +29,7 @@
 </style>
 
 <template>
-  <div class="places-list">
+  <div class="places-list sm:relative z-50">
     <div v-for='(place,index) in list'>
       <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + index">
         <div class="modal-background"></div>
