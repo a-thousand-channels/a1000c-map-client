@@ -8,7 +8,9 @@
 .modal.is-active  {
   display: block;
 }
-
+.modal-content {
+  min-width: 24em;
+}
 
 
 </style>
@@ -18,15 +20,15 @@
     <div v-for='(place,index) in list'>
       <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + index">
         <div class="modal-background"></div>
-        <div class="modal-content absolute inset-4 p-4 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-max">
-          <div class="text-right px-1 py-1 text-2xl">
+        <div class="modal-content absolute inset-4 p-4 pt-2 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-max">
+          <div class="text-right px-0 py-0 text-2xl">
             <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
           </div>
           <div v-swiper:[index]="swiperOptions">
-            <div class="swiper-wrapperX" v-if="place.images">
+            <div class="swiper-wrapperX px-4 pb-4" v-if="place.images">
               <div v-for="image,iindex in place.images" class="swiper-slideX">
                 <span v-if="image">
-                  <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-xs">
+                  <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-md">
                 </span>
                 <span v-else>
                   <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" :alt="iindex">
