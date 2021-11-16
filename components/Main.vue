@@ -254,7 +254,7 @@
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]">
-                  <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                  <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
                    <l-circle-marker
                     v-for="(place, index) in this.data.layer.places"
                     :key="'marker-' + index"
@@ -346,8 +346,9 @@ export default {
   },
   data() {
       return {
-        data: {},
-
+        data: {
+          layer: {}
+        },
         tooltip: {
         },
         data_url1: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
@@ -369,14 +370,16 @@ export default {
       }
   },
   async fetch() {
-    console.log(this.$route.query.layer)
-    if ( this.$route.query.layer ) {
-      this.data_url = this.$route.query.layer
-    }
+    console.log('fetch...')
+    // console.log(this.$route.query.layer)
+    // if ( this.$route.query.layer ) {
+    //  this.data_url = this.$route.query.layer
+    // }
     this.data = await axios.get(this.data_url).then(response =>
       response.data
     )
     // add state value to all places
+    console.log('fetch... add state value')
     for (let i = 0; i < this.data.layer.places.length; i++) {
       if ( i=== 0) {
         // this.$set(this.data.layer.places[i], 'state', true)
