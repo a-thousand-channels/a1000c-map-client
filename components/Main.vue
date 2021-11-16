@@ -275,7 +275,11 @@
           </div>
         </div>
       </div>
-      <place-modals :list="this.data.layer.places"></place-modals>
+      <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
+      <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
+      <div v-else>
+        <place-modals :list="this.data.layer.places"></place-modals>
+      </div>
       <div class="nav flex items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'list'}" class="flex h-full w-full items-center justify-center text-white font-bold">&gt;</nuxt-link>
       </div>
