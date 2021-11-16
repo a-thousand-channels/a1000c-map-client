@@ -112,7 +112,7 @@ export default {
           return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft, behavior: 'smooth' })
         } else {
           console.log('non smooth')
-          return document.getElementById('page_inner').scrollTo(0, el.offsetTop, el.offsetLeft)
+          return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
         }
       }
 

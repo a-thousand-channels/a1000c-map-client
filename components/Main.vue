@@ -337,6 +337,11 @@ import PlaceModals from '~/components/Place-modals.vue';
 
 export default {
   name: "App",
+  transition: {
+    name: "bounce",
+    mode: "in-out", // default is out-in
+    appear: true, // default is false
+  },
   watch: {
     '$route.query': '$fetch'
   },
