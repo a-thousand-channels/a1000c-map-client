@@ -226,7 +226,9 @@
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">&gt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
+        </nuxt-link>
       </div>
     </section>
 
@@ -234,6 +236,8 @@
       <div class="nav flex items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full w-full items-center justify-center text-white font-bold">&lt;</nuxt-link>
       </div>
+
+
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
@@ -245,9 +249,15 @@
             </p>
           </div>
           <p>
-            <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">^</button>
-            <button class="hidden" v-shortkey="['arrowleft']" @shortkey="navigate_left()">&lt;</button>
-            <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">&gt;</button>
+            <button class="hidden" v-shortkey="['arrowup']" @shortkey="navigate_top()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 11.828l-2.828 2.829-1.415-1.414L12 9l4.243 4.243-1.415 1.414L12 11.828z"/></svg>
+            </button>
+            <button class="hidden" v-shortkey="['arrowleft']" @shortkey="navigate_left()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.172 12L9.343 9.172l1.414-1.415L15 12l-4.243 4.243-1.414-1.415z"/></svg>
+            </button>
+            <button class="hidden" v-shortkey="['arrowright']" @shortkey="navigate_right()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
+            </button>
           </p>
         </div>
         <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
@@ -287,7 +297,9 @@
 
     <section id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">&lt;</nuxt-link>
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
+        </nuxt-link>
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
@@ -323,8 +335,20 @@
   </div>
   <div class="static invisible md:visible">
     <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <p class="text-red-300 items-center">
-        You can navigate with arrow keys (<button @click="navigate_left()">🡸 back</button> | <button @click="navigate_top()">🡱 home</button> | <button @click="navigate_right()">🡲 forward</button>)
+      <p class="text-red-300 items-center whitespace-nowrap">
+        Navigate with arrow keys:
+        <button @click="navigate_left()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
+          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current"  d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
+          back
+        </button> |
+        <button @click="navigate_top()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
+          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current" d="M12 10.828l-4.95 4.95-1.414-1.414L12 8l6.364 6.364-1.414 1.414z"/></svg>
+          home
+        </button> |
+        <button @click="navigate_right()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
+          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current"  d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
+          forward
+        </button>
       </p>
     </div>
   </div>
