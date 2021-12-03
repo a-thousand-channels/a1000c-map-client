@@ -267,7 +267,7 @@
         <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
-                <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]">
+                <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
                    <l-circle-marker
                     v-for="(place, index) in this.data.layer.places"
@@ -428,6 +428,13 @@ export default {
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
+    onMapReady() {
+      if (this.data.layer.places.length) {
+        this.$nextTick(() => {
+          this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
+        })
+      }
+    },
     jumpToMap() {
       console.log("jumpToMap")
       this.$router.push({ name: 'main', hash: '#map' })
