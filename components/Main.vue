@@ -215,7 +215,7 @@
 <template>
 <div id="page">
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
-    <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
+    <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8">
       <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5 pt-2 pb-6">
           <p v-if="$fetchState.pending">Loading...</p>
