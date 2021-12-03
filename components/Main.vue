@@ -75,6 +75,7 @@
 
       }
     }
+    button.text-link,
     a.text-link {
       text-decoration: none;
       background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%);
@@ -331,7 +332,9 @@
                   <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
                   <div class="text-gray-500 px-4" v-html="place.teaser"></div>
                   <footer>
-                    <p class="text-gray-500 px-4 mt-5"><a href="#" class="text-link">Show on the map (TODO)</a></p>
+                    <p class="text-gray-500  px-4 py-2 sm:px-16 sm:py-4">
+                      <button @click="recenterMap(place.lat,place.lon)" class="text-link">Show on the map</button>
+                    </p>
                   </footer>
                 </li>
               </ul>
@@ -377,8 +380,8 @@ export default {
     '$route.query': '$fetch'
   },
   mounted: function() {
-    // this.jumpToMap()
-    this.$router.push({ name: 'main', hash: '#map' })
+    this.jumpToMap()
+    // this.$router.push({ name: 'main', hash: '#map' })
   },
   data() {
       return {
@@ -388,7 +391,8 @@ export default {
         tooltip: {
         },
         data_url1: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
-        data_url: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar',
+        data_url2: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
         circle: {
           radius: 14,
           color: 'transparent',
@@ -434,6 +438,14 @@ export default {
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
         })
       }
+    },
+    recenterMap(lat,lon) {
+      console.log("recenter map to "+ lat +"/"+lon);
+      // this.$refs.map.mapObject.panTo(lat,lon);
+      this.$router.push({ name: 'main', hash: '#map' });
+      this.$nextTick(() => {
+        this.$refs.map.mapObject.flyTo([lat,lon],16);
+      })
     },
     jumpToMap() {
       console.log("jumpToMap")
