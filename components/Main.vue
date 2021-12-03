@@ -214,17 +214,20 @@
 
 <template>
 <div id="page">
-  <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheel="scrollX">
+  <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
     <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0">
-      <div class="content flex items-top">
-        <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
+      <div class="content flex items-top overflow-x-auto">
+        <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5 pt-2 pb-6">
           <p v-if="$fetchState.pending">Loading...</p>
           <p v-else-if="$fetchState.error">An error occurred :(</p>
           <div v-else>
-            <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-8">{{ this.data.layer.title }}</h2>
-            <h3 class="block font-semibold text-md bg-a100c-white px-2 py-1 rounded shadow mt-8">{{ this.data.layer.subtitle }}</h3>
-            <div  class="block bg-a100c-white px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.text"></div>
-            <div v-if="this.data.layer.credits" class="block bg-a100c-white text-sm text-black-500 px-2 py-1 rounded shadow mt-8" v-html="this.data.layer.credits"></div>
+            <span v-if="this.data.layer.image_link">
+              <img v-bind:src="this.data.layer.image_link" :alt="this.data.layer.title" class="max-w-full sm:max-w-ws">
+            </span>
+            <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-3">{{ this.data.layer.title }}</h2>
+            <h3 v-if="this.data.layer.subtitle" class="block font-semibold text-md bg-a100c-white px-2 py-1 rounded shadow mt-2">{{ this.data.layer.subtitle }}</h3>
+            <div  class="block bg-a100c-white px-2 py-1 rounded shadow mt-2" v-html="this.data.layer.text"></div>
+            <div v-if="this.data.layer.credits" class="block bg-a100c-white text-sm text-black-500 px-2 py-1 rounded shadow mt-2 mb-4" v-html="this.data.layer.credits"></div>
           </div>
         </div>
       </div>
@@ -329,8 +332,14 @@
                     </div>
                     <div class="swiper-pagination"></div>
                   </div>
-                  <h3 class="font-semibold text-lg px-4 py-2">{{ place.title }}</h3>
-                  <div class="text-gray-500 px-4" v-html="place.teaser"></div>
+                  <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-8">{{ place.title }}</h3>
+                  <div class="text-gray-500 px-4 sm:px-16 sm:py-4" v-html="place.teaser"></div>
+                  <ul class="pb-4 sm:px-8">
+                    <li v-for="(annotation,aindex) in place.annotations" class="bg-a100c-3 px-4 py-4 rounded shadow mt-4 mb-6">
+                      <h4 v-if="annotation.title" class="font-semibold text-md px-4 py-2">{{ annotation.title }}</h4>
+                      <div class="text-gray-500 px-4" v-html="annotation.text"></div>
+                    </li>
+                  </ul>
                   <footer>
                     <p class="text-gray-500  px-4 py-2 sm:px-16 sm:py-4">
                       <button @click="recenterMap(place.lat,place.lon)" class="text-link">Show on the map</button>
