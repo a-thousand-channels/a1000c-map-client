@@ -400,8 +400,12 @@ export default {
     '$route.query': '$fetch'
   },
   mounted: function() {
+    console.log(this.$route.query.layer)
+    if (this.$route.query.layer ) {
+      this.custom_data_url = this.$route.query.layer
+    }
+    console.log(this.$route.query);
     this.jumpToMap()
-    // this.$router.push({ name: 'main', hash: '#map' })
   },
   data() {
       return {
@@ -410,9 +414,8 @@ export default {
         },
         tooltip: {
         },
-        data_url1: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
-        data_url2: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        data_url: '',
+        custom_data_url: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
         circle: {
           radius: 14,
           color: 'transparent',
@@ -430,8 +433,16 @@ export default {
       }
   },
   async fetch() {
+    if (this.$route.query.layer ) {
+      this.custom_data_url = this.$route.query.layer
+    }
     console.log('fetch...')
-    // console.log(this.$route.query.layer)
+    if ( this.custom_data_url ) {
+      this.data_url = this.custom_data_url
+    } else {
+      this.data_url = this.default_data_url
+    }
+    console.log(this.data_url)
     // if ( this.$route.query.layer ) {
     //  this.data_url = this.$route.query.layer
     // }
@@ -448,13 +459,15 @@ export default {
         this.$set(this.data.layer.places[i], 'state', false)
       }
     }
+    // call this again, since the map could be ready before the fetch is finished :()
+    this.onMapReady()
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
     onMapReady() {
       this.$nextTick(() => {
-        if ( (this.data) && (this.data.layer) && (this.data.layer.places) ) {
+        if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map.mapObject) ) {
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
         }
       })
@@ -468,8 +481,12 @@ export default {
       })
     },
     jumpToMap() {
-      console.log("jumpToMap")
-      this.$router.push({ name: 'main', hash: '#map' })
+      console.log("jumpToMap " + this.$route.hash )
+      if ( ( this.$route.hash === '#list' ) ||  ( this.$route.hash === '#info' ) )  {
+        this.$router.push({ name: 'main', hash: this.$route.hash })
+      } else {
+        this.$router.push({ name: 'main', hash: '#map' })
+      }
     },
     scrollX(e) {
       console.log('scrollx: '+e.deltaY)
