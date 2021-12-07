@@ -474,10 +474,10 @@ export default {
       })
     },
     recenterMap(lat,lon) {
-      console.log("recenter map to "+ lat +"/"+lon);
       // this.$refs.map.mapObject.panTo(lat,lon);
-      this.$router.push({ name: 'main', hash: '#map' });
       this.$nextTick(() => {
+        console.log("recenter map to "+ lat +"/"+lon);
+        this.$router.push({ name: 'main', hash: '#map' });
         this.$refs.map.mapObject.flyTo([lat,lon],16);
       })
     },
@@ -491,7 +491,20 @@ export default {
     },
     scrollX(e) {
       console.log('scrollx: '+e.deltaY)
-      console.log( "from "+this.$route.hash)
+      var section = this.$route.hash.replace('#', '')
+      console.log( "at section "+section)
+      var top = this.$refs.list.getBoundingClientRect().top
+      console.log( "pixel from top "+top)
+      var top = this.$refs.list.getBoundingClientRect().top
+      console.log( "pixel from top "+top)
+      console.log( "pixel from ...")
+      console.log(this.$refs[section].scrollTop)
+      this.$nextTick(()=>{
+        console.log( "pixel (w/nextTick) from ...")
+        console.log(this.$refs[section].scrollTop)
+      })
+      console.log( "--------");
+
       let to = '';
       if ( e.deltaY < 0 ) {
         console.log( "to right")
