@@ -262,7 +262,8 @@
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
           <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
           <div v-else>
-            <p class="text-sm text-red-300">
+            <p id="map_header_content" class="text-sm text-red-300">
+              <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.layer.title }}</nuxt-link> //
               <button @click="$fetch" >Refresh</button> //
               <nuxt-link :to="{ path: '/'}" class="text-red-300">Home</nuxt-link>
             </p>
@@ -415,7 +416,7 @@ export default {
         tooltip: {
         },
         data_url: '',
-        custom_data_url: 'https://staging.orte.link/public/maps/cities/layers/european-cities.json',
+        custom_data_url: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
         circle: {
           radius: 14,
           color: 'transparent',
@@ -467,7 +468,7 @@ export default {
   methods: {
     onMapReady() {
       this.$nextTick(() => {
-        if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map.mapObject) ) {
+        if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map) ) {
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
         }
       })
