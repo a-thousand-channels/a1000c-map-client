@@ -1,11 +1,16 @@
 # A thousand channels: Map client
 
-A prototype of a map frontend for the A thousand channels project w/Nuxt.js 2
+A prototype of a map frontend for the A thousand channels project w/Nuxt.js v2
 
 Preview:
 **https://a-thousand-channels.github.io/a1000c-map-client/**
 
-(It renders map data provided via ORTE Backend. Currently sample map data is shown.)
+It renders map data provided via ORTE Backend. Currently some sample map data is shown.
+
+You can manually load any layer (that has the status "Published") into the client. Just add the URL of the layer to the URL with the param layer
+
+**https://a-thousand-channels.github.io/a1000c-map-client/?layer=LAYER_JSON_URL**
+
 
 ## Build Setup
 
