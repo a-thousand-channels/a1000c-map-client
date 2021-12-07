@@ -134,11 +134,14 @@
     flex-basis: 95%;
     }
     #map #map_inner,
-    #info #list_inner,
+    #info #info_inner,
     #list #list_inner {
+      height: auto;
+      width: auto;
+    }
+    #map #map_inner {
+      width: 100%;
       height: 90%;
-      width: 95%;
-      align-items: none;
     }
     #info #info_inner img {
       max-height: 45vh;
@@ -450,11 +453,11 @@ export default {
   },
   methods: {
     onMapReady() {
-      if (this.data.layer.places.length) {
-        this.$nextTick(() => {
+      this.$nextTick(() => {
+        if ( (this.data) && (this.data.layer) && (this.data.layer.places) ) {
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
-        })
-      }
+        }
+      })
     },
     recenterMap(lat,lon) {
       console.log("recenter map to "+ lat +"/"+lon);
