@@ -161,6 +161,12 @@
    .bg-a100c-white {
       background-color: rgba(255,255,255,0.8);
    }
+   .text-gray {
+     color: rgba(0,0,0,0.3);
+   }
+   .text-gray:hover {
+     color: rgba(0,0,0,0.8);
+   }
    .text-white {
       color: rgba(255,255,255,0.8);
       text-shadow: 0 0 0 #ddd;
@@ -172,6 +178,11 @@
    .border-white {
       border-color: rgba(255,255,255,1);
 
+   }
+   .swiper-container {
+      max-width: 85vw;
+      overflow: hidden;
+      /* background-color: silver; */
    }
 
    .vue2leaflet-map {
@@ -331,14 +342,15 @@
             <div v-else>
               <ul class="pb-10">
                 <li v-for="(place,index) in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
-                  <div v-swiper:[index]="swiperOptions">
-                    <div class="swiper-wrapperX" v-if="place.images">
-                      <div v-for="image,iindex in place.images" class="swiper-slideX px-0 pb-4 pt-2 sm:px-4 sm:pt-4">
+                  <div v-swiper:[index]="swiperOptions" class="">
+                    <div class="swiper-wrapper" v-if="place.images">
+                      <div v-for="image in place.images" :key="image" class="swiper-slide px-0 pb-4 pt-2 sm:px-4 sm:pt-4">
                         <span v-if="image">
-                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-ws">
+                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-ws max-h-72 sm:max-h-80 lg:max-h-96">
+                          <span class="text-sm text-gray max-w-60">{{image.title}}</span>
                         </span>
                         <span v-else>
-                          <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" :alt="iindex">
+                          <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" alt="">
                         </span>
                       </div>
                     </div>
@@ -424,12 +436,15 @@ export default {
           fillopacity: 0.85
         },
         swiperOptions: {
+          width: null,
+          slidesPerView: 1,
+          spaceBetween: 10,
           pagination: {
             el: '.swiper-pagination',
             clickable: true
           },
           paginationClickable: true,
-          spaceBetween: 50,
+          spaceBetween: 50
         }
       }
   },
