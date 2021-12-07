@@ -124,7 +124,7 @@
     }
     .content {
     flex-shrink: 1;
-    flex-basis: 97%;
+    flex-basis: 98%;
     }
     #map {
       align-items: stretch;
@@ -139,6 +139,9 @@
       height: 90%;
       width: 95%;
       align-items: none;
+    }
+    #info #info_inner img {
+      max-height: 45vh;
     }
    .bg-a100c-1 {
       background: rgb(255,0,249);
@@ -215,19 +218,24 @@
 <template>
 <div id="page">
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
-    <section id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8">
-      <div class="content flex items-top overflow-x-auto">
-        <div id="info_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5 pt-2 pb-6">
+    <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
+        <div id="info_inner" class="bg-red-100 bg-opacity-30 my-4 mx-5">
           <p v-if="$fetchState.pending">Loading...</p>
           <p v-else-if="$fetchState.error">An error occurred :(</p>
           <div v-else>
-            <span v-if="this.data.layer.image_link">
-              <img v-bind:src="this.data.layer.image_link" :alt="this.data.layer.title" class="max-w-full sm:max-w-ws">
-            </span>
-            <h2 class="block font-semibold text-lg bg-a100c-white px-2 py-1 rounded shadow mt-3">{{ this.data.layer.title }}</h2>
-            <h3 v-if="this.data.layer.subtitle" class="block font-semibold text-md bg-a100c-white px-2 py-1 rounded shadow mt-2">{{ this.data.layer.subtitle }}</h3>
-            <div  class="block bg-a100c-white px-2 py-1 rounded shadow mt-2" v-html="this.data.layer.text"></div>
-            <div v-if="this.data.layer.credits" class="block bg-a100c-white text-sm text-black-500 px-2 py-1 rounded shadow mt-2 mb-4" v-html="this.data.layer.credits"></div>
+            <div class="block bg-a100c-white rounded shadow py-2 px-2 sm:px-6 lg:px-8 lg:py-8">
+              <div id="info_image" class="lg:px-8" v-if="this.data.layer.image_link">
+                <img v-bind:src="this.data.layer.image_link" :alt="this.data.layer.title" class="max-w-full sm:max-w-ws">
+              </div>
+              <div id="info_content" class="my-2">
+                <div id="info_content_header" class="">
+                  <h2 class="block font-semibold text-2xl px-4 py-1 lg:px-8">{{ this.data.layer.title }}</h2>
+                  <h3 v-if="this.data.layer.subtitle" class="block font-semibold text-md px-4 py-1 lg:px-8">{{ this.data.layer.subtitle }}</h3>
+                </div>
+                <div  class="block px-4 py-1 lg:px-8" v-html="this.data.layer.text"></div>
+                <div v-if="this.data.layer.credits" class="block text-sm text-grey-500  px-4 py-2 lg:px-8" v-html="this.data.layer.credits"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -238,7 +246,7 @@
       </div>
     </section>
 
-    <section id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
+    <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
       <div class="nav flex flex-col content-center">
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full self-center items-center justify-center text-white font-bold">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
@@ -306,14 +314,14 @@
       </div>
     </section>
 
-    <section id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
+    <section ref="list"  id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
       <div class="nav flex items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
         </nuxt-link>
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
-          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-1 mx-5">
+          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-4 mx-5">
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
