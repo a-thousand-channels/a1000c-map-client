@@ -1,7 +1,7 @@
 {
   "name": "a1000c-map-client",
   "short_name": "a1000c-map-client",
-  "description": "A prototype of a map frontend for the A thousand channels project w/Nuxt.js 2",
+  "description": "A prototype of a map frontend for the A thousand channels project w/Nuxt.js v2",
   "icons": [],
   "start_url": "/a1000c-map-client/?standalone=true",
   "display": "standalone",
