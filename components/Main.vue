@@ -294,6 +294,7 @@
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-tile-layer url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"></l-tile-layer>
+                  <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
 
                    <l-circle-marker
                     v-for="(place, index) in this.data.layer.places"
@@ -387,8 +388,10 @@ export default {
         tooltip: {
         },
         data_url: '',
-        custom_data_url: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
+        custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url2: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
+        custom_data_url4: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
           radius: 14,
