@@ -908,6 +908,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@elfalem/leaflet-curve@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@elfalem/leaflet-curve/-/leaflet-curve-0.9.1.tgz#e9a9e4fe6304958178d0d6dfa0d10bf81b48b418"
+  integrity sha512-qRx+GK68e+j60TJ9/e/xIC31ON2owmEIxYajGbX+FQ/knOSlGTIgZYhQvLIeChU/1RQd+ly7Up6z62LWOjLyWQ==
+  optionalDependencies:
+    "@tweenjs/tween.js" "^17.2.0"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
@@ -1450,6 +1457,11 @@
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
+
+"@tweenjs/tween.js@^17.2.0":
+  version "17.6.0"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-17.6.0.tgz#61bc86c372bcc5a9f744e661dd6ae16f5ee7d0ef"
+  integrity sha512-utSXj0WHi4qr/iyfFHGMJBaL+ixQ2N7BAmx1R5g8jBqykJfjBUQ0hKWwXf767hbALC3zOoOIofKYSDWu5n04JQ==
 
 "@types/anymatch@*":
   version "3.0.0"

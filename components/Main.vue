@@ -272,7 +272,7 @@
           <div v-else>
             <p id="map_header_content" class="text-sm text-red-300">
               <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.layer.title }}</nuxt-link> //
-              <button @click="$fetch" >Refresh</button> //
+              <button @click="$fetch" >Reload view</button> //
               <nuxt-link :to="{ path: '/'}" class="text-red-300">Home</nuxt-link>
             </p>
           </div>
@@ -292,7 +292,8 @@
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
-                  <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                  <l-tile-layer url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"></l-tile-layer>
+
                    <l-circle-marker
                     v-for="(place, index) in this.data.layer.places"
                     :key="'marker-' + index"
@@ -307,7 +308,9 @@
                     :options="{ title: 'marker-' + index, id: index}"
                   >
                     <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
+
                   </l-circle-marker>
+
                </l-map>
            </client-only>
           </div>
@@ -366,11 +369,12 @@ export default {
     '$route.query': '$fetch'
   },
   mounted: function() {
-    console.log(this.$route.query.layer)
+    console.log("Mounted****")
     if (this.$route.query.layer ) {
+      console.log(this.$route.query);
+      console.log(this.$route.query.layer)
       this.custom_data_url = this.$route.query.layer
     }
-    console.log(this.$route.query);
     this.jumpToMap()
   },
   data() {
