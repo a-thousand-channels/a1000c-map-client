@@ -103,18 +103,14 @@ export default {
       console.log(to)
 
       if (to.hash) {
-        console.log(to.hash)
+        console.log("Section: "+to.hash)
         let el = await findEl(to.hash)
-        console.log(el)
         if (el) {
           if ('scrollBehavior' in document.documentElement.style) {
-            console.log('smooth')
-            console.log(el)
-            console.log(el.offsetTop)
-            console.log(el.offsetLeft)
+            console.log('scroll smooth to '+el.offsetTop+'/'+el.offsetLeft)
             return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft, behavior: 'smooth' })
           } else {
-            console.log('non smooth')
+            console.log('non smooth to '+el.offsetTop+'/'+el.offsetLeft)
             return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
           }
         }
