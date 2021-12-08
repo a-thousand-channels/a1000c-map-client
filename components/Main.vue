@@ -200,6 +200,7 @@
 
    .leaflet-container {
       background-color: rgba(255,255,255,0.3);
+      background-color: rgba(55, 55, 55, 0.3);
       background-color: transparent;
    }
    .leaflet-tooltip-top::before {
@@ -428,22 +429,127 @@ export default {
         this.$set(this.data.layer.places[i], 'state', false)
       }
     }
-    // call this again, since the map could be ready before the fetch is finished :()
-    // this.onMapReady()
-
 
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
     onMapReady(mapObject) {
-      this.$nextTick(() => {
+      // this.$nextTick(() => {
         this.mapobj = mapObject;
         if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map) ) {
           console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
+
+
+
+          var curves_layer = L.layerGroup().addTo(mapObject);
+
+          if ( this.data.layer.places_with_relations ) {
+
+            this.data.layer.places_with_relations.forEach ((place, key) => {
+
+              console.log("places_with_relations");
+              console.log(key);
+              console.log(place.relations);
+              console.log(place.relations.length);
+              console.log(place.relations);
+
+              place.relations.forEach ((relation, kkey) => {
+
+                console.log(relation.from.lat);
+                console.log(relation.from.lon);
+                console.log("Relation_from ID:  "+relation.from.id);
+                var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
+                var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
+                console.log(point1);
+                console.log(point2);
+
+
+                var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
+                // var color = clustercolor;
+                var pathOptions = {
+                        color: color,
+                        weight: 5,
+                        opacity: 0.8,
+                        className: 'curve_normal curve_',
+                        animate: false
+                }
+                var controlpoint = this.calcControlPoint(point1,point2,5)
+
+                var curvedPath = L.curve(
+                  [
+                    'M', point1,
+                    'Q', controlpoint,
+                       point2
+                  ], pathOptions).addTo(curves_layer)
+
+                // draw endpoint, if it resides on an different layer
+                  var iconSettings = {
+                      mapIconUrl: "<svg height='{radius}' width='{radius}' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='15' r='15' fill='{color}' fill-opacity='{opacity}' shape-rendering='geometricPrecision'></circle></svg>",
+                      color: color,
+                      opacity: 0.7,
+                      radius: 30
+                  };
+                  var divIcon = L.divIcon({
+                    className: "leaflet-data-outside-marker",
+                    html: L.Util.template(iconSettings.mapIconUrl, iconSettings), //.replace('#','%23'),
+                    iconAnchor  : [15, 15],
+                    iconSize    : [30, 30],
+                    popupAnchor : [0, -28]
+                  });
+                  if ( relation.from.layer_id != relation.to.layer_id) {
+                    var endpoint2_marker = L.marker(point2, {icon: divIcon}).bindTooltip(relation.to.title, {
+                      permanent: 'true',
+                      direction: 'top'
+                    }).addTo(curves_layer);
+
+                  }
+
+
+              });
+            });
+          }
+
         }
-      })
+    },
+    calcControlPoint(point1,point2,distance_in_kms) {
+      var boost = 2.9;
+      var d = 2;
+      // if transcontinental
+      if ( distance_in_kms > 5000 ) {
+        d = 7
+      // if continental
+      } else if ( distance_in_kms > 1000 ) {
+        d = 7
+      // if regional
+      } else if ( distance_in_kms > 100 ) {
+        d = 7
+      // if local
+      } else if ( distance_in_kms > 10 ) {
+        d = 10
+      // if close
+      } else if ( distance_in_kms > 5 ) {
+        d = 40
+      } else if ( distance_in_kms > 1 ) {
+        d = 120
+      } else if ( distance_in_kms <= 1 ) {
+        d = 1600 // sic!
+      } else if ( distance_in_kms < 0.1 ) {
+        // none;
+      }
+
+
+      var offsetX = point2[1] - point1[1],
+      offsetY = point2[0] - point1[0];
+      var r = Math.sqrt( Math.pow(offsetX, 0) + Math.pow(offsetY, 2) ),
+                theta = Math.atan2(offsetY, offsetX);
+      var thetaOffset = (3.14/boost);
+      var r2 = (r/d)/(Math.cos(thetaOffset)),
+                theta2 = theta + thetaOffset;
+      var midpointX = (r2 * Math.cos(theta2)) + point1[1],
+                midpointY = (r2 * Math.sin(theta2)) + point1[0];
+      return [midpointY, midpointX];
     },
     recenterMap(lat,lon) {
       // this.$refs.map.mapObject.panTo(lat,lon);
@@ -547,6 +653,9 @@ export default {
         this.data.layer.places[e.target.options.id].state = !this.data.layer.places[e.target.options.id].state;
       }
     }
+  },
+  computed: {
+
   }
 };
 </script>
