@@ -126,18 +126,27 @@
     flex-shrink: 1;
     flex-basis: 98%;
     }
+    #map #map_inner,
+    #info #info_inner,
+    #list #list_inner {
+      height: auto;
+      width: auto;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    #info > .content::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    #info > .content {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
     #map {
       align-items: stretch;
     }
     #map > .content {
     flex-shrink: 1;
     flex-basis: 95%;
-    }
-    #map #map_inner,
-    #info #info_inner,
-    #list #list_inner {
-      height: auto;
-      width: auto;
     }
     #map #map_inner {
       width: 100%;
@@ -237,19 +246,7 @@
           <p v-if="$fetchState.pending">Loading...</p>
           <p v-else-if="$fetchState.error">An error occurred :(</p>
           <div v-else>
-            <div class="block bg-a100c-white rounded shadow py-2 px-2 sm:px-6 lg:px-8 lg:py-8">
-              <div id="info_image" class="lg:px-8" v-if="this.data.layer.image_link">
-                <img v-bind:src="this.data.layer.image_link" :alt="this.data.layer.title" class="max-w-full sm:max-w-ws">
-              </div>
-              <div id="info_content" class="my-2">
-                <div id="info_content_header" class="">
-                  <h2 class="block font-semibold text-2xl px-4 py-1 lg:px-8">{{ this.data.layer.title }}</h2>
-                  <h3 v-if="this.data.layer.subtitle" class="block font-semibold text-md px-4 py-1 lg:px-8">{{ this.data.layer.subtitle }}</h3>
-                </div>
-                <div  class="block px-4 py-1 lg:px-8" v-html="this.data.layer.text"></div>
-                <div v-if="this.data.layer.credits" class="block text-sm text-grey-500  px-4 py-2 lg:px-8" v-html="this.data.layer.credits"></div>
-              </div>
-            </div>
+            <info :layer="this.data.layer"></info>
           </div>
         </div>
       </div>
