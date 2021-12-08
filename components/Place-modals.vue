@@ -37,18 +37,12 @@
           <div class="text-right px-0 py-0 text-2xl">
             <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
           </div>
-          <div v-swiper:[index]="swiperOptions">
-            <div class="swiper-wrapperX px-0 pb-4 sm:px-4" v-if="place.images">
-              <div v-for="image,iindex in place.images" class="swiper-slideX">
-                <span v-if="image">
-                  <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-md">
-                </span>
-                <span v-else>
-                  <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" :alt="iindex">
-                </span>
-              </div>
+          <div class="px-0 pb-4 sm:px-4" v-if="place.images">
+            <div class="">
+              <span v-if="place.images[0]">
+                <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-64">
+              </span>
             </div>
-            <div class="swiper-pagination"></div>
           </div>
           <div class="modal-header">
             <h2>{{index+1}} <strong>{{place.title}}</strong></h2>
@@ -90,14 +84,8 @@ export default {
   },
   data() {
     return {
-      swiperOptions: {
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        paginationClickable: true,
-        spaceBetween: 50,
-      }
+
+
     }
   },
   computed: {

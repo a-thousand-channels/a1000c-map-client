@@ -333,64 +333,17 @@
         </nuxt-link>
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
-          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-4 mx-5">
+          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-0 mx-0 sm:my-4 sm:mx-5">
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
-              <ul class="pb-10">
-                <li v-for="(place,index) in this.data.layer.places" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
-                  <div v-swiper:[index]="swiperOptions" class="">
-                    <div class="swiper-wrapper" v-if="place.images">
-                      <div v-for="image in place.images" :key="image" class="swiper-slide px-0 pb-4 pt-2 sm:px-4 sm:pt-4">
-                        <span v-if="image">
-                          <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-ws max-h-72 sm:max-h-80 lg:max-h-96">
-                          <span class="text-sm text-gray max-w-60">{{image.title}}</span>
-                        </span>
-                        <span v-else>
-                          <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" alt="">
-                        </span>
-                      </div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                  </div>
-                  <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-8">{{ place.title }}</h3>
-                  <div class="text-gray-500 px-4 sm:px-16 sm:py-4" v-html="place.teaser"></div>
-                  <ul class="pb-4 sm:px-8">
-                    <li v-for="(annotation,aindex) in place.annotations" class="bg-a100c-3 px-4 py-4 rounded shadow mt-4 mb-6">
-                      <h4 v-if="annotation.title" class="font-semibold text-md px-4 py-2">{{ annotation.title }}</h4>
-                      <div class="text-gray-500 px-4" v-html="annotation.text"></div>
-                    </li>
-                  </ul>
-                  <footer>
-                    <p class="text-gray-500  px-4 py-2 sm:px-16 sm:py-4">
-                      <button @click="recenterMap(place.lat,place.lon)" class="text-link">Show on the map</button>
-                    </p>
-                  </footer>
-                </li>
-              </ul>
+              <list :places="this.data.layer.places" :map="this.mapobj"></list>
             </div>
         </div>
       </div>
     </section>
-  </div>
-  <div class="static invisible md:visible">
-    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <p class="text-red-300 items-center whitespace-nowrap">
-        Navigate with arrow keys:
-        <button @click="navigate_left()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
-          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current"  d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
-          back
-        </button> |
-        <button @click="navigate_top()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
-          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current" d="M12 10.828l-4.95 4.95-1.414-1.414L12 8l6.364 6.364-1.414 1.414z"/></svg>
-          home
-        </button> |
-        <button @click="navigate_right()" class="whitespace-nowrap rounded-lg bg-red-100 pl-1 pr-2">
-          <svg class="inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path class="text-red-300 fill-current"  d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
-          forward
-        </button>
-      </p>
-    </div>
+
+    <keys-navigation></keys-navigation>
   </div>
 </div>
 </template>
@@ -398,6 +351,9 @@
 <script>
 import axios from "axios";
 import PlaceModals from '~/components/Place-modals.vue';
+import List from '~/components/List.vue';
+import Info from '~/components/Info.vue';
+import KeysNavigation from '~/components/Keys-navigation.vue';
 
 export default {
   name: "App",
@@ -419,29 +375,21 @@ export default {
   },
   data() {
       return {
+        mapobj: null,
         data: {
           layer: {}
         },
         tooltip: {
         },
         data_url: '',
-        custom_data_url: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
+
         circle: {
           radius: 14,
           color: 'transparent',
           fillcolor: 'rgba(242, 71, 38, 1)',
           fillopacity: 0.85
-        },
-        swiperOptions: {
-          width: null,
-          slidesPerView: 1,
-          spaceBetween: 10,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-          },
-          paginationClickable: true,
-          spaceBetween: 50
         }
       }
   },
@@ -450,6 +398,10 @@ export default {
       this.custom_data_url = this.$route.query.layer
     }
     console.log('fetch...')
+    console.log(this.data)
+    if ( this.data ) {
+      console.log('data already fetched')
+    }
     if ( this.custom_data_url ) {
       this.data_url = this.custom_data_url
     } else {
@@ -473,14 +425,18 @@ export default {
       }
     }
     // call this again, since the map could be ready before the fetch is finished :()
-    this.onMapReady()
+    // this.onMapReady()
+
+
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
-    onMapReady() {
+    onMapReady(mapObject) {
       this.$nextTick(() => {
+        this.mapobj = mapObject;
         if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map) ) {
+          console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
         }
       })
