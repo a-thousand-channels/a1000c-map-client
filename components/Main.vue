@@ -390,8 +390,8 @@ export default {
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
         custom_data_url2: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
-        custom_data_url4: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url4: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
           radius: 14,
