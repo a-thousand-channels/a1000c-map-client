@@ -348,7 +348,7 @@
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
-              <list v-if="this.list_content" :places="this.list_content" :map="this.mapobj"></list>
+              <list :places="this.list_content" :map="this.mapobj"></list>
             </div>
         </div>
       </div>
@@ -390,7 +390,7 @@ export default {
         mapobj: null,
         dataobj: {},
         data: {},
-        list_content: {},
+        list_content: [],
         tooltip: {
         },
         data_url: '',
@@ -445,6 +445,15 @@ export default {
       console.log("Map with "+this.data.places.length+" places")
 
       // TODO add state value to all places
+      // add state value to all places
+      for (let i = 0; i < this.data.places.length; i++) {
+        if ( i=== 0) {
+          // this.$set(this.data.places[i], 'state', true)
+          this.$set(this.data.places[i], 'state', false)
+        } else {
+          this.$set(this.data.places[i], 'state', false)
+        }
+      }
 
     // or a layer
     } else {
@@ -691,7 +700,7 @@ export default {
         // show modal
         this.data.places[clicked_place_index].state = !this.data.places[clicked_place_index].state;
         // if in map mode: show place content in the list view!
-        this.list_content[0] = this.data.places[clicked_place_index]
+        this.list_content.push(this.data.places[clicked_place_index]);
 
       }
     }
