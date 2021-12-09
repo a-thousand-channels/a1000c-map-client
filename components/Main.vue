@@ -188,6 +188,7 @@
       border-color: rgba(255,255,255,1);
 
    }
+   .inline { display: inline-block; }
    .swiper-container {
       max-width: 85vw;
       overflow: hidden;
