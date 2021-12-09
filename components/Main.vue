@@ -701,7 +701,8 @@ export default {
         // show modal
         this.data.places[clicked_place_index].state = !this.data.places[clicked_place_index].state;
         // if in map mode: show place content in the list view!
-        this.list_content.push(this.data.places[clicked_place_index]);
+        this.list_content = []
+        this.list_content.push(this.data.places[clicked_place_index])
 
       }
     }
