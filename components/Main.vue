@@ -302,6 +302,7 @@
                       :key="layer.id"
                       :name="layer.title"
                       :ref="layer.title"
+                      layer-type="base"
                     >
                        <l-circle-marker
                         v-for="(place, index) in layer.places"
