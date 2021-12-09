@@ -62,8 +62,8 @@
 export default {
   props: {
     places: {
-      type: Array,
-      required: true
+      type: Object,
+      required: false
     },
     map: {
       type: Object,

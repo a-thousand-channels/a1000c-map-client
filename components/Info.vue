@@ -34,7 +34,7 @@
 
 export default {
   props: {
-    layer: {
+    data: {
       type: Object,
       required: true
     }

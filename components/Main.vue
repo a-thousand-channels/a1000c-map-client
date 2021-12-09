@@ -248,7 +248,7 @@
           <p v-if="$fetchState.pending">Loading...</p>
           <p v-else-if="$fetchState.error">An error occurred :(</p>
           <div v-else>
-            <info :layer="this.data.layer"></info>
+            <info :data="this.data"></info>
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@
           <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
           <div v-else>
             <p id="map_header_content" class="text-sm text-red-300">
-              <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.layer.title }}</nuxt-link> //
+              <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.title }}</nuxt-link> //
               <button @click="$fetch" >Reload view</button> //
               <nuxt-link :to="{ path: '/'}" class="text-red-300">Home</nuxt-link>
             </p>
@@ -294,35 +294,40 @@
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
+                  <l-control-layers position="topright"></l-control-layers>
                   <l-tile-layer url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"></l-tile-layer>
                   <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-
-                   <l-circle-marker
-                    v-for="(place, index) in this.data.layer.places"
-                    :key="'marker-' + index"
-                    :lat-lng="[place.lat,place.lon]"
-                    :radius="circle.radius"
-                    :color="circle.color"
-                    :stroke="circle.stroke"
-                    :fillColor="circle.fillcolor"
-                    :fillOpacity="circle.fillopacity"
-                    @click="handleMapClick"
-                    :id="index"
-                    :options="{ title: 'marker-' + index, id: index}"
-                  >
-                    <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
-
-                  </l-circle-marker>
-
+                    <l-layer-group
+                      v-for="layer in this.data.layer"
+                      :key="layer.id"
+                      :name="layer.title"
+                      :ref="layer.title"
+                    >
+                       <l-circle-marker
+                        v-for="(place, index) in layer.places"
+                        :key="'marker-' + index"
+                        :lat-lng="[place.lat,place.lon]"
+                        :radius="circle.radius"
+                        :color="circle.color"
+                        :stroke="circle.stroke"
+                        :fillColor="layer.color"
+                        :fillOpacity="circle.fillopacity"
+                        @click="handleMapClick"
+                        :id="index"
+                        :options="{ title: 'marker-' + place.id, id: place.id}"
+                      >
+                        <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
+                      </l-circle-marker>
+                  </l-layer-group>
                </l-map>
            </client-only>
           </div>
         </div>
       </div>
-      <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
+      <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
       <div v-else class="sm:absolute sm:top-4 sm:right-4">
-        <place-modals :list="this.data.layer.places"></place-modals>
+        <place-modals :data="this.data"></place-modals>
       </div>
 
       <div class="nav flex flex-col  items-center content-center justify-center">
@@ -343,7 +348,7 @@
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
-              <list :places="this.data.layer.places" :map="this.mapobj"></list>
+              <list v-if="this.list_content" :places="this.list_content" :map="this.mapobj"></list>
             </div>
         </div>
       </div>
@@ -356,9 +361,9 @@
 
 <script>
 import axios from "axios";
-import PlaceModals from '~/components/Place-modals.vue';
 import List from '~/components/List.vue';
 import Info from '~/components/Info.vue';
+import PlaceModals from '~/components/Place-modals.vue';
 import KeysNavigation from '~/components/Keys-navigation.vue';
 
 export default {
@@ -383,16 +388,17 @@ export default {
   data() {
       return {
         mapobj: null,
-        data: {
-          layer: {}
-        },
+        dataobj: {},
+        data: {},
+        list_content: {},
         tooltip: {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
         custom_data_url2: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
         custom_data_url4: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url5: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
 
         circle: {
           radius: 14,
@@ -407,8 +413,8 @@ export default {
       this.custom_data_url = this.$route.query.layer
     }
     console.log('fetch...')
-    console.log(this.data)
-    if ( this.data ) {
+    console.log(this.dataobj)
+    if ( this.dataobj ) {
       console.log('data already fetched')
     }
     if ( this.custom_data_url ) {
@@ -420,19 +426,45 @@ export default {
     // if ( this.$route.query.layer ) {
     //  this.data_url = this.$route.query.layer
     // }
-    this.data = await axios.get(this.data_url).then(response =>
+    this.dataobj = await axios.get(this.data_url).then(response =>
       response.data
     )
-    // add state value to all places
     console.log('fetch... add state value')
-    for (let i = 0; i < this.data.layer.places.length; i++) {
-      if ( i=== 0) {
-        // this.$set(this.data.layer.places[i], 'state', true)
-        this.$set(this.data.layer.places[i], 'state', false)
-      } else {
-        this.$set(this.data.layer.places[i], 'state', false)
+
+    // check if its a map
+    if ( this.dataobj.map ) {
+      this.data = this.dataobj.map
+      console.log("Data for a map ")
+      console.log("Data for a map with " + this.data.layer.length + " accessible layers")
+      this.data.places = []
+      this.data.places_with_relations = []
+      this.data.layer.forEach ((layer, key) => {
+        this.data.places.push(...layer.places);
+        this.data.places_with_relations.push(...layer.places_with_relations);
+      });
+      console.log("Map with "+this.data.places.length+" places")
+
+      // TODO add state value to all places
+
+    // or a layer
+    } else {
+      console.log("Data for a single layer")
+      this.data = this.dataobj.layer
+      this.data.layer[0] = this.dataobj.layer
+      this.list_content = this.data.places
+      console.log("Data for a map with " + this.data.layer.length + " accessible layers")
+
+      // add state value to all places
+      for (let i = 0; i < this.data.places.length; i++) {
+        if ( i=== 0) {
+          // this.$set(this.data.places[i], 'state', true)
+          this.$set(this.data.places[i], 'state', false)
+        } else {
+          this.$set(this.data.places[i], 'state', false)
+        }
       }
     }
+
 
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
@@ -441,17 +473,17 @@ export default {
     onMapReady(mapObject) {
       // this.$nextTick(() => {
         this.mapobj = mapObject;
-        if ( (this.data) && (this.data.layer) && (this.data.layer.places) && (this.$refs.map) ) {
+        if ( (this.data) && (this.data.places) && (this.$refs.map) ) {
           console.log("onMapReady: fitBounds")
-          this.$refs.map.mapObject.fitBounds(this.data.layer.places.map(m => { return [m.lat, m.lon] }))
+          this.$refs.map.mapObject.fitBounds(this.data.places.map(m => { return [m.lat, m.lon] }))
 
 
 
           var curves_layer = L.layerGroup().addTo(mapObject);
 
-          if ( this.data.layer.places_with_relations ) {
+          if ( this.data.places_with_relations ) {
 
-            this.data.layer.places_with_relations.forEach ((place, key) => {
+            this.data.places_with_relations.forEach ((place, key) => {
 
               console.log("places_with_relations");
               console.log(key);
@@ -475,7 +507,7 @@ export default {
                 var pathOptions = {
                         color: color,
                         weight: 5,
-                        opacity: 0.8,
+                        opacity: 1,
                         className: 'curve_normal curve_',
                         animate: false
                 }
@@ -649,12 +681,18 @@ export default {
       if ( e.target.options.title ) {
 
         // set all state to false
-        for (let i = 0; i < this.data.layer.places.length; i++) {
-            this.$set(this.data.layer.places[i], 'state', false)
+        for (let i = 0; i < this.data.places.length; i++) {
+            this.$set(this.data.places[i], 'state', false)
         }
-        console.log("Clicked place: "+this.data.layer.places[e.target.options.id].title)
-        console.log("Clicked place ID: "+this.data.layer.places[e.target.options.id].id)
-        this.data.layer.places[e.target.options.id].state = !this.data.layer.places[e.target.options.id].state;
+        var clicked_place = this.data.places.find( place => place.id === e.target.options.id )
+        var clicked_place_index = this.data.places.findIndex( place => place.id === e.target.options.id )
+        console.log("Clicked place: "+clicked_place.title)
+        console.log("Clicked place ID: "+clicked_place.id)
+        // show modal
+        this.data.places[clicked_place_index].state = !this.data.places[clicked_place_index].state;
+        // if in map mode: show place content in the list view!
+        this.list_content[0] = this.data.places[clicked_place_index]
+
       }
     }
   },
