@@ -55,6 +55,24 @@
               <div id="audio" class="player-wrapper" v-if="place.audio">
                 <audio-player :place="place"></audio-player>
               </div>
+            </div>
+            <div class="modal-header">
+              <h2>{{place.id}} <strong>{{place.title}}</strong></h2>
+            </div>
+            <div class="modal-content">
+              <div v-if="place.teaser" class="text-gray-500 px-4" :inner-html.prop="place.teaser | truncate(200, '...')"></div>
+            </div>
+            <div class="modal-player">
+                <p class="captions" :id="'place-' + place.id + '-infos'"></p>
+                <div id="audio" class="player-wrapper" v-if="place.audio">
+                  <audio-player :place="place"></audio-player>
+                </div>
+            </div>
+            <footer>
+              <p class="text-gray-500 px-4 py-2 sm:px-4 sm:py-4">
+                <button @click="showPlaceInList(place.id)" class="text-link">Show details</button>
+              </p>
+            </footer>
           </div>
         </div>
       </div>
@@ -80,6 +98,12 @@ export default {
   methods: {
     toggleModal(place) {
       place.state = !place.state;
+    },
+    showPlaceInList(id) {
+      this.$nextTick(() => {
+        console.log("show place "+ id +" in list");
+        this.$router.push({ name: 'main', hash: '#list' });
+      })
     }
   },
   data() {

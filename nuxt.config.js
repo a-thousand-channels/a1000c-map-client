@@ -41,7 +41,8 @@ export default {
   plugins: [
     { src: '@/plugins/vue-shortkey.js', mode: 'client' },
     { src: '@/plugins/vue-awesome-swiper.js', mode: 'client' },
-    { src: '@/plugins/leaflet-curve.js', mode: 'client' }
+    { src: '@/plugins/leaflet-curve.js', mode: 'client' },
+    { src: '@/plugins/filters.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
