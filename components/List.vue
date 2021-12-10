@@ -21,6 +21,10 @@
         </nuxt-link>
         to learn more about this map :)
       </li>
+      <li v-else class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
+        <h2 class="font-semibold md:px-16">{{ data.title }}</h2>
+      </li>
+
       <li v-for="(place,index) in places" :id="'place-'+place.id" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
         <div v-swiper:[index]="swiperOptions" class="md:px-12">
           <div class="swiper-wrapper" v-if="place.images">
@@ -37,16 +41,16 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
-        <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-8">{{ place.title }}</h3>
-        <div class="text-gray-500 px-4 sm:px-16 sm:py-4" v-html="place.teaser"></div>
-        <ul class="pb-4 sm:px-8">
+        <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-6">{{ place.title }}</h3>
+        <div class="text-gray-500 px-4 sm:px-16 sm:py-3" v-html="place.teaser"></div>
+        <ul v-if="place.annotations.length > 0" class="pb-4 sm:px-8">
           <li v-for="(annotation,aindex) in place.annotations" class="bg-a100c-3 px-4 py-4 rounded shadow mt-4 mb-6">
             <h4 v-if="annotation.title" class="font-semibold text-md px-4 py-2">{{ annotation.title }}</h4>
             <div class="text-gray-500 px-4" v-html="annotation.text"></div>
           </li>
         </ul>
-        <footer>
-          <p class="text-gray-500 px-4 py-2 sm:px-16 sm:py-4">
+        <footer class="pb-4">
+          <p class="text-gray-500 px-4 py-2 sm:px-16 sm:py-3">
             <button @click="recenterMap(place.lat,place.lon,index)" class="text-link">Show on the map</button>
           </p>
         </footer>
@@ -63,6 +67,10 @@ export default {
   props: {
     places: {
       type: Array,
+      required: false
+    },
+    data: {
+      type: Object,
       required: false
     },
     map: {

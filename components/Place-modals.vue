@@ -34,19 +34,20 @@
       <div v-for='(place,index) in layer'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content absolute inset-4 p-4 pt-2 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min">
-            <div class="text-right px-0 py-0 text-2xl">
+          <div class="modal-content absolute inset-4 p-4 pt-2 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min sm:max-w-md">
+            <div class="text-right px-0 py-0 w-8 float-right text-3xl">
               <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
             </div>
-            <div class="px-0 pb-4 sm:px-4" v-if="place.images">
+            <div v-if="place.images && place.images.length > 0" class="px-0 pb-4 sm:px-4">
               <div class="">
                 <span v-if="place.images[0]">
                   <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-64">
                 </span>
               </div>
             </div>
-            <div class="modal-header">
-              <h2>{{place.id}} <strong>{{place.title}}</strong></h2>
+            <div class="modal-header pt-2 px-4">
+              <p class="my-4">{{data.title}}</p>
+              <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
               <div v-if="place.teaser" class="text-gray-500 px-4" :inner-html.prop="place.teaser | truncate(200, '...')"></div>

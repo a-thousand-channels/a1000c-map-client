@@ -367,7 +367,7 @@
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
-              <list :places="this.list_content" :map="this.mapobj"></list>
+              <list :places="this.list_content" :data="this.data" :map="this.mapobj"></list>
             </div>
         </div>
       </div>
@@ -416,8 +416,8 @@ export default {
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
         custom_data_url2: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
         custom_data_url4: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url5: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
-        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
+        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url6: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
 
         circle: {
           radius: 14,
@@ -478,9 +478,10 @@ export default {
     } else {
       console.log("Data for a single layer")
       this.data = this.dataobj.layer
+      this.data.layer = []
       this.data.layer[0] = this.dataobj.layer
       this.list_content = this.data.places
-      console.log("Data for a map with " + this.data.layer.length + " accessible layers")
+      console.log("Data for a map with " + this.data.layer.length + " accessible layer")
 
       // add state value to all places
       for (let i = 0; i < this.data.places.length; i++) {
