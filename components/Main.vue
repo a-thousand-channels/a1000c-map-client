@@ -298,19 +298,14 @@
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-control-layers position="topright"></l-control-layers>
-
-
-
-                  <l-layer-group
-                      name="Maps"
-                      layer-type="overlay"
-                    >
                   <l-layer-group
                       v-for="layer in this.data.layer"
                       :key="layer.id"
                       :name="layer.title"
                       :ref="layer.title"
                       layer-type="overlay"
+                      @ready="onLayerReady"
+                      @update:visible="onLayerVisible(layer.id)"
                     >
                        <l-circle-marker
                         v-for="(place, index) in layer.places"
@@ -327,7 +322,6 @@
                       >
                         <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
                       </l-circle-marker>
-                  </l-layer-group>
                   </l-layer-group>
                    <l-tile-layer
                         url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
@@ -414,10 +408,8 @@ export default {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url2: 'https://orte.link/public/maps/from-gay-to-queer/layers/thomas.json',
-        custom_data_url4: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
+        custom_data_url1: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
         custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
-        custom_data_url6: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
 
         circle: {
           radius: 14,
@@ -499,6 +491,18 @@ export default {
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
+    onLayerReady(mapObject) {
+      this.mapobj = mapObject;
+      console.log("onLayerReady");
+      console.log(this.mapobj)
+
+    },
+    onLayerVisible(id) {
+      this.id = id;
+      console.log("onLayerVisible");
+
+      console.log(id)
+    },
     onMapReady(mapObject) {
       // this.$nextTick(() => {
         this.mapobj = mapObject;
