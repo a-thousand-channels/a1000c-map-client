@@ -170,6 +170,9 @@
    .bg-a100c-white {
       background-color: rgba(255,255,255,0.8);
    }
+   .bg-red-100 {
+      background-color: transparent;
+   }
    .text-gray {
      color: rgba(0,0,0,0.3);
    }
@@ -295,14 +298,19 @@
            <client-only>
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-control-layers position="topright"></l-control-layers>
-                  <l-tile-layer url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"></l-tile-layer>
-                  <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                    <l-layer-group
+
+
+
+                  <l-layer-group
+                      name="Maps"
+                      layer-type="overlay"
+                    >
+                  <l-layer-group
                       v-for="layer in this.data.layer"
                       :key="layer.id"
                       :name="layer.title"
                       :ref="layer.title"
-                      layer-type="base"
+                      layer-type="overlay"
                     >
                        <l-circle-marker
                         v-for="(place, index) in layer.places"
@@ -320,6 +328,16 @@
                         <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
                       </l-circle-marker>
                   </l-layer-group>
+                  </l-layer-group>
+                   <l-tile-layer
+                        url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
+                        name="Simple Basemap"
+                        layer-type="base">
+                    </l-tile-layer>
+                    <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
+                        name="Openstreetmap"
+                        layer-type="base">
+                    </l-tile-layer>
                </l-map>
            </client-only>
           </div>
