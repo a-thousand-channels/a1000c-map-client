@@ -311,7 +311,6 @@
                       :name="layer.title"
                       :ref="layer.title"
                       layer-type="overlay"
-                      @ready="onLayerReady"
                       @update:visible="onLayerVisible(layer.id)"
                     >
                        <l-circle-marker
@@ -330,35 +329,8 @@
                         <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
                       </l-circle-marker>
                   </l-layer-group>
-                   <l-tile-layer
-                        url="https://tiles.3plusx.io/world1/{z}/{x}/{y}.png"
-                        name="Simple Basemap"
-                        visible="true"
-                        layer-type="base">
-                    </l-tile-layer>
-                   <l-tile-layer
-                        url="https://tiles.3plusx.io/world1/{z}/{x}/{y}.png"
-                        name="Simple Basemap (dark)"
-                        visible="false"
-                        layer-type="base">
-                    </l-tile-layer>
-                    <l-tile-layer
-                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
-                        name="Simple Basemap w/populated areas"
-                        visible="false"
-                        layer-type="base">
-                    </l-tile-layer>
-                    <l-tile-layer
-                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
-                        name="Simple Basemap w/populated areas (dark)"
-                        visible="false"
-                        layer-type="base">
-                    </l-tile-layer>
-                    <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-                        name="Openstreetmap"
-                        visible="false"
-                        layer-type="base">
-                    </l-tile-layer>
+
+
                </l-map>
            </client-only>
           </div>
@@ -435,8 +407,8 @@ export default {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url1: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
-        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
+        custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
           radius: 14,
@@ -536,16 +508,34 @@ export default {
 
     },
     onMapReady(mapObject) {
-      // this.$nextTick(() => {
+      this.$nextTick(() => {
         this.mapobj = mapObject;
         if ( (this.data) && (this.data.places) && (this.$refs.map) ) {
           console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.data.places.map(m => { return [m.lat, m.lon] }))
 
+          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'});
+          var simple_basemap_layer = L.tileLayer('https://tiles.3plusx.io/world1/{z}/{x}/{y}.png', {foo: 'bar'}).addTo(this.$refs.map.mapObject);
+          var simple_basemap_dark_layer = L.tileLayer('https://tiles.3plusx.io/world1/{z}/{x}/{y}.png', {foo: 'bar'});
+          var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightgrey/{z}/{x}/{y}.png', {foo: 'bar'});
+          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/yellow/{z}/{x}/{y}.png', {foo: 'bar'});
+
+          var baseMaps = {
+              "Simple basemap": simple_basemap_layer,
+              "Simple basemap (dark)": simple_basemap_dark_layer,
+              "Simple basemap + populated areas": simple_basemap_pop_yellow_layer,
+              "Simple basemap + populated areas (dark)": simple_basemap_pop_grey_layer,
+              "OpenStreetMap": openstreetmap_layer
+          };
+
+
+          L.control.layers(baseMaps).addTo(this.$refs.map.mapObject);
+
+          console.log(this.mapobj)
           this.mapobj.on('baselayerchange', function(e) {
             console.log('Changed to ' + e.name);
             var m = document.getElementById("map_map");
-            if ( ( e.name =='Simple Basemap (dark)') || ( e.name == 'Simple Basemap w/populated areas (dark)') ) {
+            if ( ( e.name =='Simple basemap (dark)') || ( e.name == 'Simple basemap + populated areas (dark)') ) {
               m.classList.add("dark");
             } else {
               m.classList.remove("dark");
@@ -555,77 +545,78 @@ export default {
 
           var curves_layer = L.layerGroup().addTo(mapObject);
 
-          if ( this.data.places_with_relations ) {
+          this.data.layer.forEach ((layer, lkey) => {
+            if ( layer.places_with_relations ) {
+              layer.places_with_relations.forEach ((place, key) => {
 
-            this.data.places_with_relations.forEach ((place, key) => {
+                console.log("places_with_relations");
+                console.log(key);
+                console.log(place.relations);
+                console.log(place.relations.length);
+                console.log(place.relations);
 
-              console.log("places_with_relations");
-              console.log(key);
-              console.log(place.relations);
-              console.log(place.relations.length);
-              console.log(place.relations);
+                place.relations.forEach ((relation, kkey) => {
 
-              place.relations.forEach ((relation, kkey) => {
-
-                console.log(relation.from.lat);
-                console.log(relation.from.lon);
-                console.log("Relation_from ID:  "+relation.from.id);
-                var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
-                var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
-                console.log(point1);
-                console.log(point2);
+                  // console.log(relation.from.lat);
+                  // console.log(relation.from.lon);
+                  console.log("Relation_from ID:  "+relation.from.id);
+                  var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
+                  var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
+                  // console.log(point1);
+                  // console.log(point2);
 
 
-                var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
-                // var color = clustercolor;
-                console.log(this.data.layer)
-                if ( this.data.layer[0].color ) {
-                  color = this.data.layer[0].color
-                }
-                var pathOptions = {
-                        color: color,
-                        weight: 5,
-                        opacity: 1,
-                        className: 'curve_normal curve_',
-                        animate: false
-                }
-                var controlpoint = this.calcControlPoint(point1,point2,5)
-
-                var curvedPath = L.curve(
-                  [
-                    'M', point1,
-                    'Q', controlpoint,
-                       point2
-                  ], pathOptions).addTo(curves_layer)
-
-                // draw endpoint, if it resides on an different layer
-                  var iconSettings = {
-                      mapIconUrl: "<svg height='{radius}' width='{radius}' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='15' r='15' fill='{color}' fill-opacity='{opacity}' shape-rendering='geometricPrecision'></circle></svg>",
-                      color: color,
-                      opacity: 0.7,
-                      radius: 30
-                  };
-                  var divIcon = L.divIcon({
-                    className: "leaflet-data-outside-marker",
-                    html: L.Util.template(iconSettings.mapIconUrl, iconSettings), //.replace('#','%23'),
-                    iconAnchor  : [15, 15],
-                    iconSize    : [30, 30],
-                    popupAnchor : [0, -28]
-                  });
-                  if ( relation.from.layer_id != relation.to.layer_id) {
-                    var endpoint2_marker = L.marker(point2, {icon: divIcon}).bindTooltip(relation.to.title, {
-                      permanent: 'true',
-                      direction: 'top'
-                    }).addTo(curves_layer);
-
+                  var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
+                  // var color = clustercolor;
+                  if ( layer.color ) {
+                    color = layer.color
                   }
+                  var pathOptions = {
+                          color: color,
+                          weight: 5,
+                          opacity: 1,
+                          className: 'curve_normal curve_',
+                          animate: false
+                  }
+                  var controlpoint = this.calcControlPoint(point1,point2,5)
+
+                  var curvedPath = L.curve(
+                    [
+                      'M', point1,
+                      'Q', controlpoint,
+                         point2
+                    ], pathOptions).addTo(curves_layer)
+
+                  // draw endpoint, if it resides on an different layer
+                    var iconSettings = {
+                        mapIconUrl: "<svg height='{radius}' width='{radius}' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='15' r='15' fill='{color}' fill-opacity='{opacity}' shape-rendering='geometricPrecision'></circle></svg>",
+                        color: color,
+                        opacity: 0.7,
+                        radius: 30
+                    };
+                    var divIcon = L.divIcon({
+                      className: "leaflet-data-outside-marker",
+                      html: L.Util.template(iconSettings.mapIconUrl, iconSettings), //.replace('#','%23'),
+                      iconAnchor  : [15, 15],
+                      iconSize    : [30, 30],
+                      popupAnchor : [0, -28]
+                    });
+                    if ( relation.from.layer_id != relation.to.layer_id) {
+                      var endpoint2_marker = L.marker(point2, {icon: divIcon}).bindTooltip(relation.to.title, {
+                        permanent: 'true',
+                        direction: 'top'
+                      }).addTo(curves_layer);
+
+                    }
 
 
+                });
               });
-            });
-          }
+            }
+          });
 
         }
+      })
     },
     calcControlPoint(point1,point2,distance_in_kms) {
       var boost = 2.9;

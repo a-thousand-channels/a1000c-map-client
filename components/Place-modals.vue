@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="modal-header pt-2 px-4">
-              <p class="my-4">{{data.title}}</p>
+              <p class="my-4">{{data.title}} <span v-if="layer">{{layer.title}}</span></p>
               <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
