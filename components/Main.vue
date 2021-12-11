@@ -306,7 +306,7 @@
                 <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-control-layers position="topright"></l-control-layers>
                   <l-layer-group
-                      v-for="layer in this.data.layer"
+                      v-for="(layer,lindex) in this.data.layer"
                       :key="layer.id"
                       :name="layer.title"
                       :ref="layer.title"
@@ -324,7 +324,7 @@
                         :fillOpacity="circle.fillopacity"
                         @click="handleMapClick"
                         :id="index"
-                        :options="{ title: 'marker-' + place.id, id: place.id}"
+                        :options="{ title: 'marker-' + place.id, id: place.id, place_index: index, layer_index: lindex, layer_title: layer.title}"
                       >
                         <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
                       </l-circle-marker>
@@ -339,7 +339,7 @@
       <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
       <div v-else class="sm:absolute sm:top-4 sm:right-4">
-        <place-modals :data="this.data"></place-modals>
+        <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>
 
       <div class="nav flex flex-col  items-center content-center justify-center">
@@ -360,7 +360,7 @@
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
-              <list :places="this.list_content" :data="this.data" :map="this.mapobj"></list>
+              <list :places="this.list_content" :layerindex="this.list_content_layer_index" :data="this.data" :map="this.mapobj"></list>
             </div>
         </div>
       </div>
@@ -402,7 +402,11 @@ export default {
         mapobj: null,
         dataobj: {},
         data: {},
+        places: [],
+        places_with_relations: [],
         list_content: [],
+        list_content_layer_title: '',
+        list_content_layer_index: '',
         tooltip: {
         },
         data_url: '',
@@ -446,24 +450,24 @@ export default {
       this.data = this.dataobj.map
       console.log("Data for a map ")
       console.log("Data for a map with " + this.data.layer.length + " accessible layers")
-      this.data.places = []
-      this.data.places_with_relations = []
       this.data.layer.forEach ((layer, key) => {
-        this.data.places.push(...layer.places);
-        this.data.places_with_relations.push(...layer.places_with_relations);
+        this.places.push(...layer.places);
+        this.places_with_relations.push(...layer.places_with_relations);
       });
-      console.log("Map with "+this.data.places.length+" places")
+      console.log("Map with "+this.places.length+" places")
 
       // TODO add state value to all places
       // add state value to all places
-      for (let i = 0; i < this.data.places.length; i++) {
-        if ( i=== 0) {
-          // this.$set(this.data.places[i], 'state', true)
-          this.$set(this.data.places[i], 'state', false)
-        } else {
-          this.$set(this.data.places[i], 'state', false)
+      this.data.layer.forEach ((layer, lkey) => {
+        for (let i = 0; i < layer.places.length; i++) {
+          if ( i=== 0) {
+            // this.$set(this.data.places[i], 'state', true)
+            this.$set(layer.places[i], 'state', false)
+          } else {
+            this.$set(layer.places[i], 'state', false)
+          }
         }
-      }
+      })
 
     // or a layer
     } else {
@@ -510,9 +514,9 @@ export default {
     onMapReady(mapObject) {
       this.$nextTick(() => {
         this.mapobj = mapObject;
-        if ( (this.data) && (this.data.places) && (this.$refs.map) ) {
+        if ( (this.data) && (this.places) && (this.$refs.map) ) {
           console.log("onMapReady: fitBounds")
-          this.$refs.map.mapObject.fitBounds(this.data.places.map(m => { return [m.lat, m.lon] }))
+          this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
 
           var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'});
           var simple_basemap_layer = L.tileLayer('https://tiles.3plusx.io/world1/{z}/{x}/{y}.png', {foo: 'bar'}).addTo(this.$refs.map.mapObject);
@@ -746,22 +750,31 @@ export default {
       console.log("onclick");
       console.log(e.target.options.id);
       console.log(e.target.options.title);
+      console.log(this.data);
 
       if ( e.target.options.title ) {
 
         // set all state to false
-        for (let i = 0; i < this.data.places.length; i++) {
-            this.$set(this.data.places[i], 'state', false)
+        for (let i = 0; i < this.places.length; i++) {
+            this.$set(this.places[i], 'state', false)
         }
-        var clicked_place = this.data.places.find( place => place.id === e.target.options.id )
-        var clicked_place_index = this.data.places.findIndex( place => place.id === e.target.options.id )
+        var clicked_place = this.places.find( place => place.id === e.target.options.id )
+        var clicked_place_index = this.places.findIndex( place => place.id === e.target.options.id )
+
         console.log("Clicked place: "+clicked_place.title)
         console.log("Clicked place ID: "+clicked_place.id)
+        console.log("Clicked place index: "+e.target.options.place_index)
+        console.log("Clicked layer title: "+e.target.options.layer_title)
+        console.log("Clicked layer index: "+e.target.options.layer_index)
         // show modal
-        this.data.places[clicked_place_index].state = !this.data.places[clicked_place_index].state;
+        this.places[clicked_place_index].state = !this.places[clicked_place_index].state;
+        this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state = !this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state.state;
         // if in map mode: show place content in the list view!
         this.list_content = []
-        this.list_content.push(this.data.places[clicked_place_index])
+        this.list_content.push(this.places[clicked_place_index])
+        this.list_content_layer_title = e.target.options.layer_title
+        this.list_content_layer_index = e.target.options.layer_index
+
 
       }
     }

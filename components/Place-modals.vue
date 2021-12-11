@@ -30,8 +30,8 @@
 
 <template>
   <div class="places-list sm:relative z-50">
-    <div v-for='(layer,lindex) in data'>
-      <div v-for='(place,index) in layer'>
+    <div v-for='(layer,lindex) in layers'>
+      <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
           <div class="modal-content absolute inset-4 p-4 pt-2 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min sm:max-w-md">
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="modal-header pt-2 px-4">
-              <p class="my-4">{{data.title}} <span v-if="layer">{{layer.title}}</span></p>
+              <p class="my-4">{{data.title}} :: {{layer.title}}<span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
               <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
@@ -79,6 +79,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    layers: {
+      type: Array,
       required: true
     }
   },
