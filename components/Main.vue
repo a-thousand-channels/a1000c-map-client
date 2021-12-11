@@ -331,34 +331,33 @@
                       </l-circle-marker>
                   </l-layer-group>
                    <l-tile-layer
-                        url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
+                        url="https://tiles.3plusx.io/world1/{z}/{x}/{y}.png"
                         name="Simple Basemap"
-                        layer-type="base"
-                        @update:visible="onTileLayerVisible('world')">
+                        visible="true"
+                        layer-type="base">
                     </l-tile-layer>
                    <l-tile-layer
-                        url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
+                        url="https://tiles.3plusx.io/world1/{z}/{x}/{y}.png"
                         name="Simple Basemap (dark)"
-                        layer-type="base"
-                        @update:visible="onTileLayerVisible('world_dark')">
-                        @ready="onTileLayerVisible('world_dark')">
-                    </l-tile-layer>
-                    <l-tile-layer
-                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
-                        name="Simple Basemap w/populated areas (dark)"
-                        layer-type="base"
-                        @update:visible="onTileLayerVisible('populated_dark')">
+                        visible="false"
+                        layer-type="base">
                     </l-tile-layer>
                     <l-tile-layer
                         url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
                         name="Simple Basemap w/populated areas"
-                        layer-type="base"
-                        @update:visible="onTileLayerVisible('populated')">
+                        visible="false"
+                        layer-type="base">
+                    </l-tile-layer>
+                    <l-tile-layer
+                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
+                        name="Simple Basemap w/populated areas (dark)"
+                        visible="false"
+                        layer-type="base">
                     </l-tile-layer>
                     <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
                         name="Openstreetmap"
-                        layer-type="base"
-                        @update:visible="onTileLayerVisible('osm')">
+                        visible="false"
+                        layer-type="base">
                     </l-tile-layer>
                </l-map>
            </client-only>
