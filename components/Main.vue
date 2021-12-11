@@ -152,6 +152,13 @@
       width: 100%;
       height: 90%;
     }
+    #map #map_map {
+      background-color: transparent;
+    }
+    #map #map_map.dark {
+      background-color: rgba(68, 68, 68,0.9);
+      border-color: transparent;
+    }
     #info #info_inner img {
       max-height: 45vh;
     }
@@ -326,11 +333,32 @@
                    <l-tile-layer
                         url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
                         name="Simple Basemap"
-                        layer-type="base">
+                        layer-type="base"
+                        @update:visible="onTileLayerVisible('world')">
+                    </l-tile-layer>
+                   <l-tile-layer
+                        url="https://tiles.3plusx.io/world/dark/{z}/{x}/{y}.png"
+                        name="Simple Basemap (dark)"
+                        layer-type="base"
+                        @update:visible="onTileLayerVisible('world_dark')">
+                        @ready="onTileLayerVisible('world_dark')">
+                    </l-tile-layer>
+                    <l-tile-layer
+                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
+                        name="Simple Basemap w/populated areas (dark)"
+                        layer-type="base"
+                        @update:visible="onTileLayerVisible('populated_dark')">
+                    </l-tile-layer>
+                    <l-tile-layer
+                        url="https://tiles.3plusx.io/world_populated_places/{z}/{x}/{y}.png"
+                        name="Simple Basemap w/populated areas"
+                        layer-type="base"
+                        @update:visible="onTileLayerVisible('populated')">
                     </l-tile-layer>
                     <l-tile-layer url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
                         name="Openstreetmap"
-                        layer-type="base">
+                        layer-type="base"
+                        @update:visible="onTileLayerVisible('osm')">
                     </l-tile-layer>
                </l-map>
            </client-only>
@@ -503,6 +531,11 @@ export default {
 
       console.log(id)
     },
+    onTileLayerVisible(basemap) {
+      console.log("onTileLayerVisible");
+      console.log(basemap)
+
+    },
     onMapReady(mapObject) {
       // this.$nextTick(() => {
         this.mapobj = mapObject;
@@ -510,7 +543,16 @@ export default {
           console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.data.places.map(m => { return [m.lat, m.lon] }))
 
+          this.mapobj.on('baselayerchange', function(e) {
+            console.log('Changed to ' + e.name);
+            var m = document.getElementById("map_map");
+            if ( ( e.name =='Simple Basemap (dark)') || ( e.name == 'Simple Basemap w/populated areas (dark)') ) {
+              m.classList.add("dark");
+            } else {
+              m.classList.remove("dark");
 
+            }
+          });
 
           var curves_layer = L.layerGroup().addTo(mapObject);
 
@@ -537,6 +579,10 @@ export default {
 
                 var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
                 // var color = clustercolor;
+                console.log(this.data.layer)
+                if ( this.data.layer[0].color ) {
+                  color = this.data.layer[0].color
+                }
                 var pathOptions = {
                         color: color,
                         weight: 5,
