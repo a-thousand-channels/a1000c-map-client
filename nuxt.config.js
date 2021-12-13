@@ -110,13 +110,30 @@ export default {
         let el = await findEl(to.hash)
         if (el) {
           if ('scrollBehavior' in document.documentElement.style) {
-            console.log('scroll smooth to '+el.offsetTop+'/'+el.offsetLeft)
-            return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft, behavior: 'smooth' })
+            console.log('Scroll smooth to '+el.offsetTop+'/'+el.offsetLeft)
+            document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft, behavior: 'smooth' })
           } else {
-            console.log('non smooth to '+el.offsetTop+'/'+el.offsetLeft)
-            return document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
+            console.log('Scroll non smooth to '+el.offsetTop+'/'+el.offsetLeft)
+            document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
           }
         }
+        var query = from.query.place_id
+        if ( !query ) {
+          query  = to.query.place_id
+        }
+        console.log("Place: #"+query)
+        let place = await findEl("#"+query)
+        if (place) {
+          console.log("Place found at "+ place)
+          if ('scrollBehavior' in document.documentElement.style) {
+            console.log('Scroll smooth to '+place.offsetTop)
+            return document.getElementById('list_content').scrollTo({ top: (place.offsetTop-20), behavior: 'smooth' })
+          } else {
+            console.log('Scroll non smooth to '+place.offsetTop)
+            return document.getElementById('list_content').scrollTo({ top: (place.offsetTop-20) })
+          }
+        }
+
       }
       return { x: 0, y: 0 }
     }
