@@ -2,7 +2,6 @@
 .places-list {
   display: block;
    margin-top: -6px;
-  border: 1px solid fuchsia;
 }
 
 .modal {
@@ -37,7 +36,7 @@
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content absolute inset-4 p-4 pt-2 m-0 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min sm:max-w-md">
+          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min sm:max-w-md">
             <div class="text-right px-0 py-0 w-8 float-right text-3xl">
               <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
             </div>
@@ -49,7 +48,7 @@
               </div>
             </div>
             <div class="modal-header pt-2 px-4">
-              <p class="my-4">{{data.title}} :: {{layer.title}} <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
+              <p class="my-4"><span v-if="data.title != layer.title">{{data.title}} :: </span><span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
               <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
@@ -102,7 +101,7 @@ export default {
         this.data.state = !this.data.state
         place.state = !place.state;
         console.log("show place "+ place.id +" in list");
-        this.$router.push({ name: 'main', hash: '#list' });
+        this.$router.push({ name: 'main', hash: '#list', query: { place_id: "list-place-"+place.id }});
       })
     }
   },

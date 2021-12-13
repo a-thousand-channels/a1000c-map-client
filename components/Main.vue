@@ -141,6 +141,9 @@
       -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;  /* Firefox */
     }
+    #info #info_inner img {
+      max-height: 45vh;
+    }
     #map {
       align-items: stretch;
     }
@@ -149,7 +152,7 @@
     flex-basis: 95%;
     }
     #map #map_inner {
-      width: 100%;
+      width: 97%;
       height: 90%;
     }
     #map #map_map {
@@ -161,13 +164,12 @@
     }
     #map #modals_wrapper {
       display: none;
-      border: 1px solid fuchsia;
     }
     #map #modals_wrapper.is-active {
       display: block;
     }
-    #info #info_inner img {
-      max-height: 45vh;
+    #list #list_inner {
+      width: 97%;
     }
    .bg-a100c-1 {
       background: rgb(255,0,249);
@@ -362,7 +364,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
         </nuxt-link>
       </div>
-      <div class="content flex items-top overflow-x-auto pb-10">
+      <div id="list_content" class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-red-100 bg-opacity-30 my-0 mx-0 mr-6 sm:my-4 sm:mx-5">
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
@@ -418,8 +420,8 @@ export default {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
-        custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url1: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
+        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
           radius: 14,
@@ -485,8 +487,10 @@ export default {
       this.data = this.dataobj.layer
       this.data.layer = []
       this.data.layer[0] = this.dataobj.layer
-      this.list_content = this.data.places
       console.log("Data for a map with " + this.data.layer.length + " accessible layer")
+      this.places = this.data.places
+      this.list_content = this.data.places
+      console.log("Map with "+this.places.length+" places")
 
       // add state value to all places
       for (let i = 0; i < this.data.places.length; i++) {
@@ -525,8 +529,12 @@ export default {
       this.$nextTick(() => {
         this.mapobj = mapObject;
         if ( (this.data) && (this.places) && (this.$refs.map) && (this.$refs.map.mapObject) ) {
-          console.log("onMapReady: fitBounds")
-          this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+          if ( this.places.length > 0 ) {
+            console.log("onMapReady: fitBounds w/"+this.places.length)
+            this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+          } else {
+            console.log("onMapReady: NO fitBounds w/"+this.places.length)
+          }
 
           var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'})
           var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightgrey/{z}/{x}/{y}.png', {foo: 'bar'});
@@ -555,69 +563,71 @@ export default {
 
           var curves_layer = L.layerGroup().addTo(mapObject);
 
-          this.data.layer.forEach ((layer, lkey) => {
-            if ( layer.places_with_relations ) {
-              layer.places_with_relations.forEach ((place, key) => {
+          if ( this.data.layer ) {
+            this.data.layer.forEach ((layer, lkey) => {
+              if ( layer.places_with_relations ) {
+                layer.places_with_relations.forEach ((place, key) => {
 
-                console.log("places_with_relations: "+place.relations.length);
+                  console.log("places_with_relations: "+place.relations.length);
 
-                place.relations.forEach ((relation, kkey) => {
+                  place.relations.forEach ((relation, kkey) => {
 
-                  console.log("Relation_from ID:  "+relation.from.id);
-                  var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
-                  var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
-                  // console.log(point1);
-                  // console.log(point2);
+                    console.log("Relation_from ID:  "+relation.from.id);
+                    var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
+                    var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
+                    // console.log(point1);
+                    // console.log(point2);
 
 
-                  var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
-                  // var color = clustercolor;
-                  if ( layer.color ) {
-                    color = layer.color
-                  }
-                  var pathOptions = {
-                          color: color,
-                          weight: 5,
-                          opacity: 1,
-                          className: 'curve_normal curve_',
-                          animate: false
-                  }
-                  var controlpoint = this.calcControlPoint(point1,point2,5)
-
-                  var curvedPath = L.curve(
-                    [
-                      'M', point1,
-                      'Q', controlpoint,
-                         point2
-                    ], pathOptions).addTo(curves_layer)
-
-                  // draw endpoint, if it resides on an different layer
-                    var iconSettings = {
-                        mapIconUrl: "<svg height='{radius}' width='{radius}' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='15' r='15' fill='{color}' fill-opacity='{opacity}' shape-rendering='geometricPrecision'></circle></svg>",
-                        color: color,
-                        opacity: 0.7,
-                        radius: 30
-                    };
-                    var divIcon = L.divIcon({
-                      className: "leaflet-data-outside-marker",
-                      html: L.Util.template(iconSettings.mapIconUrl, iconSettings), //.replace('#','%23'),
-                      iconAnchor  : [15, 15],
-                      iconSize    : [30, 30],
-                      popupAnchor : [0, -28]
-                    });
-                    if ( relation.from.layer_id != relation.to.layer_id) {
-                      var endpoint2_marker = L.marker(point2, {icon: divIcon}).bindTooltip(relation.to.title, {
-                        permanent: 'true',
-                        direction: 'top'
-                      }).addTo(curves_layer);
-
+                    var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
+                    // var color = clustercolor;
+                    if ( layer.color ) {
+                      color = layer.color
                     }
+                    var pathOptions = {
+                            color: color,
+                            weight: 5,
+                            opacity: 1,
+                            className: 'curve_normal curve_',
+                            animate: false
+                    }
+                    var controlpoint = this.calcControlPoint(point1,point2,5)
+
+                    var curvedPath = L.curve(
+                      [
+                        'M', point1,
+                        'Q', controlpoint,
+                           point2
+                      ], pathOptions).addTo(curves_layer)
+
+                    // draw endpoint, if it resides on an different layer
+                      var iconSettings = {
+                          mapIconUrl: "<svg height='{radius}' width='{radius}' xmlns='http://www.w3.org/2000/svg'><circle cx='15' cy='15' r='15' fill='{color}' fill-opacity='{opacity}' shape-rendering='geometricPrecision'></circle></svg>",
+                          color: color,
+                          opacity: 0.7,
+                          radius: 30
+                      };
+                      var divIcon = L.divIcon({
+                        className: "leaflet-data-outside-marker",
+                        html: L.Util.template(iconSettings.mapIconUrl, iconSettings), //.replace('#','%23'),
+                        iconAnchor  : [15, 15],
+                        iconSize    : [30, 30],
+                        popupAnchor : [0, -28]
+                      });
+                      if ( relation.from.layer_id != relation.to.layer_id) {
+                        var endpoint2_marker = L.marker(point2, {icon: divIcon}).bindTooltip(relation.to.title, {
+                          permanent: 'true',
+                          direction: 'top'
+                        }).addTo(curves_layer);
+
+                      }
 
 
+                  });
                 });
-              });
-            }
-          });
+              }
+            });
+          }
 
         }
       })

@@ -102,6 +102,7 @@ export default {
           })
       }
 
+      console.log(from)
       console.log(to)
 
       if (to.hash) {

@@ -25,14 +25,14 @@
         <h2 class="font-semibold pl-0 md:pl-12">{{ data.title }} <span v-if="data.layer[parseInt(layerindex)]">— {{ data.layer[parseInt(layerindex)].title}}</span></h2>
       </li>
 
-      <li v-for="(place,index) in places" :id="'place-'+place.id" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
+      <li v-for="(place,index) in places" :id="'list-place-'+place.id" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
         <div v-swiper:[index]="swiperOptions" class="md:px-12">
           <div class="swiper-wrapper" v-if="place.images">
             <div v-for="(image,iindex) in place.images" :key="iindex" class="swiper-slide px-0 pb-4 pt-2 sm:px-4 sm:pt-4">
               <p v-if="place.images.length > 1" class="text-sm text-gray max-w-60 text-left">({{iindex+1}}/{{place.images.length}})</p>
               <span v-if="image">
                 <img v-bind:src="image.image_url" :alt="image.alt" class="max-w-full sm:max-w-ws max-h-72 sm:max-h-80 lg:max-h-96">
-                <span class="text-sm text-gray max-w-60">{{image.title}}</span>
+                <span class="text-sm leading-tight text-gray max-w-60">{{image.title}}</span>
               </span>
               <span v-else>
                 <img src="https://via.placeholder.com/585x870?text=Platzhalter_585x870px" alt="">
