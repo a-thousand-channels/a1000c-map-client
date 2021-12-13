@@ -303,7 +303,7 @@
         <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
-                <l-map :zoom=4 :minZoom=2 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
+                <l-map :zoom=4 :minZoom=2 :maxZoom=19 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
                   <l-control-layers position="topright"></l-control-layers>
                   <l-layer-group
                       v-for="(layer,lindex) in this.data.layer"
@@ -411,7 +411,7 @@ export default {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
+        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer.json',
         custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
@@ -442,7 +442,10 @@ export default {
     // }
     this.dataobj = await axios.get(this.data_url).then(response =>
       response.data
-    )
+    ).catch(function (error) {
+      // handle error
+      console.log(error);
+    })
     console.log('fetch... add state value')
 
     // check if its a map
@@ -518,17 +521,13 @@ export default {
           console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
 
-          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'});
-          var simple_basemap_layer = L.tileLayer('https://tiles.3plusx.io/world1/{z}/{x}/{y}.png', {foo: 'bar'}).addTo(this.$refs.map.mapObject);
-          var simple_basemap_dark_layer = L.tileLayer('https://tiles.3plusx.io/world1/{z}/{x}/{y}.png', {foo: 'bar'});
+          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'})
           var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightgrey/{z}/{x}/{y}.png', {foo: 'bar'});
-          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/yellow/{z}/{x}/{y}.png', {foo: 'bar'});
+          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {foo: 'bar'}).addTo(this.$refs.map.mapObject);
 
           var baseMaps = {
-              "Simple basemap": simple_basemap_layer,
-              "Simple basemap (dark)": simple_basemap_dark_layer,
-              "Simple basemap + populated areas": simple_basemap_pop_yellow_layer,
-              "Simple basemap + populated areas (dark)": simple_basemap_pop_grey_layer,
+              "Basemap": simple_basemap_pop_yellow_layer,
+              "Basemap (dark)": simple_basemap_pop_grey_layer,
               "OpenStreetMap": openstreetmap_layer
           };
 
@@ -539,7 +538,7 @@ export default {
           this.mapobj.on('baselayerchange', function(e) {
             console.log('Changed to ' + e.name);
             var m = document.getElementById("map_map");
-            if ( ( e.name =='Simple basemap (dark)') || ( e.name == 'Simple basemap + populated areas (dark)') ) {
+            if ( ( e.name =='Basemap (dark)') ) {
               m.classList.add("dark");
             } else {
               m.classList.remove("dark");
