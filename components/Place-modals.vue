@@ -1,7 +1,10 @@
 <style>
 .places-list {
-    margin-top: -6px;
+  display: block;
+   margin-top: -6px;
+  border: 1px solid fuchsia;
 }
+
 .modal {
   display: block;
   transition: all 1s ease-out;
@@ -30,7 +33,7 @@
 
 <template>
   <div class="places-list sm:relative z-50">
-    <div v-for='(layer,lindex) in layers'>
+    <div v-for='(layer,lindex) in layers' class="">
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
@@ -46,7 +49,7 @@
               </div>
             </div>
             <div class="modal-header pt-2 px-4">
-              <p class="my-4">{{data.title}} :: {{layer.title}}<span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
+              <p class="my-4">{{data.title}} :: {{layer.title}} <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
               <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
@@ -60,7 +63,7 @@
             </div>
             <footer>
               <p class="text-gray-500 px-4 py-2 sm:px-4 sm:py-4">
-                <button @click="showPlaceInList(place.id)" class="text-link">Show details</button>
+                <button @click="showPlaceInList(place)" class="text-link">Show details</button>
               </p>
             </footer>
           </div>
@@ -91,11 +94,14 @@ export default {
   },
   methods: {
     toggleModal(place) {
+      this.data.state = !this.data.state
       place.state = !place.state;
     },
-    showPlaceInList(id) {
+    showPlaceInList(place) {
       this.$nextTick(() => {
-        console.log("show place "+ id +" in list");
+        this.data.state = !this.data.state
+        place.state = !place.state;
+        console.log("show place "+ place.id +" in list");
         this.$router.push({ name: 'main', hash: '#list' });
       })
     }

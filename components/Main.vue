@@ -159,6 +159,13 @@
       background-color: rgba(68, 68, 68,0.9);
       border-color: transparent;
     }
+    #map #modals_wrapper {
+      display: none;
+      border: 1px solid fuchsia;
+    }
+    #map #modals_wrapper.is-active {
+      display: block;
+    }
     #info #info_inner img {
       max-height: 45vh;
     }
@@ -338,7 +345,7 @@
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
-      <div v-else class="sm:absolute sm:top-4 sm:right-4">
+      <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>
 
@@ -356,7 +363,7 @@
         </nuxt-link>
       </div>
       <div class="content flex items-top overflow-x-auto pb-10">
-          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-0 mx-0 sm:my-4 sm:mx-5">
+          <div id="list_inner" class="bg-red-100 bg-opacity-30 my-0 mx-0 mr-6 sm:my-4 sm:mx-5">
             <p v-if="$fetchState.pending">Loading...</p>
             <p v-else-if="$fetchState.error">An error occurred :(</p>
             <div v-else>
@@ -406,12 +413,12 @@ export default {
         places_with_relations: [],
         list_content: [],
         list_content_layer_title: '',
-        list_content_layer_index: '',
+        list_content_layer_index: 0,
         tooltip: {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer.json',
+        custom_data_url: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
         custom_data_url1: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
 
         circle: {
@@ -491,7 +498,7 @@ export default {
         }
       }
     }
-
+    this.$set(this.data, 'state', false)
 
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
@@ -517,7 +524,7 @@ export default {
     onMapReady(mapObject) {
       this.$nextTick(() => {
         this.mapobj = mapObject;
-        if ( (this.data) && (this.places) && (this.$refs.map) ) {
+        if ( (this.data) && (this.places) && (this.$refs.map) && (this.$refs.map.mapObject) ) {
           console.log("onMapReady: fitBounds")
           this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
 
@@ -552,16 +559,10 @@ export default {
             if ( layer.places_with_relations ) {
               layer.places_with_relations.forEach ((place, key) => {
 
-                console.log("places_with_relations");
-                console.log(key);
-                console.log(place.relations);
-                console.log(place.relations.length);
-                console.log(place.relations);
+                console.log("places_with_relations: "+place.relations.length);
 
                 place.relations.forEach ((relation, kkey) => {
 
-                  // console.log(relation.from.lat);
-                  // console.log(relation.from.lon);
                   console.log("Relation_from ID:  "+relation.from.id);
                   var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
                   var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
@@ -767,12 +768,17 @@ export default {
         console.log("Clicked layer index: "+e.target.options.layer_index)
         // show modal
         this.places[clicked_place_index].state = !this.places[clicked_place_index].state;
+        this.data.state = !this.data.state;
+        console.log("this.data.state: "+this.data.state)
+
+
         this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state = !this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state.state;
         // if in map mode: show place content in the list view!
         this.list_content = []
         this.list_content.push(this.places[clicked_place_index])
         this.list_content_layer_title = e.target.options.layer_title
-        this.list_content_layer_index = e.target.options.layer_index
+        this.list_content_layer_index = parseInt(e.target.options.layer_index)
+        console.log("Clicked layer index: "+this.list_content_layer_index)
 
 
       }

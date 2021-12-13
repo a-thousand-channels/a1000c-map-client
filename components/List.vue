@@ -22,7 +22,7 @@
         to learn more about this map :)
       </li>
       <li v-else class="bg-a100c-white px-4 py-2 rounded shadow mt-4 ">
-        <h2 class="font-semibold pl-12 md:pl-12">{{ data.title }} <span v-if="data.layer[parseInt(layerindex)]">— {{ data.layer[parseInt(layerindex)].title}}</span></h2>
+        <h2 class="font-semibold pl-0 md:pl-12">{{ data.title }} <span v-if="data.layer[parseInt(layerindex)]">— {{ data.layer[parseInt(layerindex)].title}}</span></h2>
       </li>
 
       <li v-for="(place,index) in places" :id="'place-'+place.id" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
@@ -74,7 +74,7 @@ export default {
       required: false
     },
     layerindex: {
-      type: String,
+      type: Number,
       required: false
     },
     map: {
