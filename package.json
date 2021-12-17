@@ -18,7 +18,7 @@
     "nuxt": "^2.15.7",
     "nuxt-leaflet": "^0.0.27",
     "push-dir": "^0.4.1",
-    "swiper": "^7.3.2",
+    "swiper": "^7.3.3",
     "vue-awesome-swiper": "^4.1.1",
     "vue-shortkey": "^3.1.7"
   },
