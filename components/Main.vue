@@ -420,8 +420,7 @@ export default {
         },
         data_url: '',
         custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url1: 'https://staging.orte.link/public/maps/from-gay-to-queer.json',
-        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/queere-geschichte-n-in-bremen.json',
 
         circle: {
           radius: 14,
@@ -502,7 +501,10 @@ export default {
         }
       }
     }
+    console.log("Data state: "+this.data.state)
     this.$set(this.data, 'state', false)
+    console.log("Data state: "+this.data.state)
+
 
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
@@ -777,9 +779,10 @@ export default {
         console.log("Clicked layer title: "+e.target.options.layer_title)
         console.log("Clicked layer index: "+e.target.options.layer_index)
         // show modal
+        console.log("Data state: "+this.data.state)
         this.places[clicked_place_index].state = !this.places[clicked_place_index].state;
         this.data.state = !this.data.state;
-        console.log("this.data.state: "+this.data.state)
+        console.log("Data state: "+this.data.state)
 
 
         this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state = !this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state.state;
