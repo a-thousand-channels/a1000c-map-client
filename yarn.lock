@@ -9544,10 +9544,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swiper@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-7.3.2.tgz#71ede63e816d0d6dbc8840edd1f4a7a583e3b3e7"
-  integrity sha512-0l0YaGAIV+lo/4qBcdR/UeWNub9OWXAAa4LDjaHUXkfQTInFTzz4pb6OHtlLZVgu8wTOFnvq6+1DtU4dSbg8Xw==
+swiper@^7.3.4:
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-7.3.4.tgz#84346930972277a6ae710e3e88c1b05adf3748c0"
+  integrity sha512-inlAKAA12oiCL3eSWC8WxtwWtzGZ7VU4sABWzwAk75+TU2AMi0+MyjlQ6QSlCkv/vrnMT6CsPant6wyNouuUww==
   dependencies:
     dom7 "^4.0.2"
     ssr-window "^4.0.2"
