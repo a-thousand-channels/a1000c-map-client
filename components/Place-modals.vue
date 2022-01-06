@@ -24,7 +24,7 @@
 
 
 .modal-content {
-  min-width: 18em;
+  min-width: 15em;
 }
 
 
@@ -36,7 +36,7 @@
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-8 bg-white bg-a100c-white overflow-hidden shadow min-w-none sm:min-w-min sm:max-w-md">
+          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-8 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md">
             <div class="text-right px-0 py-0 w-8 float-right text-3xl">
               <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
             </div>
@@ -47,21 +47,23 @@
                 </span>
               </div>
             </div>
-            <div class="modal-header pt-2 px-4">
-              <p class="my-4"><span v-if="data.title != layer.title">{{data.title}} :: </span><span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
-              <h2><strong>{{place.title}}</strong> ({{place.id}})</h2>
+            <div class="modal-header pt-1 sm:pt-2 px-4">
+              <p class="text-sm sm:text-md my-0 sm:my-4"><span v-if="data.title != layer.title">{{data.title}} :: </span><span v-else><nuxt-link :to="{ path: '/'}">Home</nuxt-link></span> <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
+              <h2 class="text-sm sm:text-md"><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
-              <div v-if="place.teaser" class="text-gray-500 px-4" :inner-html.prop="place.teaser | truncate(200, '...')"></div>
+              <div v-if="place.teaser" class="text-sm sm:text-md  text-gray-500 px-4" :inner-html.prop="place.teaser | truncate(200, '...')"></div>
             </div>
             <div class="modal-player">
                 <p class="captions" :id="'place-' + place.id + '-infos'"></p>
-                <div id="audio" class="player-wrapper" v-if="place.audio">
+                <div id="audio" class="player-wrapper px-4" v-if="place.audio">
                   <audio-player :place="place"></audio-player>
+                </div>
+                <div id="audio" class="player-wrapper px-4" v-if="place.audiolink" v-html="place.audiolink">
                 </div>
             </div>
             <footer>
-              <p class="text-gray-500 px-4 py-2 sm:px-4 sm:py-4">
+              <p class="text-sm sm:text-md text-gray-500 px-4 py-1 sm:px-4 sm:py-4">
                 <button @click="showPlaceInList(place)" class="text-link">Show details</button>
               </p>
             </footer>

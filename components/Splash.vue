@@ -19,20 +19,19 @@
 
 <template>
 <div id="page">
-  <div class="relative flex items-top justify-center min-h-screen bg-pink-100 bg-a100c-1 sm:items-center sm:pt-0">
+  <div class="relative flex overflow-x-auto items-top justify-center min-h-screen bg-pink-100 bg-a100c-1-splash sm:items-center sm:pt-0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-12">
       <div class="flex justify-center pt-8 mt-8 sm:pt-0">
-        <img src="Main-Logo-gradiant-2-smalll-gif-.gif" title="A thousand channels">
+        <img src="a-thousand-channels--logo-variant-a--short.png" title="A thousand channels">
       </div>
-      <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
-        <h2 class="text-2xl leading-7 font-semibold">
+      <div class="mt-4 overflow-hidden bg-white shadow sm:rounded-lg  md:px-4 lg:px-8 p-2">
+        <h2 class="text-3xl beta">
           Welcome to an early prototype of our web map.
         </h2>
         <p class="mt-3 text-gray-600">
           We are developing a web map, that can easily be generated and published on the web. You will not need server side technologies for that, just a simple webspace. This prototype is work in progress.
         </p>
-        <p
         <p class="mt-4 pt-4 text-gray-800 border-t border-dashed">
           <nuxt-link :to="{ path: '/main', hash:'map', query: { layer: this.custom_data_url }}" class="bg-red-400 bg-a100c-1 text-white text-center px-4 py-2 rounded-lg">Check it out</nuxt-link>
         </p>

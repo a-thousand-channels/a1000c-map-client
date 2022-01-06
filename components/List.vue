@@ -22,7 +22,7 @@
         to learn more about this map :)
       </li>
       <li v-else class="bg-a100c-white px-4 py-2 rounded shadow mt-4 ">
-        <h2 class="font-semibold pl-0 md:pl-12">{{ data.title }} <span v-if="data.layer[parseInt(layerindex)]">— {{ data.layer[parseInt(layerindex)].title}}</span></h2>
+        <h2 class="font-semibold pl-0 md:pl-12"><span v-if="data.title != data.layer[parseInt(layerindex)].title">{{data.title}}</span><span v-else><nuxt-link :to="{ path: '/'}">Start</nuxt-link></span> <span v-if="data.layer[parseInt(layerindex)]">— {{ data.layer[parseInt(layerindex)].title}}</span></h2>
       </li>
 
       <li v-for="(place,index) in places" :id="'list-place-'+place.id" class="bg-a100c-white px-4 py-2 rounded shadow mt-4">
@@ -43,8 +43,10 @@
         </div>
         <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-6">{{ place.title }}</h3>
         <div class="text-gray-500 px-4 sm:px-16 sm:py-3" v-html="place.teaser"></div>
-        <ul v-if="place.annotations.length > 0" class="pb-4 sm:px-8">
-          <li v-for="(annotation,aindex) in place.annotations" class="bg-a100c-3 px-4 py-4 rounded shadow mt-4 mb-6">
+        <div :id="'list-audio-'+place.id" class="player-wrapper px-4 sm:px-16 sm:py-3" v-if="place.audiolink" v-html="place.audiolink">
+        </div>
+        <ul v-if="place.annotations.length > 0" class="pb-0 sm:px-8">
+          <li v-for="(annotation,aindex) in place.annotations" class="bg-a100c-3 px-4 py-6 rounded shadow mt-4 mb-6">
             <h4 v-if="annotation.title" class="font-semibold text-md px-4 py-2">{{ annotation.title }}</h4>
             <div class="text-gray-500 px-4" v-html="annotation.text"></div>
           </li>

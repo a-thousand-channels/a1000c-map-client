@@ -264,8 +264,8 @@
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
     <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-red-100 bg-opacity-30 my-4 mx-5">
-          <p v-if="$fetchState.pending">Loading...</p>
-          <p v-else-if="$fetchState.error">An error occurred :(</p>
+          <p v-if="$fetchState.pending" class="text-sm text-red-300">Loading...</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
           <div v-else>
             <info :data="this.data"></info>
           </div>
@@ -289,11 +289,11 @@
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
           <div v-else>
             <p id="map_header_content" class="text-sm text-red-300">
               <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.title }}</nuxt-link> //
-              <button @click="$fetch" >Reload view</button> //
+              <button @click="$fetch" >Reload</button> //
               <nuxt-link :to="{ path: '/'}" class="text-red-300">Home</nuxt-link>
             </p>
           </div>
@@ -309,10 +309,10 @@
             </button>
           </p>
         </div>
-        <div id="map_inner" class="h-full bg-red-100 bg-opacity-10 my-1 mx-1">
+        <div id="map_inner" class="h-full bg-red-0 bg-opacity-0 my-1 mx-1">
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
-                <l-map :zoom=4 :minZoom=2 :maxZoom=19 :center="[55.9464418,8.1277591]" ref="map" @ready="onMapReady">
+                <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" ref="map" @ready="onMapReady">
                   <l-control-layers position="topright"></l-control-layers>
                   <l-layer-group
                       v-for="(layer,lindex) in this.data.layer"
@@ -346,7 +346,7 @@
         </div>
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
-      <p v-else-if="$fetchState.error" class="text-sm text-red-300">An error occurred :(</p>
+      <p v-else-if="$fetchState.error" class="text-sm text-red-300">...</p>
       <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>
@@ -419,14 +419,14 @@ export default {
         tooltip: {
         },
         data_url: '',
-        custom_data_url1: 'https://orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-        custom_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/queere-geschichte-n-in-bremen.json',
-
+        default_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
+        mapcenter: [53.075878, 8.807311],
+        mapzoom: 12,
         circle: {
           radius: 14,
           color: 'transparent',
           fillcolor: 'rgba(242, 71, 38, 1)',
-          fillopacity: 0.85
+          fillopacity: 0.95
         }
       }
   },
@@ -442,19 +442,16 @@ export default {
     if ( this.custom_data_url ) {
       this.data_url = this.custom_data_url
     } else {
+      // does not work (yet)
+      // this.$router.push('/')
       this.data_url = this.default_data_url
     }
     console.log(this.data_url)
-    // if ( this.$route.query.layer ) {
-    //  this.data_url = this.$route.query.layer
-    // }
+
     this.dataobj = await axios.get(this.data_url).then(response =>
       response.data
-    ).catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    console.log('fetch... add state value')
+    )
+    console.log('fetch... success')
 
     // check if its a map
     if ( this.dataobj.map ) {
@@ -483,28 +480,48 @@ export default {
     // or a layer
     } else {
       console.log("Data for a single layer")
-      this.data = this.dataobj.layer
-      this.data.layer = []
-      this.data.layer[0] = this.dataobj.layer
-      console.log("Data for a map with " + this.data.layer.length + " accessible layer")
-      this.places = this.data.places
-      this.list_content = this.data.places
-      console.log("Map with "+this.places.length+" places")
+      if (this.dataobj && this.dataobj.layer ) {
+        this.data = this.dataobj.layer
+        this.data.layer = []
+        this.data.layer[0] = this.dataobj.layer
 
-      // add state value to all places
-      for (let i = 0; i < this.data.places.length; i++) {
-        if ( i=== 0) {
-          // this.$set(this.data.places[i], 'state', true)
-          this.$set(this.data.places[i], 'state', false)
-        } else {
-          this.$set(this.data.places[i], 'state', false)
+        if (this.data.mapcenter_lat && this.data.mapcenter_lon ) {
+          this.mapcenter = [this.data.mapcenter_lat, this.data.mapcenter_lon]
+        }
+        if (this.data.zoom ) {
+          this.mapzoom = this.data.zoom
+        }
+        console.log("Data for a map with " + this.data.layer.length + " accessible layer")
+        this.places = this.data.places
+        this.places_with_relations = this.data.places_with_relations
+        this.list_content = this.data.places
+        console.log("Layer Map with "+this.places.length+" places and "+this.places_with_relations.length+" Relations")
+
+        // add state value to all places
+        for (let i = 0; i < this.data.places.length; i++) {
+          if ( i=== 0) {
+            // this.$set(this.data.places[i], 'state', true)
+            this.$set(this.data.places[i], 'state', false)
+          } else {
+            this.$set(this.data.places[i], 'state', false)
+          }
         }
       }
     }
-    console.log("Data state: "+this.data.state)
-    this.$set(this.data, 'state', false)
-    console.log("Data state: "+this.data.state)
 
+    if ( (this.data) && (this.places) && (this.$refs.map) ) {
+      if ( this.places.length > 0 ) {
+        // console.log("afterFetch: fitBounds w/"+this.places.length)
+        // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+      } else {
+        console.log("afterFetch: NO fitBounds w/"+this.places.length)
+      }
+      if ( this.data.layer ) {
+        console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
+        this.drawCurves();
+      }
+    }
+    this.$set(this.data, 'state', false)
 
     // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
@@ -530,21 +547,30 @@ export default {
     onMapReady(mapObject) {
       this.$nextTick(() => {
         this.mapobj = mapObject;
-        if ( (this.data) && (this.places) && (this.$refs.map) && (this.$refs.map.mapObject) ) {
+        if ( (this.data) && (this.places) && (this.$refs.map) ) {
           if ( this.places.length > 0 ) {
-            console.log("onMapReady: fitBounds w/"+this.places.length)
-            this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+            // use bremen as center for ever :)
+            // console.log("onMapReady: fitBounds w/"+this.places.length)
+            // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
           } else {
             console.log("onMapReady: NO fitBounds w/"+this.places.length)
           }
 
-          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {foo: 'bar'})
-          var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightgrey/{z}/{x}/{y}.png', {foo: 'bar'});
-          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {foo: 'bar'}).addTo(this.$refs.map.mapObject);
+          const controlelements = document.getElementsByClassName('leaflet-top leaflet-right');
+          var elements = controlelements[0].getElementsByClassName('leaflet-control-layers');
+          controlelements[0].removeChild(elements[0]);
 
+          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Openstreemap + Contributors' })
+          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png', {attribution: ''}).addTo(this.$refs.map.mapObject);
+          var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {attribution: ''})
+
+          /*
+          var m = document.getElementById("map_map");
+          m.classList.add("dark");
+          */
           var baseMaps = {
-              "Basemap": simple_basemap_pop_yellow_layer,
-              "Basemap (dark)": simple_basemap_pop_grey_layer,
+              "Basemap": simple_basemap_pop_grey_layer,
+              "Basemap (dark)": simple_basemap_pop_yellow_layer,
               "OpenStreetMap": openstreetmap_layer
           };
 
@@ -563,9 +589,18 @@ export default {
             }
           });
 
-          var curves_layer = L.layerGroup().addTo(mapObject);
+
 
           if ( this.data.layer ) {
+            console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
+            // this.drawCurves();
+          }
+
+        }
+      })
+    },
+    drawCurves() {
+        var curves_layer = L.layerGroup().addTo(this.mapobj);
             this.data.layer.forEach ((layer, lkey) => {
               if ( layer.places_with_relations ) {
                 layer.places_with_relations.forEach ((place, key) => {
@@ -589,7 +624,7 @@ export default {
                     var pathOptions = {
                             color: color,
                             weight: 5,
-                            opacity: 1,
+                            opacity: 0.75,
                             className: 'curve_normal curve_',
                             animate: false
                     }
@@ -629,10 +664,7 @@ export default {
                 });
               }
             });
-          }
 
-        }
-      })
     },
     calcControlPoint(point1,point2,distance_in_kms) {
       var boost = 2.9;
@@ -779,10 +811,9 @@ export default {
         console.log("Clicked layer title: "+e.target.options.layer_title)
         console.log("Clicked layer index: "+e.target.options.layer_index)
         // show modal
-        console.log("Data state: "+this.data.state)
         this.places[clicked_place_index].state = !this.places[clicked_place_index].state;
         this.data.state = !this.data.state;
-        console.log("Data state: "+this.data.state)
+        console.log("this.data.state: "+this.data.state)
 
 
         this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state = !this.data.layer[parseInt(e.target.options.layer_index)].places[parseInt(e.target.options.place_index)].state.state;
