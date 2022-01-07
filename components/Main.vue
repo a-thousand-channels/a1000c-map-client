@@ -1,7 +1,5 @@
 <style>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+
 
     /* work-sans-regular - latin-ext_latin */
 @font-face {
@@ -63,18 +61,6 @@
        url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-
-    @layer base {
-      h1 {
-        @apply text-2xl;
-      }
-      h2 {
-        @apply text-xl;
-      }
-      a {
-
-      }
-    }
     button.text-link,
     a.text-link {
       text-decoration: none;
