@@ -38,7 +38,7 @@
           <div class="modal-background"></div>
           <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-8 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md">
             <div class="text-right px-0 py-0 w-8 float-right text-3xl">
-              <button class="close-button" aria-label="close" @click="toggleModal(place)">&times;</button>
+              <button class="close-button" aria-label="close" @click="closeModal(place)">&times;</button>
             </div>
             <div v-if="place.images && place.images.length > 0" class="px-0 pb-4 sm:px-4">
               <div class="">
@@ -94,9 +94,9 @@ export default {
     // AudioPlayer
   },
   methods: {
-    toggleModal(place) {
-      this.data.state = !this.data.state
-      place.state = !place.state;
+    closeModal(place) {
+      this.data.state = false
+      place.state = false
     },
     showPlaceInList(place) {
       this.$nextTick(() => {
