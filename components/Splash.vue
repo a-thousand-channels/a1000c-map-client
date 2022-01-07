@@ -23,7 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-12">
       <div class="flex justify-center pt-8 mt-8 sm:pt-0">
-        <img src="a-thousand-channels--logo-variant-a--short.png" title="A thousand channels">
+        <img src="~/assets/a-thousand-channels--logo-variant-a--short.png" title="A thousand channels">
       </div>
       <div class="mt-4 overflow-hidden bg-white shadow sm:rounded-lg  md:px-4 lg:px-8 p-2">
         <h2 class="text-3xl beta">

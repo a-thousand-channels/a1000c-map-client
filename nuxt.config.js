@@ -2,6 +2,10 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  static: {
+    prefix: true
+  },
+
   publicPath: '/a1000c-map-client/',
 
 
