@@ -812,7 +812,9 @@ export default {
         console.log("Clicked layer index: "+e.target.options.layer_index)
         // show modal
         this.places[clicked_place_index].state = !this.places[clicked_place_index].state;
-        this.data.state = !this.data.state;
+        console.log("this.data.state before toggle: "+this.data.state)
+        this.data.state = true;
+        // this.data.state = !this.data.state || true;
         console.log("this.data.state: "+this.data.state)
 
 
