@@ -60,12 +60,10 @@ export default {
     }
   },
   mounted: function() {
-    console.log(this.$route.query.layer)
-    if (this.$route.query.layer ) {
+    if ( (this.$route) && (this.$route.query.layer) ) {
+      console.log(this.$route.query.layer)
       this.custom_data_url = this.$route.query.layer
     }
-    console.log(this.$route.query);
-
   }
 }
 </script>

@@ -87,6 +87,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend(config, { isClient }) {
+      if (isClient) {
+        config.optimization.splitChunks.maxSize = 200000
+      }
+    }
   },
   router: {
     base: '/a1000c-map-client/',
