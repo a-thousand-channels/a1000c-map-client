@@ -17,14 +17,12 @@ jobs:
           # working-directory: ./a1000c-map-client
           build: npm run generate
           start: npm start
-          browser: chrome
-          headless: true
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEBUG: '@cypress/github-action'
+          DEBUG: 'cypress:*'
   cypress-component:
     runs-on: ubuntu-latest
     steps:
