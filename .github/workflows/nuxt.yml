@@ -29,11 +29,10 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           install: false
+          record: false
           wait-on: 'http://localhost:3000'
           group: 'e2e specs'
         env:
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEBUG: '@cypress/github-action'
