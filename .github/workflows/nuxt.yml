@@ -15,12 +15,15 @@ jobs:
         with:
           # just perform install
           runTests: false
+      # install nuxt dependencies
+      - name: Install dependencies
+        run: yarn
       # generate static files
       - name: Generate the app 🏁
-        run: npm generate
+        run: yarn run generate
       # run app
       - name: Start the app 🏁
-        run: npm start &
+        run: yarn start &
       # run test
       - name: Cypress run
         uses: cypress-io/github-action@v2
