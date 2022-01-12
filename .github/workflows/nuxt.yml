@@ -15,6 +15,9 @@ jobs:
         with:
           # just perform install
           runTests: false
+      # generate static files
+      - name: Generate the app 🏁
+        run: npm generate
       # run app
       - name: Start the app 🏁
         run: npm start &
