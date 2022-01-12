@@ -16,16 +16,16 @@ jobs:
           # just perform install
           runTests: false
       # install nuxt dependencies
-      - name: Install dependencies
+      - name: Install dependencies 📦
         run: yarn
       # generate static files
-      - name: Generate the app 🏁
+      - name: Generate the app 🔩
         run: yarn run generate
       # run app
       - name: Start the app 🏁
         run: yarn start &
       # run test
-      - name: Cypress run
+      - name: Cypress run 🤖
         uses: cypress-io/github-action@v2
         with:
           install: false
@@ -33,3 +33,31 @@ jobs:
           wait-on: 'http://localhost:3000'
         env:
           DEBUG: '@cypress/github-action'
+deploy-run:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Setup node env
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies 📦
+        run: yarn
+
+      - name: Generate 🔩
+        run: yarn run generate
+
+      - name: Deploy 🏁
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
