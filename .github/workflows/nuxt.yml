@@ -33,7 +33,7 @@ jobs:
           wait-on: 'http://localhost:3000'
         env:
           DEBUG: '@cypress/github-action'
-deploy-run:
+  deploy-run:
     runs-on: ${{ matrix.os }}
 
     strategy:
