@@ -1,9 +1,14 @@
 
 describe('Splash', () => {
 
-
-  it('displays splash page ', () => {
+  beforeEach(() => {
     cy.visit('http://localhost:3000/a1000c-map-client/')
-    cy.get('h2').contains('Welcome to an early prototype of our web map.')
+  })
+  it('displays splash page ', () => {
+    cy.get('h2').contains('Welcome')
+  })
+  it('on button click loads map ', () => {
+    cy.contains('Check it out').click()
+    cy.url().should('eq', 'http://localhost:3000/a1000c-map-client/main#map')
   })
 })
