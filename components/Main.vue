@@ -373,6 +373,9 @@ import Info from '~/components/Info.vue';
 import PlaceModals from '~/components/Place-modals.vue';
 import KeysNavigation from '~/components/Keys-navigation.vue';
 
+import config from '../nuxt.config'
+
+
 export default {
   name: "App",
   transition: {
@@ -405,8 +408,10 @@ export default {
         tooltip: {
         },
         data_url: '',
-        default_data_url: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
-        mapcenter: [53.075878, 8.807311],
+        // data_url is now predefined via nuxt.config.js
+        default_data_url: config.defaultDataUrl,
+        // mapcenter could be definied via this.data or calculated by the extent of all places
+        mapcenter: [0,0],
         mapzoom: 12,
         circle: {
           radius: 14,
@@ -472,6 +477,7 @@ export default {
 
         if (this.data.mapcenter_lat && this.data.mapcenter_lon ) {
           this.mapcenter = [this.data.mapcenter_lat, this.data.mapcenter_lon]
+          console.log("mapcenter "+ this.mapcenter)
         }
         if (this.data.zoom ) {
           this.mapzoom = this.data.zoom
@@ -496,7 +502,7 @@ export default {
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
       if ( this.places.length > 0 ) {
         // console.log("afterFetch: fitBounds w/"+this.places.length)
-        // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+        this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
@@ -532,9 +538,11 @@ export default {
         this.mapobj = mapObject;
         if ( (this.data) && (this.places) && (this.$refs.map) ) {
           if ( this.places.length > 0 ) {
-            // use bremen as center for ever :)
-            // console.log("onMapReady: fitBounds w/"+this.places.length)
-            // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+            // dont use bremen as center for ever :)
+            if ( this.data.mapcenter_lon == 0 ) {
+              console.log("onMapReady: fitBounds w/"+this.places.length)
+              this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+            }
           } else {
             console.log("onMapReady: NO fitBounds w/"+this.places.length)
           }

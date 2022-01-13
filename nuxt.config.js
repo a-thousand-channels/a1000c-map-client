@@ -8,10 +8,12 @@ export default {
 
   publicPath: '/a1000c-map-client/',
 
+  defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'a1000c-map-client',
+
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
