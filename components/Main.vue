@@ -258,7 +258,7 @@
         </div>
       </div>
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold" id="link_to_map">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
         </nuxt-link>
       </div>
@@ -266,7 +266,7 @@
 
     <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
       <div class="nav flex flex-col content-center">
-        <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full self-center items-center justify-center text-white font-bold">
+        <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_info">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
         </nuxt-link>
       </div>
@@ -339,15 +339,15 @@
       </div>
 
       <div class="nav flex flex-col  items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'list'}" class="flex h-full self-center items-center justify-center text-white font-bold">
+        <a href="main#list" class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_list">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
-        </nuxt-link>
+        </a>
       </div>
     </section>
 
     <section ref="list"  id="list" class="flex min-h-screen max-h-screen bg-a100c-3 sm:pt-0">
       <div class="nav flex items-center content-center justify-center">
-        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold">
+        <nuxt-link :to="{ path: '/main', hash:'map'}" class="flex h-full w-full items-center justify-center text-white font-bold" id="link_from_list_to_map">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
         </nuxt-link>
       </div>
