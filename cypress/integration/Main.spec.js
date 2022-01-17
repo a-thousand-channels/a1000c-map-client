@@ -8,14 +8,14 @@ describe('Main > Map', () => {
   })
   describe('Call page and change page views', () => {
     before(() => {
-      cy.visit('http://localhost:3000/a1000c-map-client/main#map')
+      cy.visit('http://localhost:3000/a1000c-map-client/main')
     })
     it('displays main > map page ', () => {
       cy.get('#map_header_content').contains('Start —')
       cy.get('#map_header_content').contains(project_title)
     })
     it('click on right nav button switches to list ', () => {
-      cy.get("a#link_to_list").should("have.attr", "href", "main#list").click()
+      cy.get("a#link_to_list").should("have.attr", "href", "/a1000c-map-client/main#list").click()
       cy.url().should('eq', 'http://localhost:3000/a1000c-map-client/main#list')
     })
     it('shows header of list block', () => {
