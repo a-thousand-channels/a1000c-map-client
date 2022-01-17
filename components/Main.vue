@@ -322,7 +322,7 @@
                         :id="index"
                         :options="{ title: 'marker-' + place.id, id: place.id, place_index: index, layer_index: lindex, layer_title: layer.title}"
                       >
-                        <l-tooltip :content="place.title" :options="{ permanent: 'true', direction: 'top' }" />
+                        <l-tooltip :content="place.title" :options="{ permanent: false, direction: 'top' }" />
                       </l-circle-marker>
                   </l-layer-group>
 
@@ -498,7 +498,8 @@ export default {
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
       if ( this.places.length > 0 ) {
         // console.log("afterFetch: fitBounds w/"+this.places.length)
-        this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+        // disabled, since counters the flyto feature
+        // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
@@ -508,7 +509,6 @@ export default {
       }
     }
     this.$set(this.data, 'state', false)
-    // exposes $fetchState with .pending and .error
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
   methods: {
@@ -535,7 +535,8 @@ export default {
         if ( (this.data) && (this.places) && (this.$refs.map) ) {
           if ( this.places.length > 0 ) {
             // dont use bremen as center for ever :)
-            if ( this.data.mapcenter_lon == 0 ) {
+            console.log("mapcenter: "+this.mapcenter[0])
+            if ( this.mapcenter[0] == 0 ) {
               console.log("onMapReady: fitBounds w/"+this.places.length)
               this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
             }
