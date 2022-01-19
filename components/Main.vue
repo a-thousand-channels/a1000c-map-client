@@ -559,11 +559,21 @@ export default {
           var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png', {attribution: ''}).addTo(this.$refs.map.mapObject);
           var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {attribution: ''})
 
+          var custom_basemap = '';
+          if ( ( this.data ) && ( this.data.basemap_url ) ) {
+            custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.attribution})
+          }
+          if ( ( this.data ) && ( this.data.background_color ) ) {
+            var m = document.getElementById("map_map");
+            m.style.backgroundColor = this.data.background_color;
+          }
+
           /*
           var m = document.getElementById("map_map");
           m.classList.add("dark");
           */
           var baseMaps = {
+              "Custom Map": custom_basemap,
               "Basemap": simple_basemap_pop_grey_layer,
               "Basemap (dark)": simple_basemap_pop_yellow_layer,
               "OpenStreetMap": openstreetmap_layer
