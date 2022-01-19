@@ -438,12 +438,19 @@ export default {
       // this.$router.push('/')
       this.data_url = this.default_data_url
     }
-    console.log(this.data_url)
+    // check local content
+    var dataobj_temp = await this.$content(this.localDataUrl).fetch();
+    this.dataobj = dataobj_temp[0];
 
-    this.dataobj = await axios.get(this.data_url).then(response =>
-      response.data
-    )
-    console.log('fetch... success')
+    console.log('fetch LOCAL...')
+    console.log(this.dataobj)
+    if(this.dataobj == {} && (this.dataobj.map || this.dataobj.layer)) {
+      this.dataobj = await axios.get(this.data_url).then(response =>
+        response.data
+      )
+      console.log('fetch REMOTE... ')
+      console.log(this.dataobj)
+    }
 
     // check if its a map
     if ( this.dataobj.map ) {
