@@ -5,18 +5,19 @@ on: [push]
 jobs:
   cypress-e2e:
     runs-on: ubuntu-latest
+    name: Cypress e2e testing
     timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       # install dependencies
-      - name: Install dependencies 📦
+      - name: Install cypress dependencies 📦
         uses: cypress-io/github-action@v2
         with:
           # just perform install
           runTests: false
       # install nuxt dependencies
-      - name: Install dependencies 📦
+      - name: Install nuxt dependencies 📦
         run: yarn
       # generate static files
       - name: Generate the app 🔩
@@ -35,6 +36,8 @@ jobs:
           DEBUG: '@cypress/github-action'
   deploy-run:
     runs-on: ${{ matrix.os }}
+    name: Deploy
+    needs: cypress-e2e
 
     strategy:
       matrix:
@@ -55,6 +58,8 @@ jobs:
 
       - name: Generate 🔩
         run: yarn run generate
+        env:
+          PUBLICPATH: '/a1000c-map-client/'
 
       - name: Deploy 🏁
         uses: peaceiris/actions-gh-pages@v3

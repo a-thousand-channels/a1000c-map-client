@@ -145,7 +145,7 @@
       background-color: transparent;
     }
     #map #map_map.dark {
-      background-color: rgba(68, 68, 68,0.9);
+      background-color: rgba(68, 68, 68,0.9) !important;
       border-color: transparent;
     }
     #map #modals_wrapper {
@@ -169,11 +169,17 @@
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
    }
+   .bg-a100c-dark {
+
+    }
    .bg-a100c-white {
       background-color: rgba(255,255,255,0.8);
    }
    .bg-red-100 {
       background-color: rgba(255,255,255,0.35);
+   }
+   .bg-map {
+
    }
    .text-gray {
      color: rgba(0,0,0,0.3);
@@ -208,6 +214,7 @@
       background-color: rgba(255,255,255,0.3);
       background-color: rgba(55, 55, 55, 0.3);
       background-color: transparent;
+
    }
    .leaflet-tooltip-top::before {
         bottom: 0;
@@ -246,9 +253,21 @@
 </style>
 
 <template>
+
 <div id="page">
+ <style v-if="data.backgroundimage_link">
+  :root {
+    --background-color: {{ data.background_color ?  data.background_color : '' }};
+    --background-image: url('{{ data.backgroundimage_link ? data.backgroundimage_link : '' }}');
+  }
+   .bg-a100c-1 {
+      background-color: var(--background-color);
+      background-image: var(--background-image);
+      background-size: cover;
+   }
+  </style>
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
-    <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8" :style="data.background_color"> <div class="content flex items-top overflow-x-auto">
+    <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-opacity-30 my-4 mx-5">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Loading...</p>
           <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
@@ -264,7 +283,7 @@
       </div>
     </section>
 
-    <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
+    <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-1">
       <div class="nav flex flex-col content-center">
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_info">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
@@ -275,7 +294,7 @@
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Can't fetch map data... :(</p>
           <div v-else>
             <p id="map_header_content" class="text-sm text-red-300">
               <nuxt-link :to="{ path: '/'}" class="text-red-300">Start</nuxt-link>
@@ -299,7 +318,7 @@
         <div id="map_inner" class="h-full bg-red-0 bg-opacity-0 my-1 mx-1">
           <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
            <client-only>
-                <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" ref="map" @ready="onMapReady">
+                <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" ref="map" @ready="onMapReady" class=" bg-map">
                   <l-control-layers position="topright"></l-control-layers>
                   <l-layer-group
                       v-for="(layer,lindex) in this.data.layer"
@@ -325,8 +344,6 @@
                         <l-tooltip :content="place.title" :options="{ permanent: false, direction: 'top' }" />
                       </l-circle-marker>
                   </l-layer-group>
-
-
                </l-map>
            </client-only>
           </div>
@@ -334,11 +351,9 @@
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">...</p>
-      <!--
       <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>
-    -->
 
       <div class="nav flex flex-col  items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'list'}"  class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_list">
@@ -355,8 +370,8 @@
       </div>
       <div id="list_content" class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-opacity-30 my-0 mx-0 mr-6 sm:my-4 sm:mx-5">
-            <p v-if="$fetchState.pending">Loading...</p>
-            <p v-else-if="$fetchState.error">An error occurred :(</p>
+            <p v-if="$fetchState.pending">Fetching places...</p>
+            <p v-else-if="$fetchState.error">Can't fetch map data... :(</p>
             <div v-else>
               <list :places="this.list_content" :layerindex="this.list_content_layer_index" :data="this.data" :map="this.mapobj"></list>
             </div>
@@ -558,43 +573,47 @@ export default {
           controlelements[0].removeChild(elements[0]);
 
           var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Openstreemap + Contributors' })
-          var simple_basemap_pop_grey_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png', {attribution: ''}).addTo(this.$refs.map.mapObject);
-          var simple_basemap_pop_yellow_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {attribution: ''})
+          var simple_basemap_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png', {attribution: ''}).addTo(this.$refs.map.mapObject);
+          var simple_basemap_dark = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {attribution: ''})
+          /*
+          var m = document.getElementById("map_map");
+          m.classList.add("dark");
+          */
+          var baseMaps = {
+              "Basemap": simple_basemap_layer,
+              "Basemap (dark)": simple_basemap_dark,
+              "OpenStreetMap": openstreetmap_layer
+          };
+          console.log(baseMaps)
 
           var custom_basemap = '';
           if ( ( this.data ) && ( this.data.basemap_url ) ) {
             custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.attribution})
+            baseMaps["custom"] = custom_basemap
+            console.log(baseMaps)
           }
           if ( ( this.data ) && ( this.data.background_color ) ) {
             var m = document.getElementById("map_map");
             m.style.backgroundColor = this.data.background_color;
           }
 
-          /*
-          var m = document.getElementById("map_map");
-          m.classList.add("dark");
-          */
-          var baseMaps = {
-              "Custom Map": custom_basemap,
-              "Basemap": simple_basemap_pop_grey_layer,
-              "Basemap (dark)": simple_basemap_pop_yellow_layer,
-              "OpenStreetMap": openstreetmap_layer
-          };
 
 
-          L.control.layers(baseMaps).addTo(this.$refs.map.mapObject);
+          if ( this.$refs.map.mapObject ) {
+            L.control.layers(baseMaps).addTo(this.$refs.map.mapObject);
 
-          console.log(this.mapobj)
-          this.mapobj.on('baselayerchange', function(e) {
-            console.log('Changed to ' + e.name);
-            var m = document.getElementById("map_map");
-            if ( ( e.name =='Basemap (dark)') ) {
-              m.classList.add("dark");
-            } else {
-              m.classList.remove("dark");
+            console.log(this.mapobj)
+            this.mapobj.on('baselayerchange', function(e) {
+              console.log('Changed to ' + e.name);
+              var m = document.getElementById("map_map");
+              if ( ( e.name =='Basemap (dark)') ) {
+                m.classList.add("dark");
+              } else {
+                m.classList.remove("dark");
 
-            }
-          });
+              }
+            });
+          }
 
 
 
