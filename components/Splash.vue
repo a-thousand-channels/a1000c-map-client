@@ -66,6 +66,8 @@
    .bg-a100c-1-splash {
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
+    }
+    .bg-a100c-1-splash-image {
       background-image: var(--background-image);
       background-size: cover;
    }
@@ -89,11 +91,16 @@
 
 <template>
 <div id="page">
-  <style>
+  <style v-if="data.backgroundimage_link">
   :root {
-    --background-color: {{ data.background_color }};
-    --background-image: url('{{ data.backgroundimage_link }}');
+    --background-color: {{ data.background_color ?  data.background_color : '' }};
+    --background-image: url('{{ data.backgroundimage_link ? data.backgroundimage_link : '' }}');
   }
+   .bg-a100c-1-splash {
+      background-color: var(--background-color);
+      background-image: var(--background-image);
+      background-size: cover;
+   }
   </style>
   <div class="relative flex overflow-x-auto items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
     <div class="max-w-4xl mx-auto px-6 py-3 lg:px-12 lg:py-6">

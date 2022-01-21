@@ -160,7 +160,6 @@
    .bg-a100c-1 {
       background: rgb(255,0,249);
       background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
-      background: var(--background-color);
    }
    .bg-a100c-2 {
       background: rgb(255,0,249);
@@ -256,11 +255,16 @@
 <template>
 
 <div id="page">
- <style>
-    :root {
-      --background-color: {{ data.background_color }};
-      --background-image: url('{{ data.backgroundimage_link }}');
-    }
+ <style v-if="data.backgroundimage_link">
+  :root {
+    --background-color: {{ data.background_color ?  data.background_color : '' }};
+    --background-image: url('{{ data.backgroundimage_link ? data.backgroundimage_link : '' }}');
+  }
+   .bg-a100c-1 {
+      background-color: var(--background-color);
+      background-image: var(--background-image);
+      background-size: cover;
+   }
   </style>
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
     <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
