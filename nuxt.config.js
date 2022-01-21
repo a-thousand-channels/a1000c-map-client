@@ -6,7 +6,7 @@ export default {
     prefix: true
   },
 
-  publicPath: '/' || process.env.PUBLICPATH,
+  publicPath: process.env.PUBLIC_PATH || '/',
 
   defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
   localDataUrl: 'data',
@@ -97,7 +97,7 @@ export default {
     }
   },
   router: {
-    base: '/' || process.env.PUBLICPATH,
+    base: process.env.PUBLIC_PATH || '/',
     scrollBehavior: async (to, from, savedPosition) => {
       console.log(process.env.path)
 
