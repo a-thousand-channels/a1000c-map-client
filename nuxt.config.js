@@ -99,7 +99,7 @@ export default {
   router: {
     base: process.env.PUBLIC_PATH || '/',
     scrollBehavior: async (to, from, savedPosition) => {
-      console.log(process.env.path)
+      console.log(process.env.PUBLIC_PATH)
 
       console.log("scrollBehavior")
       if (savedPosition) {
