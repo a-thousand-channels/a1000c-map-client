@@ -9,7 +9,7 @@
     "color": "#bb93ec",
     "basemap_url":"https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png",
     "basemap_attribution":"Map data OpenStreetMap + its contributors, CC-BY-SA, Map by ut/3plusx",
-    "background_color":"#204a87",
+    "background_color":"#8ae234",
     "tooltip_display_mode":"",
     "mapcenter_lat": "",
     "mapcenter_lon": "",
