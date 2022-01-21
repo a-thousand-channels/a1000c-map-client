@@ -59,7 +59,7 @@ jobs:
       - name: Generate 🔩
         run: yarn run generate
         env:
-          PUBLICPATH: '/a1000c-map-client/'
+          PUBLIC_PATH: '/a1000c-map-client/'
 
       - name: Deploy 🏁
         uses: peaceiris/actions-gh-pages@v3
