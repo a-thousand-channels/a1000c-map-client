@@ -248,7 +248,7 @@
 <template>
 <div id="page">
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
-    <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
+    <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8" :style="data.background_color"> <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-opacity-30 my-4 mx-5">
           <p v-if="$fetchState.pending" class="text-sm text-red-300">Loading...</p>
           <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
@@ -334,9 +334,11 @@
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-red-300">...</p>
+      <!--
       <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>
+    -->
 
       <div class="nav flex flex-col  items-center content-center justify-center">
         <nuxt-link :to="{ path: '/main', hash:'list'}"  class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_list">
@@ -439,18 +441,18 @@ export default {
       this.data_url = this.default_data_url
     }
     // check local content
-    var dataobj_temp = await this.$content(this.localDataUrl).fetch();
-    this.dataobj = dataobj_temp[0];
+    // var dataobj_temp = await this.$content(this.localDataUrl).fetch();
+    // this.dataobj = dataobj_temp[0];
 
     console.log('fetch LOCAL...')
     console.log(this.dataobj)
-    if(this.dataobj == {} && (this.dataobj.map || this.dataobj.layer)) {
+    // if( this.dataobj.length == 0 ) {
       this.dataobj = await axios.get(this.data_url).then(response =>
         response.data
       )
       console.log('fetch REMOTE... ')
       console.log(this.dataobj)
-    }
+    // }
 
     // check if its a map
     if ( this.dataobj.map ) {
