@@ -108,7 +108,7 @@
           <span v-else>We are developing a web map, that can easily be generated and published on the web. You will not need server side technologies for that, just a simple webspace. This prototype is work in progress.</span>
         </p>
         <p class="mt-4 pt-4 text-gray-800">
-          <nuxt-link :to="{ path: '/main', hash:'map', query: { layer: this.custom_data_url }}" class="bg-red-400 bg-a100c-1-button text-white text-center px-4 py-2 rounded-lg">Check it out</nuxt-link>
+          <nuxt-link :to="{ path: '/main', hash:'map', query: { layer: this.custom_data_url }}" class="bg-red-400 bg-a100c-1-button text-white text-center px-4 py-2 rounded-lg" id="jump">Check it out</nuxt-link>
         </p>
         <p class="mt-4 pt-4 text-gray-800">
           <span v-if="this.data.tease">{{ this.data.tease }}</span>

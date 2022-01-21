@@ -10,13 +10,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       # install dependencies
-      - name: Install dependencies 📦
+      - name: Install cypress dependencies 📦
         uses: cypress-io/github-action@v2
         with:
           # just perform install
           runTests: false
       # install nuxt dependencies
-      - name: Install dependencies 📦
+      - name: Install nuxt dependencies 📦
         run: yarn
       # generate static files
       - name: Generate the app 🔩
