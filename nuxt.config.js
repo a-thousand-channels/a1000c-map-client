@@ -9,7 +9,7 @@ export default {
   publicPath: process.env.PUBLIC_PATH || '/',
 
   defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
-  localDataUrl: 'data',
+  localDataUrl: '/_content/data',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
