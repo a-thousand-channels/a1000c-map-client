@@ -445,7 +445,7 @@ export default {
     }
     console.log('fetch...')
     console.log(this.dataobj)
-    if ( this.dataobj ) {
+    if ( this.dataobj.length >= 1 ) {
       console.log('data already fetched')
     }
     if ( this.custom_data_url ) {
@@ -456,19 +456,27 @@ export default {
       this.data_url = this.default_data_url
     }
     // check local content
-    // var dataobj_temp = await this.$content(this.localDataUrl).fetch();
-    // this.dataobj = dataobj_temp[0];
-
-    console.log('fetch LOCAL...')
-    console.log(this.dataobj)
-    // if( this.dataobj.length == 0 ) {
-      this.dataobj = await axios.get(this.data_url).then(response =>
-        response.data
-      )
-      console.log('fetch REMOTE... ')
+    var dataobj_temp = await this.$content(this.localDataUrl).fetch().catch((err) => {
+      console.log('error')
+    });
+    
+    if(dataobj_temp.length > 0 ) {
+      this.dataobj = dataobj_temp[0];
+      console.log('fetch LOCAL...')
       console.log(this.dataobj)
-    // }
 
+    } else {
+      console.log('fetch LOCAL ERROR...',this.dataobj.length)
+      // get remote content
+      if(this.dataobj.length == undefined ) {
+        this.dataobj = await axios.get(this.data_url).then(response =>
+          response.data
+        )
+        console.log('fetch REMOTE... ')
+        console.log(this.dataobj)
+      }
+    }
+      
     // check if its a map
     if ( this.dataobj.map ) {
       this.data = this.dataobj.map
