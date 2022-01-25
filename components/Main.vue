@@ -757,8 +757,10 @@ export default {
       console.log("jumpToMap " + this.$route.hash )
       if ( ( this.$route.hash === '#list' ) ||  ( this.$route.hash === '#info' ) )  {
         this.$router.push({ name: 'main', hash: this.$route.hash })
+        location.hash = this.$route.hash;
       } else {
         this.$router.push({ name: 'main', hash: '#map' })
+        location.hash = '#map';
       }
     },
     scrollX(e) {

@@ -11,7 +11,11 @@
     </div>
     <div id="info_content" class="my-2">
       <div id="info_content_header" class="">
-        <h2 class="block font-semibold text-2xl px-4 py-1 lg:px-8">{{ data.title }}</h2>
+        <h2 class="block font-semibold text-2xl px-4 py-1 lg:px-8">
+          <nuxt-link :to="{ path: '/'}" class="text-red-300">
+            {{ data.title }}
+          </nuxt-link>
+        </h2>
         <h3 v-if="data.subtitle" class="block font-semibold text-md px-4 py-1 lg:px-8">{{ data.subtitle }}</h3>
       </div>
       <div  class="block px-4 py-1 lg:px-8" v-html="data.text"></div>
