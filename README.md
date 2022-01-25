@@ -68,6 +68,9 @@ $ yarn install
 # serve with hot reload at localhost:3000
 $ yarn dev
 
+# serve at <YOUR_IP>:3000, to make it accesible for other machines in your network
+$ HOST=<YOUR_IP> npm run dev
+
 # build for production and launch server
 $ yarn build
 $ yarn start
