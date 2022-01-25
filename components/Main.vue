@@ -1,5 +1,7 @@
 <style>
-
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
 
     /* work-sans-regular - latin-ext_latin */
 @font-face {
@@ -60,6 +62,9 @@
        url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+    @layer base {
+      .border-transparent { border-color: transparent; }
+    }
 
     button.text-link,
     a.text-link {
@@ -248,8 +253,10 @@
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-
-
+    /* hotfix for display error #40 */
+    div#page_inner {
+      @apply border-solid border-2 border-transparent
+    }
 </style>
 
 <template>
