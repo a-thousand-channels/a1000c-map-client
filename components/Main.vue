@@ -63,7 +63,9 @@
        url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
     @layer components {
-      .border-transparent { border-color: transparent; }
+      border-transparent {
+        border-color:  transparent;
+      }
     }
 
     button.text-link,
