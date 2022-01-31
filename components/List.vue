@@ -93,7 +93,8 @@ export default {
         this.$router.push({ name: 'main', hash: '#map' });
         // this.$refs.map.mapObject.flyTo([lat,lon],16);
         // this.$parent.mapObject.flyTo([lat,lon],16);
-        this.map.flyTo([lat,lon],17);
+        // TODO: carefully adapt zoom level
+        this.map.flyTo([lat,lon],12);
 
       })
     }
