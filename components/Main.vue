@@ -165,16 +165,16 @@
       width: 97%;
     }
    .bg-a100c-1 {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
+       background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(240,235,227,0.5)  0%, rgba(146,153,101,0.5) 48%, rgba(111,80,80,0.5)100%);
    }
    .bg-a100c-2 {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
+       background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(111,80,80,0.5) 0%, rgba(240,235,227,0.85) 48%, rgba(146,153,101,0.5) 100%);
    }
    .bg-a100c-3 {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
+         background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(146,153,101,0.5) 0%, rgba(111,80,80,0.5)  48%, rgba(240,235,227,0.5) 100%);
    }
    .bg-a100c-dark {
 
@@ -278,8 +278,8 @@
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
     <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-opacity-30 my-4 mx-5">
-          <p v-if="$fetchState.pending" class="text-sm text-red-300">Loading...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Please wait ...</p>
+          <p v-if="$fetchState.pending" class="text-sm text-color">Loading...</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-color">Please wait ...</p>
           <div v-else>
             <info :data="this.data"></info>
           </div>
@@ -292,7 +292,7 @@
       </div>
     </section>
 
-    <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-1">
+    <section ref="map" id="map" class="flex min-h-screen max-h-screen bg-a100c-2">
       <div class="nav flex flex-col content-center">
         <nuxt-link :to="{ path: '/main', hash:'info'}" class="flex h-full self-center items-center justify-center text-white font-bold" id="link_to_info">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
@@ -302,11 +302,11 @@
 
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
-          <p v-if="$fetchState.pending" class="text-sm text-red-300">Fetching places...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-red-300">Can't fetch map data... :(</p>
+          <p v-if="$fetchState.pending" class="text-sm text-color">Fetching places...</p>
+          <p v-else-if="$fetchState.error" class="text-sm text-color">Can't fetch map data... :(</p>
           <div v-else>
-            <p id="map_header_content" class="text-sm text-red-300">
-              <nuxt-link :to="{ path: '/'}" class="text-red-300">Start</nuxt-link>
+            <p id="map_header_content" class="text-sm text-color">
+              <nuxt-link :to="{ path: '/'}" class="text-color">Start</nuxt-link>
               —
               <nuxt-link :to="{ path: '/main', hash: 'info'}">{{ this.data.title }}</nuxt-link>
 
@@ -358,8 +358,8 @@
           </div>
         </div>
       </div>
-      <p v-if="$fetchState.pending" class="text-sm text-red-300">...</p>
-      <p v-else-if="$fetchState.error" class="text-sm text-red-300">...</p>
+      <p v-if="$fetchState.pending" class="text-sm text-color">...</p>
+      <p v-else-if="$fetchState.error" class="text-sm text-color">...</p>
       <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
       </div>

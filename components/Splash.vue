@@ -64,29 +64,25 @@
      background:  rgb(255,255,255,1);
    }
    .bg-a100c-1-splash {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.15) 0%, rgba(255,117,0,0.15) 50%, rgba(255,0,35,0.15) 100%);
+       background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(111,80,80,0.5) 0%, rgba(240,235,227,0.5) 48%, rgba(146,153,101,0.5) 100%);
     }
     .bg-a100c-1-splash-image {
       background-image: var(--background-image);
       background-size: cover;
    }
    .bg-a100c-1-hover, .bg-a100c-1-button {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.5) 0%, rgba(255,117,0,0.5) 50%, rgba(255,0,35,0.5) 100%);
+      background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(111,80,80,1) 0%, rgba(223,214,185,1) 48%, rgba(146,153,101,1) 100%);
    }
    .bg-a100c-1-button {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,249,0.75) 0%, rgba(255,117,0,0.75) 50%, rgba(255,0,35,0.76) 100%);
+      background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(111,80,80,1) 0%, rgba(223,214,185,1) 48%, rgba(146,153,101,1) 100%);
    }
-   .bg-a100c-2 {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,117,0,0.15) 0%, rgba(255,0,35,0.15) 50%, rgba(255,0,249,0.15) 100% );
+   .text-color {
+      color: #373030
    }
-   .bg-a100c-3 {
-      background: rgb(255,0,249);
-      background: linear-gradient(90deg, rgba(255,0,35,0.15) 0%, rgba(255,0,249,0.15) 50%, rgba(255,117,0,0.15) 100% );
-   }
+
 </style>
 
 <template>

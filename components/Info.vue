@@ -12,7 +12,7 @@
     <div id="info_content" class="my-2">
       <div id="info_content_header" class="">
         <h2 class="block font-semibold text-2xl px-4 py-1 lg:px-8">
-          <nuxt-link :to="{ path: '/'}" class="text-red-300">
+          <nuxt-link :to="{ path: '/'}" class="text-color">
             {{ data.title }}
           </nuxt-link>
         </h2>

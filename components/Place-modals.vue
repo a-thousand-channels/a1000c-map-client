@@ -48,7 +48,7 @@
               </div>
             </div>
             <div class="modal-header pt-1 sm:pt-2 px-4">
-              <p class="text-sm sm:text-md my-0 sm:my-4"><span v-if="data.title != layer.title">{{data.title}} </span><span v-else><nuxt-link :to="{ path: '/'}">Home</nuxt-link></span> <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
+              <p class="text-sm sm:text-md my-0 sm:my-4"><span v-if="data.title != layer.title">{{data.title}} </span><span v-else><nuxt-link :to="{ path: '/'}">Start</nuxt-link></span> <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
               <h2 class="text-sm sm:text-md"><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">
