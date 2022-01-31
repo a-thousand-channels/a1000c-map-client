@@ -81,8 +81,20 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
+      name: 'A 1000 channels',
+      lang: 'en',
+      display: 'standalone',
     }
+  },
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern: 'ttps://tiles.3plusx.io/.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+      },
+    ]
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
