@@ -335,7 +335,7 @@
                       :name="layer.title"
                       :ref="layer.title"
                       layer-type="overlay"
-                      @update:visible="onLayerVisible(layer.id)"
+                      @update:visible="onLayerVisible(layer.id,layer.title)"
                     >
                        <l-circle-marker
                         v-for="(place, index) in layer.places"
@@ -460,8 +460,6 @@ export default {
     if ( this.custom_data_url ) {
       this.data_url = this.custom_data_url
     } else {
-      // does not work (yet)
-      // this.$router.push('/')
       this.data_url = this.default_data_url
     }
     // check local content
@@ -482,7 +480,7 @@ export default {
           response.data
         )
         console.log('fetch REMOTE... ')
-        console.log(this.dataobj)
+        console.log(this.dataobj.layer.title)
       }
     }
       
@@ -514,7 +512,7 @@ export default {
 
         if (this.data.mapcenter_lat && this.data.mapcenter_lon ) {
           this.mapcenter = [this.data.mapcenter_lat, this.data.mapcenter_lon]
-          console.log("mapcenter "+ this.mapcenter)
+          console.log("Mapcenter "+ this.mapcenter)
         }
         if (this.data.zoom ) {
           this.mapzoom = this.data.zoom
@@ -537,10 +535,13 @@ export default {
     }
 
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
-      if ( this.places.length > 0 ) {
-        // console.log("afterFetch: fitBounds w/"+this.places.length)
-        // disabled, since counters the flyto feature
-        // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+      if ( this.places.length > 0 && this.$route.query.flyto !== 'true' ) {
+        console.log("afterFetch: fitBounds w/"+this.places.length)
+        // don't use bremen as center for ever :)
+        console.log("Mapcenter: "+this.mapcenter[0])
+        if ( this.mapcenter[0] == 0 ) {
+          this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+        }
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
@@ -559,11 +560,10 @@ export default {
       console.log(this.mapobj)
 
     },
-    onLayerVisible(id) {
+    onLayerVisible(id,title) {
       this.id = id;
       console.log("onLayerVisible");
-
-      console.log(id)
+      console.log(id + " "+ title)
     },
     onTileLayerVisible(basemap) {
       console.log("onTileLayerVisible");
@@ -574,9 +574,11 @@ export default {
       this.$nextTick(() => {
         this.mapobj = mapObject;
         if ( (this.data) && (this.places) && (this.$refs.map) ) {
+          console.log("Map operations")
+          // this is too early for async fetching of the map data. so see fetch for this routine
           if ( this.places.length > 0 ) {
             // dont use bremen as center for ever :)
-            console.log("mapcenter: "+this.mapcenter[0])
+            console.log("Mapcenter: "+this.mapcenter[0])
             if ( this.mapcenter[0] == 0 ) {
               console.log("onMapReady: fitBounds w/"+this.places.length)
               this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))

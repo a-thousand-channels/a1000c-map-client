@@ -90,11 +90,9 @@ export default {
     recenterMap(lat,lon,index) {
       this.$nextTick(() => {
         console.log("recenter map to "+ lat +"/"+lon);
-        this.$router.push({ name: 'main', hash: '#map' });
-        // this.$refs.map.mapObject.flyTo([lat,lon],16);
-        // this.$parent.mapObject.flyTo([lat,lon],16);
+        this.$router.push({ name: 'main', hash: '#map', query: { flyto: "true" } });
         // TODO: carefully adapt zoom level
-        this.map.flyTo([lat,lon],12);
+        this.map.flyTo([lat,lon],16);
 
       })
     }

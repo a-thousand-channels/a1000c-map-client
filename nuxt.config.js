@@ -9,6 +9,7 @@ export default {
   publicPath: process.env.PUBLIC_PATH || '/',
 
   defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
+  // defaultDataUrl: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
   localDataUrl: '/_content/data',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -134,8 +135,8 @@ export default {
         var query = from.query.place_id
         if ( !query ) {
           query  = to.query.place_id
+          console.log("Place: #"+query)
         }
-        console.log("Place: #"+query)
         let place = await findEl("#"+query)
         if (place) {
           console.log("Place found at "+ place)

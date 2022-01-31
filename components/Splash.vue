@@ -163,30 +163,35 @@ export default {
     }
     console.log('fetch...')
     console.log(this.dataobj)
-    if ( this.dataobj ) {
+    if ( this.dataobj >= 1 ) {
       console.log('data already fetched')
     }
     if ( this.custom_data_url ) {
       this.data_url = this.custom_data_url
     } else {
-      // does not work (yet)
-      // this.$router.push('/')
       this.data_url = this.default_data_url
     }
     // check local content
-    // var dataobj_temp = await this.$content(this.localDataUrl).fetch();
-    // this.dataobj = dataobj_temp[0];
+    var dataobj_temp = await this.$content(this.localDataUrl).fetch().catch((err) => {
+      console.log('error')
+    });
 
-    console.log('fetch LOCAL...')
-    console.log(this.dataobj)
-    // if( this.dataobj.length == 0 ) {
-      this.dataobj = await axios.get(this.data_url).then(response =>
-        response.data
-      )
-      console.log('fetch REMOTE... ')
+   if(dataobj_temp.length > 0 ) {
+      this.dataobj = dataobj_temp[0];
+      console.log('fetch LOCAL...')
       console.log(this.dataobj)
-    // }
 
+    } else {
+      console.log('fetch LOCAL ERROR...',this.dataobj.length)
+      // get remote content
+      if(this.dataobj.length == undefined ) {
+        this.dataobj = await axios.get(this.data_url).then(response =>
+          response.data
+        )
+        console.log('fetch REMOTE... ')
+        console.log(this.dataobj.layer.title)
+      }
+    }
     // check if its a map
     if ( this.dataobj.map ) {
       this.data = this.dataobj.map
@@ -241,7 +246,7 @@ export default {
       if ( this.places.length > 0 ) {
         // console.log("afterFetch: fitBounds w/"+this.places.length)
         // disabled, since counters the flyto feature
-        // this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+        this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
