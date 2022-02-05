@@ -6,14 +6,15 @@
   opacity: 0;
   /* always hidden, since we use the loop: true option ; */
 }
-#list_inner .swiper-button-prev, .swiper-button-next {
-  opacity:  0.8;
+#list_inner .swiper-button-prev {
+  opacity:  0;
   color: #999
 }
 #list_inner .swiper-button-next {
   opacity:  0.8;
   color: #999
-}#list_inner .swiper-button-next:after {
+}
+#list_inner .swiper-button-next:after {
   font-size: 25px;
 }
 #list_inner .swiper-button-prev.swiper-button-disabled,
@@ -58,8 +59,10 @@
               </span>
             </div>
           </div>
+          <div v-if="place.images.length > 1">
             <div tabindex="0" :class="`swiper-button-prev swiper-button-prev${index}`" role="button"></div>
             <div tabindex="1" :class="`swiper-button-next swiper-button-next${index}`" role="button"></div>
+          </div>
         </div>
         <h3 class="font-semibold text-lg px-4 py-2 sm:px-16 sm:pt-6">{{ place.title }}</h3>
         <div class="text-gray-500 px-4 sm:px-16 sm:py-3" v-html="place.teaser"></div>
