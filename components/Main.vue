@@ -415,7 +415,6 @@ export default {
       this.dataobj = dataobj_temp[0];
       console.log('fetch LOCAL...')
       console.log(this.dataobj)
-
     } else {
       console.log('fetch LOCAL ERROR...',this.dataobj.length)
       // get remote content
