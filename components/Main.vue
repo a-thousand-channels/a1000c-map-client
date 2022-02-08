@@ -3,65 +3,6 @@
     @tailwind components;
     @tailwind utilities;
 
-    /* work-sans-regular - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-600 - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-800 - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-600italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-800italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 800;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
     @layer components {
       border-transparent {
         border-color:  transparent;
@@ -264,12 +205,15 @@
 <template>
 
 <div id="page">
- <style v-if="data.backgroundimage_link">
+ <style v-if="this.data.backgroundimage_link  || this.data.background_color">
   :root {
-    --background-color: {{ data.background_color ?  data.background_color : '' }};
-    --background-image: url('{{ data.backgroundimage_link ? data.backgroundimage_link : '' }}');
+    --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+    --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
   }
-   .bg-a100c-1 {
+   .bg-a100c-1,
+   .bg-a100c-2,
+   .bg-a100c-3
+   {
       background-color: var(--background-color);
       background-image: var(--background-image);
       background-size: cover;
@@ -325,7 +269,7 @@
           </p>
         </div>
         <div id="map_inner" class="h-full bg-red-0 bg-opacity-0 my-1 mx-1">
-          <div id="map_map" class="h-full w-full border-solid border-2 border-white shadow z-40">
+          <div id="map_map" class="h-full w-full border-solid border-2 shadow z-40">
            <client-only>
                 <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" ref="map" @ready="onMapReady" class=" bg-map">
                   <l-control-layers position="topright"></l-control-layers>
@@ -535,11 +479,12 @@ export default {
     }
 
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
+      console.log("afterFetch: fitBounds w/"+this.places.length)
       if ( this.places.length > 0 && this.$route.query.flyto !== 'true' ) {
-        console.log("afterFetch: fitBounds w/"+this.places.length)
         // don't use bremen as center for ever :)
         console.log("Mapcenter: "+this.mapcenter[0])
         if ( this.mapcenter[0] == 0 ) {
+          console.log("afterFetch: fitBounds w/"+this.places.length)
           this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
         }
       } else {
@@ -612,11 +557,14 @@ export default {
             console.log(baseMaps)
           }
           if ( ( this.data ) && ( this.data.background_color ) ) {
-            var m = document.getElementById("map_map");
-            m.style.backgroundColor = this.data.background_color;
+            // var m = document.getElementById("page_inner");
+            // m.style.background = this.data.background_color;
+            var sections = document.getElementsByTagName("section");
+            var i;
+            for (i = 0; i < sections.length; i++) {
+              sections[i].style.background  = this.data.background_color;
+            }
           }
-
-
 
           if ( this.$refs.map.mapObject ) {
             L.control.layers(baseMaps).addTo(this.$refs.map.mapObject);

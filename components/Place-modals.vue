@@ -43,7 +43,7 @@
             <div v-if="place.images && place.images.length > 0" class="px-0 pb-4 sm:px-4">
               <div class="">
                 <span v-if="place.images[0]">
-                  <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-64">
+                  <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-96">
                 </span>
               </div>
             </div>

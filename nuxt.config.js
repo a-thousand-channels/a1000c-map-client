@@ -9,8 +9,6 @@ export default {
   publicPath: process.env.PUBLIC_PATH || '/',
 
   defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
-  // defaultDataUrl: 'https://staging.orte.link/public/maps/queer-places-in-hamburg/layers/nachtbar.json',
-  defaultDataUrl: 'https://orte.link/public/maps/from-gay-to-queer/layers/manu.json',
   localDataUrl: '/_content/data',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -21,7 +19,9 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'theme-color', content: '#ffffff' },
+      { name: 'msapplication-TileColor', content: '#ffffff' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -29,21 +29,13 @@ export default {
       { rel: 'icon', type: 'image/png', sizes: "32x32", href: '/favicon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: "16x16", href: '/favicon-16x16.png' },
 
-/*
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#ffc40d">
-<meta name="theme-color" content="#ffffff">
-*/
-
-
 
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-
+    '@/assets/css/fonts.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

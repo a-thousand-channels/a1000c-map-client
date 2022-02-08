@@ -1,67 +1,12 @@
 <style>
 
-
-    /* work-sans-regular - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-600 - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-800 - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-600italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-600italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* work-sans-800italic - latin-ext_latin */
-@font-face {
-  font-family: 'Work Sans';
-  font-style: italic;
-  font-weight: 800;
-  src: local(''),
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('~/assets/fonts/worksans/work-sans-v13-latin-ext_latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
+    body {
+      scroll-behavior: smooth;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
    .bg-white {
-     background:  rgb(255,255,255,1);
+      background-color: rgba(255,255,255,0.8);
    }
    .bg-a100c-1-splash {
        background: rgb(111,80,80);
@@ -87,22 +32,26 @@
 
 <template>
 <div id="page">
-  <style v-if="data.backgroundimage_link">
+  <style v-if="this.data.backgroundimage_link || this.data.background_color">
   :root {
-    --background-color: {{ data.background_color ?  data.background_color : '' }};
-    --background-image: url('{{ data.backgroundimage_link ? data.backgroundimage_link : '' }}');
+    --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+    --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
   }
    .bg-a100c-1-splash {
+      background: var(--background-color);
       background-color: var(--background-color);
       background-image: var(--background-image);
       background-size: cover;
    }
   </style>
-  <div class="relative flex overflow-x-auto items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
+  <div class="flex overflow-scroll items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
     <div class="max-w-4xl mx-auto px-6 py-3 lg:px-12 lg:py-6">
 
-      <div class="mt-4 overflow-hidden bg-white shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
-        <h2 class="text-3xl beta">
+      <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-4 px-8 py-4 md:px-8 lg:px-8">
+        <div class="lg:px-8" v-if="data.image_link">
+          <img v-bind:src="data.image_link" :alt="data.title" class="max-w-full sm:max-w-ws">
+        </div>
+        <h2 class="text-4xl mt-4">
           <span v-if="this.data.title">{{ this.data.title }}</span>
           <span v-else>Welcome to the prototype of our web map</span>
         </h2>
@@ -111,14 +60,14 @@
           <span v-else>We are developing a web map, that can easily be generated and published on the web. You will not need server side technologies for that, just a simple webspace. This prototype is work in progress.</span>
         </p>
         <p class="mt-4 pt-4 text-gray-800">
-          <nuxt-link :to="{ path: '/main', hash:'map', query: { layer: this.custom_data_url }}" class="bg-red-400 bg-a100c-1-button text-white text-center px-4 py-2 rounded-lg" id="jump">Check it out</nuxt-link>
+          <nuxt-link :to="{ path: '/main', hash:'map'}" class="bg-red-400 bg-a100c-1-button text-white text-center px-4 py-2 rounded-lg" id="jump">Check it out</nuxt-link>
         </p>
         <p class="mt-4 pt-4 text-gray-800">
-          <span v-if="this.data.tease">{{ this.data.tease }}</span>
+          <span v-if="this.data.tease">{{ this.data.teaser }}</span>
           <span v-else></span>
         </p>
       </div>
-      <div class="mt-4 overflow-hidden bg-white shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
+      <div class="mt-4 overflow-hidden bg-white text-small shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
         <p class="mt-3 text-gray-600">
           This map is provided by A thousand channels
         <p class="mt-3 text-gray-600">
@@ -255,6 +204,8 @@ export default {
         this.drawCurves();
       }
     }
+
+
     this.$set(this.data, 'state', false)
     // TODO: For static hosting , the fetch hook is only called during page generation!!
   },
