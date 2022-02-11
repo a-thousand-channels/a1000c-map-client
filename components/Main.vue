@@ -294,7 +294,7 @@
                         :id="index"
                         :options="{ title: 'marker-' + place.id, id: place.id, place_index: index, layer_index: lindex, layer_title: layer.title}"
                       >
-                        <l-tooltip :content="place.title" :options="{ permanent: false, direction: 'top' }" />
+                        <l-tooltip :content="place.title" :options="tooltip_options" />
                       </l-circle-marker>
                   </l-layer-group>
                </l-map>
@@ -371,14 +371,13 @@ export default {
         list_content: [],
         list_content_layer_title: '',
         list_content_layer_index: 0,
-        tooltip: {
-        },
         data_url: '',
         // data_url is now predefined via nuxt.config.js
         default_data_url: config.defaultDataUrl,
         // mapcenter could be definied via this.data or calculated by the extent of all places
         mapcenter: [0,0],
         mapzoom: 10,
+        tooltip_options: { permanent: false, direction: 'top', interactive: 'true' },
         circle: {
           radius: 14,
           color: 'transparent',
@@ -462,6 +461,9 @@ export default {
         }
         if (this.data.zoom ) {
           this.mapzoom = this.data.zoom
+        }
+        if (this.data.tooltip_display_mode == 'permanent' ) {
+          this.tooltip_options = { permanent: true, direction: 'top', interactive: 'true' }
         }
         console.log("Data for a map with " + this.data.layer.length + " accessible layer")
         this.places = this.data.places
