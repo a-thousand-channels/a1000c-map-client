@@ -359,11 +359,6 @@ export default {
   },
   mounted: function() {
     console.log("Mounted****")
-    if (this.$route.query.layer ) {
-      console.log(this.$route.query);
-      console.log(this.$route.query.layer)
-      this.custom_data_url = this.$route.query.layer
-    }
     this.jumpToMap()
   },
   data() {

@@ -125,12 +125,8 @@ export default {
             document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
           }
         }
-        var query = from.query.place_id
-        if ( !query ) {
-          query  = to.query.place_id
-          console.log("Place: #"+query)
-        }
-        let place = await findEl("#"+query)
+        let place_query = from.query.place_id
+        let place = await findEl("#"+place_query)
         if (place) {
           console.log("Place found at "+ place)
           if ('scrollBehavior' in document.documentElement.style) {

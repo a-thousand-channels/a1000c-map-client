@@ -120,15 +120,6 @@ export default {
 
       })
     },
-  },
-  data() {
-    return {
-    }
-  },
-  computed: {
-
-  },
-  methods: {
     getSwiperOptions(index){
      return {
         slidesPerView: 1,
@@ -146,6 +137,13 @@ export default {
         loop: true
       }
     }
+  },
+  data() {
+    return {
+    }
+  },
+  computed: {
+
   },
   mounted() {
   }

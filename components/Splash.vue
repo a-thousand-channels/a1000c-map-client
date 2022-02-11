@@ -48,8 +48,8 @@
     <div class="max-w-4xl mx-auto px-6 py-3 lg:px-12 lg:py-6">
 
       <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-4 px-8 py-4 md:px-8 lg:px-8">
-        <div class="lg:px-8" v-if="data.image_link">
-          <img v-bind:src="data.image_link" :alt="data.title" class="max-w-full sm:max-w-ws">
+        <div class="lg:px-0" v-if="data.image_link">
+          <img v-bind:src="data.image_link" :alt="data.title" class="max-w-full sm:max-w-ws max-h-[34rem]">
         </div>
         <h2 class="text-4xl mt-4">
           <span v-if="this.data.title">{{ this.data.title }}</span>
@@ -93,10 +93,10 @@ import config from '../nuxt.config'
 export default {
  data() {
     return {
-        dataobj: {},
-        data: {},
-        places: [],
-        places_with_relations: [],
+      dataobj: {},
+      data: {},
+      places: [],
+      places_with_relations: [],
       custom_data_url: '',
       data_url: '',
       // data_url is now predefined via nuxt.config.js
@@ -208,12 +208,6 @@ export default {
 
     this.$set(this.data, 'state', false)
     // TODO: For static hosting , the fetch hook is only called during page generation!!
-  },
-  mounted: function() {
-    if ( (this.$route) && (this.$route.query.layer) ) {
-      console.log(this.$route.query.layer)
-      this.custom_data_url = this.$route.query.layer
-    }
   }
 }
 </script>

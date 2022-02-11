@@ -6,7 +6,7 @@
 <template>
   <div>
   <div class="block bg-a100c-white rounded shadow py-2 px-2 sm:px-6 lg:px-8 lg:py-8">
-    <div id="info_image" class="lg:px-8" v-if="data.image_link">
+    <div id="info_image" class="pt-2 px-4 lg:px-8 lg:px-8" v-if="data.image_link">
       <img v-bind:src="data.image_link" :alt="data.title" class="max-w-full sm:max-w-ws">
     </div>
     <div id="info_content" class="my-2">
