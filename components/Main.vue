@@ -390,11 +390,14 @@ export default {
   async fetch() {
     if (this.$route.query.layer ) {
       this.custom_data_url = this.$route.query.layer
+    } else if ( this.$store.getters["getlayerUrl"] ) {
+      console.log('Get layer from store')
+      this.custom_data_url= this.$store.getters["getlayerUrl"]
+      console.log('Stored layerUrl: '+ this.$store.getters["getlayerUrl"])
     }
-    console.log('fetch...')
-    console.log(this.dataobj)
-    if ( this.dataobj.length >= 1 ) {
-      console.log('data already fetched')
+    console.log('Start to fetch...')
+    if ( this.dataobj && this.dataobj.length > 0 ) {
+      console.log('Data already fetched')
     }
     if ( this.custom_data_url ) {
       this.data_url = this.custom_data_url
@@ -403,22 +406,27 @@ export default {
     }
     // check local content
     var dataobj_temp = await this.$content(this.localDataUrl).fetch().catch((err) => {
-      console.log('error')
+      console.log('Error')
     });
     
     if(dataobj_temp.length > 0 ) {
       this.dataobj = dataobj_temp[0];
-      console.log('fetch LOCAL...')
+      console.log('Fetch LOCAL...')
       console.log(this.dataobj)
     } else {
-      console.log('fetch LOCAL ERROR...',this.dataobj.length)
+      console.log('Fetch LOCAL ERROR...',this.dataobj.length)
       // get remote content
       if(this.dataobj.length == undefined ) {
         this.dataobj = await axios.get(this.data_url).then(response =>
           response.data
         )
-        console.log('fetch REMOTE... ')
-        console.log(this.dataobj.layer.title)
+        console.log('Fetch REMOTE... ')
+        if ( this.$route.query.layer ) {
+          console.log('fetch REMOTE URL by param ... ')
+        } else {
+          console.log('fetch REMOTE URL by config ... ')
+        }
+        console.log('Layer title: "'+this.dataobj.layer.title+'"')
       }
     }
       
