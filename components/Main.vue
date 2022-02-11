@@ -485,6 +485,7 @@ export default {
       if ( this.places.length > 0 && this.$route.query.flyto !== 'true' ) {
         // don't use bremen as center for ever :)
         console.log("Mapcenter: "+this.mapcenter[0])
+        console.log("Mapzoom: "+this.mapzoom)
         if ( this.mapcenter[0] == 0 ) {
           console.log("afterFetch: fitBounds w/"+this.places.length)
           this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
@@ -492,6 +493,8 @@ export default {
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
+      this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.places.map(m => { return [m.lat, m.lon] }))
+      console.log("afterFetch: set Mapzoom to "+this.mapzoom)
       if ( this.data.layer ) {
         console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
         this.drawCurves();
@@ -529,6 +532,8 @@ export default {
             if ( this.mapcenter[0] == 0 ) {
               console.log("onMapReady: fitBounds w/"+this.places.length)
               this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+              this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.places.map(m => { return [m.lat, m.lon] }))
+              console.log("afterFetch: set Mapzoom to "+this.mapzoom)
             }
           } else {
             console.log("onMapReady: NO fitBounds w/"+this.places.length)

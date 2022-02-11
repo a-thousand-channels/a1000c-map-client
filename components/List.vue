@@ -113,10 +113,16 @@ export default {
   methods: {
     recenterMap(lat,lon,index) {
       this.$nextTick(() => {
-        console.log("recenter map to "+ lat +"/"+lon);
+        console.log("Recenter map to "+ lat +"/"+lon);
+        console.log("Predefined zoom level: "+ this.data.zoom);
+        let z = 10;
+        if ( this.data.zoom > 10 ) {
+          z = this.data.zoom + 3;
+          console.log("Set zoom level to: "+ z);
+        }
         this.$router.push({ name: 'main', hash: '#map', query: { flyto: "true" } });
         // TODO: carefully adapt zoom level
-        this.map.flyTo([lat,lon],16);
+        this.map.flyTo([lat,lon],z);
 
       })
     },

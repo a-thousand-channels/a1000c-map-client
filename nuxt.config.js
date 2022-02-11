@@ -127,7 +127,8 @@ export default {
             document.getElementById('page_inner').scrollTo({ top: el.offsetTop, left: el.offsetLeft })
           }
         }
-        let place_query = from.query.place_id
+        let place_query = to.query.place_id
+        console.log("Place query "+ place_query)
         let place = await findEl("#"+place_query)
         if (place) {
           console.log("Place found at "+ place)
