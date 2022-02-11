@@ -1,6 +1,7 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  ssr: false,
 
   static: {
     prefix: true
@@ -43,7 +44,8 @@ export default {
     { src: '@/plugins/vue-shortkey.js', mode: 'client' },
     { src: '@/plugins/vue-awesome-swiper.js', mode: 'client' },
     { src: '@/plugins/leaflet-curve.js', mode: 'client' },
-    { src: '@/plugins/filters.js', mode: 'client' }
+    { src: '@/plugins/filters.js', mode: 'client' },
+    { src: '~/plugins/preview.client.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
