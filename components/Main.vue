@@ -501,6 +501,16 @@ export default {
         console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
         this.drawCurves();
       }
+     var custom_basemap = '';
+      if ( ( this.data ) && ( this.data.basemap_url ) ) {
+        custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.attribution}).addTo(this.$refs.map.mapObject);
+        // remove basemap control element
+        const controlelements1 = document.getElementsByClassName('leaflet-top leaflet-right');
+        var elements = controlelements1[0].getElementsByClassName('leaflet-control-layers');
+        if ( controlelements1[0].length > 0 ) {
+          controlelements1[0].removeChild(elements[0]);
+        }
+      }
     }
     this.$set(this.data, 'state', false)
     // TODO: For static hosting , the fetch hook is only called during page generation!!
@@ -558,13 +568,9 @@ export default {
               "OpenStreetMap": openstreetmap_layer
           };
           console.log(baseMaps)
+          console.log(this.data.basemap_url)
 
-          var custom_basemap = '';
-          if ( ( this.data ) && ( this.data.basemap_url ) ) {
-            custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.attribution})
-            baseMaps["custom"] = custom_basemap
-            console.log(baseMaps)
-          }
+
           if ( ( this.data ) && ( this.data.background_color ) ) {
             // var m = document.getElementById("page_inner");
             // m.style.background = this.data.background_color;
@@ -607,11 +613,11 @@ export default {
               if ( layer.places_with_relations ) {
                 layer.places_with_relations.forEach ((place, key) => {
 
-                  console.log("places_with_relations: "+place.relations.length);
+                  // console.log("places_with_relations: "+place.relations.length);
 
                   place.relations.forEach ((relation, kkey) => {
 
-                    console.log("Relation_from ID:  "+relation.from.id);
+                    // console.log("Relation_from ID:  "+relation.from.id);
                     var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
                     var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
                     // console.log(point1);
