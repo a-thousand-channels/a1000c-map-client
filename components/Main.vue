@@ -250,6 +250,7 @@
   :root {
     --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
     --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
+    --map-background-color: {{ this.data.background_color ?  this.data.background_color : 'transparent' }};
   }
    .bg-a100c-1,
    .bg-a100c-2,
@@ -258,6 +259,9 @@
       background-color: var(--background-color);
       background-image: var(--background-image);
       background-size: cover;
+   }
+   #map_map {
+      background-color: var(--background-color);
    }
   </style>
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
