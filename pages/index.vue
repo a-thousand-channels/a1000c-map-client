@@ -6,7 +6,7 @@
 export default {
  data() {
     return {
-      title: 'Map prototype'
+      title: 'A 1000 Channels map prototype'
     }
   },
   head() {

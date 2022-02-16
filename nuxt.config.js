@@ -19,7 +19,12 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'title', name: 'title', content: 'A 1000 Channels map prototype' },
+      { hid: 'og:title', name: 'og:title', content: 'A 1000 Channels map prototype' },
+      { hid: 'description', name: 'description', content: 'This is the demo version of a web map, that can easily be generated and published on the web.' },
+      { id: 'og:description', name: 'og:description', content: 'This is the demo version of a web map, that can easily be generated and published on the web.' },
+      { name: 'og:image', content: 'https://a-thousand-channels.github.io/a1000c-map-client/a-thousand-channels--logo-variant-a--short.png'
+      },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'theme-color', content: '#ffffff' },
       { name: 'msapplication-TileColor', content: '#ffffff' }
@@ -29,6 +34,8 @@ export default {
       { rel: 'apple-touch-icon', sizes: '120x120', href: '/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/png', sizes: "32x32", href: '/favicon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: "16x16", href: '/favicon-16x16.png' },
+      { rel: 'manifest', href: '/site.webmanifest' },
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: "#5bbad5" }
 
 
     ]
