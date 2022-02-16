@@ -257,10 +257,10 @@
    .bg-a100c-3
    {
       background-color: var(--background-color);
-      background-image: var(--background-image);
+      /* background-image: var(--background-image); */
       background-size: cover;
    }
-   #map_map {
+   #map #map_map {
       background-color: var(--background-color);
    }
   </style>
