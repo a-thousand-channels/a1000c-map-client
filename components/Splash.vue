@@ -69,14 +69,14 @@
       </div>
       <div class="mt-4 overflow-hidden bg-white text-small shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
         <p class="mt-3 text-gray-600">
-          This map is provided by A thousand channels
+          This demo map is provided by A thousand channels
         <p class="mt-3 text-gray-600">
-          Give us a shout if you have questions, need help or want to support us. Please visit our <a href="https://github.com/a-thousand-channels/a1000c-map-client" style="text-decoration: none; background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 100%">Website</a>.
+          Give us a shout if you have questions, need help or want to support us. Please visit our <a href="https://www.a-thousand-channels.xyz/" style="text-decoration: none; background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 100%">Website</a>.
           We always are very happy about feedback and contributions :)
         </p>
         <p class="mt-3">
           <a href="https://www.a-thousand-channels.xyz/" target="_blank" style="text-decoration: none; background-image: linear-gradient(120deg, #fde68a 0, #fde68a 100%); background-repeat: no-repeat; background-size: 100% 0.4em; background-position: 0 100%">
-            A Thousand Channels – a queer 🏳️‍🌈 mapping 🗺 platform 🎁
+            A Thousand Channels – a queer 🏳️‍🌈 mapping 🌎 platform 🎁
           </a>
         </p>
       </div>
