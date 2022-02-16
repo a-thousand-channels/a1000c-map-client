@@ -676,9 +676,9 @@ export default {
 
                     var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
                     // var color = clustercolor;
-                    if ( layer.color ) {
-                      color = layer.color
-                    }
+                    // if ( layer.color ) {
+                    //  color = layer.color
+                    // }
                     var pathOptions = {
                             color: color,
                             weight: 5,
