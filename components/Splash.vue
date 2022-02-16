@@ -40,10 +40,11 @@
    .bg-a100c-1-splash {
       background: var(--background-color);
       background-color: var(--background-color);
-      background-image: var(--background-image);
       background-size: cover;
    }
+   /* background-image: var(--background-image); */
   </style>
+
   <div class="flex overflow-scroll items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
     <div class="max-w-4xl mx-auto px-6 py-3 lg:px-12 lg:py-6">
 
