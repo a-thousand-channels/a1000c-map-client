@@ -11,15 +11,14 @@ describe('Main > Map', () => {
       cy.visit('http://localhost:3000/main')
     })
     it('displays main > map page ', () => {
-      // cy.get('#map_header_content').contains('Start —')
-      // cy.get('#map_header_content').contains(project_title)
+      cy.get('#map_header_content').contains('Start —')
+      cy.get('#map_header_content').contains(project_title)
     })
     it('click on right nav button switches to list ', () => {
       cy.get("a#link_to_list").should("have.attr", "href", "/main#list").click()
       cy.url().should('eq', 'http://localhost:3000/main#list')
-    })
-    it('shows header of list block', () => {
-      cy.get('ul li h2 span').contains(project_title)
+      cy.wait(1500)
+      cy.get('section#list ul li h2').contains(project_title)
     })
     it('click on left nav button switches back to map ', () => {
       cy.get("a#link_from_list_to_map").should("have.attr", "href", "/main#map").click()
