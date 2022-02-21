@@ -438,6 +438,7 @@ export default {
         // mapcenter could be definied via this.data or calculated by the extent of all places
         mapcenter: [0,0],
         mapzoom: 10,
+        mapbounds: [],
         tooltip_options: { permanent: false, direction: 'top', interactive: 'true' },
         custom_basemap: [],
         circle: {
@@ -561,7 +562,8 @@ export default {
         console.log("Mapzoom: "+this.mapzoom)
         if ( this.mapcenter[0] == 0 ) {
           console.log("afterFetch: fitBounds w/"+this.places.length)
-          this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
+          this.mapbounds = this.places.map(m => { return [m.lat, m.lon] })
+          this.$refs.map.mapObject.fitBounds(this.mapbounds)
         }
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
@@ -615,8 +617,9 @@ export default {
             console.log("Mapcenter: "+this.mapcenter[0])
             if ( this.mapcenter[0] == 0 ) {
               console.log("onMapReady: fitBounds w/"+this.places.length)
-              this.$refs.map.mapObject.fitBounds(this.places.map(m => { return [m.lat, m.lon] }))
-              this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.places.map(m => { return [m.lat, m.lon] }))
+              this.mapbounds = this.places.map(m => { return [m.lat, m.lon] })
+              this.$refs.map.mapObject.fitBounds(this.mapbounds)
+              this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.mapbounds)
               console.log("afterFetch: set Mapzoom to "+this.mapzoom)
             }
           } else {
@@ -774,7 +777,11 @@ export default {
     },
     centerMap() {
       console.log("centerMap")
-      this.$refs.map.mapObject.flyTo(this.mapcenter,this.mapzoom);
+      if ( this.mapcenter[0] == 0 ) {
+        this.$refs.map.mapObject.flyToBounds(this.mapbounds,this.mapzoom);
+      } else {
+        this.$refs.map.mapObject.flyTo(this.mapcenter,this.mapzoom);
+      }
     },
     recenterMap(lat,lon) {
       // this.$refs.map.mapObject.panTo(lat,lon);
