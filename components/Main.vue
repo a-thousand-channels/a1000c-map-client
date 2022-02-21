@@ -124,7 +124,7 @@
       background-color: rgba(255,255,255,0.8);
    }
    .bg-red-100 {
-      background-color: rgba(255,255,255,0.35);
+      background-color: rgba(255,255,255,0.55);
    }
    .bg-map {
 
@@ -175,7 +175,8 @@
       border: 2px solid #444;
     }
     #map_map .leaflet-touch .leaflet-control-attribution {
-      display:  none;
+      /* display: none */
+      background: rgba(255, 255, 255, 0.5);
     }
     #map_map .leaflet-control-zoom-in, .leaflet-control-zoom-out {
       background-color: transparent;
@@ -234,7 +235,7 @@
         color: #fff;
         font-family: monospace;
         white-space: nowrap;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
 
     /* hotfix for display error #40 */
@@ -246,23 +247,33 @@
 <template>
 
 <div id="page">
- <style v-if="this.data.backgroundimage_link  || this.data.background_color">
-  :root {
-    --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
-    --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
-    --map-background-color: {{ this.data.background_color ?  this.data.background_color : 'transparent' }};
-  }
-   .bg-a100c-1,
-   .bg-a100c-2,
-   .bg-a100c-3
-   {
-      background-color: var(--background-color);
-      /* background-image: var(--background-image); */
-      background-size: cover;
-   }
-   #map #map_map {
-      background-color: var(--background-color);
-   }
+  <style v-if="this.data.backgroundimage_link && this.data.background_color">
+    :root {
+      --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+      --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
+    }
+      .bg-a100c-1,
+      .bg-a100c-2,
+      .bg-a100c-3 {
+        background-image: none;
+        background-color: var(--background-color);
+        background-size: cover;
+     }
+  </style>
+  <style v-else-if="this.data.background_color">
+    :root {
+      --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+    }
+      .bg-a100c-1,
+      .bg-a100c-2,
+      .bg-a100c-3 {
+        background: var(--background-color);
+        background-color: none;
+        background-size: cover;
+     }
+    #map #map_map {
+       background-color: var(--background-color);
+    }
   </style>
   <div id="page_inner" class="flex a1000c-horizontal" ref="scroll_container" @wheelX="scrollX">
     <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
@@ -428,6 +439,7 @@ export default {
         mapcenter: [0,0],
         mapzoom: 10,
         tooltip_options: { permanent: false, direction: 'top', interactive: 'true' },
+        custom_basemap: [],
         circle: {
           radius: 14,
           color: 'transparent',
@@ -531,7 +543,16 @@ export default {
         }
       }
     }
-
+    if ( ( this.dataX ) && ( this.data.background_color ) ) {
+      // var m = document.getElementById("page_inner");
+      // m.style.background = this.data.background_color;
+      console.log("background_color")
+      var sections = document.getElementsByTagName("section");
+      var i;
+      for (i = 0; i < sections.length; i++) {
+        sections[i].style.background  = this.data.background_color;
+      }
+    }
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
       console.log("afterFetch: fitBounds w/"+this.places.length)
       if ( this.places.length > 0 && this.$route.query.flyto !== 'true' ) {
@@ -551,9 +572,10 @@ export default {
         console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
         this.drawCurves();
       }
-     var custom_basemap = '';
+
       if ( ( this.data ) && ( this.data.basemap_url ) ) {
-        custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.attribution}).addTo(this.$refs.map.mapObject);
+        this.custom_basemap = L.tileLayer(this.data.basemap_url, {attribution: this.data.basemap_attribution}).addTo(this.$refs.map.mapObject);
+        this.$refs.map.mapObject.addControl(this.custom_basemap);
         // remove basemap control element
         const controlelements1 = document.getElementsByClassName('leaflet-top leaflet-right');
         var elements = controlelements1[0].getElementsByClassName('leaflet-control-layers');
@@ -618,18 +640,10 @@ export default {
               "OpenStreetMap": openstreetmap_layer
           };
           console.log(baseMaps)
+
           console.log(this.data.basemap_url)
 
-
-          if ( ( this.data ) && ( this.data.background_color ) ) {
-            // var m = document.getElementById("page_inner");
-            // m.style.background = this.data.background_color;
-            var sections = document.getElementsByTagName("section");
-            var i;
-            for (i = 0; i < sections.length; i++) {
-              sections[i].style.background  = this.data.background_color;
-            }
-          }
+          console.log(this.custom_basemap)
 
           if ( this.$refs.map.mapObject ) {
             L.control.layers(baseMaps).addTo(this.$refs.map.mapObject);
@@ -642,13 +656,9 @@ export default {
                 m.classList.add("dark");
               } else {
                 m.classList.remove("dark");
-
               }
             });
           }
-
-
-
           if ( this.data.layer ) {
             console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
             // this.drawCurves();

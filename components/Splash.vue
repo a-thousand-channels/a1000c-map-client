@@ -16,13 +16,25 @@
       background-image: var(--background-image);
       background-size: cover;
    }
-   .bg-a100c-1-hover, .bg-a100c-1-button {
+   .bg-a100c-1-hover {
       background: rgb(111,80,80);
       background: linear-gradient(90deg, rgba(111,80,80,1) 0%, rgba(223,214,185,1) 48%, rgba(146,153,101,1) 100%);
    }
    .bg-a100c-1-button {
       background: rgb(111,80,80);
       background: linear-gradient(90deg, rgba(111,80,80,1) 0%, rgba(223,214,185,1) 48%, rgba(146,153,101,1) 100%);
+   }
+  .bg-a100c-1 {
+       background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(240,235,227,0.5)  0%, rgba(146,153,101,0.5) 48%, rgba(111,80,80,0.5)100%);
+   }
+   .bg-a100c-2 {
+       background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(111,80,80,0.5) 0%, rgba(240,235,227,0.85) 48%, rgba(146,153,101,0.5) 100%);
+   }
+   .bg-a100c-3 {
+         background: rgb(111,80,80);
+      background: linear-gradient(90deg, rgba(146,153,101,0.5) 0%, rgba(111,80,80,0.5)  48%, rgba(240,235,227,0.5) 100%);
    }
    .text-color {
       color: #373030
@@ -32,17 +44,37 @@
 
 <template>
 <div id="page">
-  <style v-if="this.data.backgroundimage_link || this.data.background_color">
-  :root {
-    --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
-    --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
-  }
-   .bg-a100c-1-splash {
-      background: var(--background-color);
-      background-color: var(--background-color);
-      background-size: cover;
-   }
-   /* background-image: var(--background-image); */
+  <style v-if="this.data.backgroundimage_link && this.data.background_color">
+    :root {
+      --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+      --background-image: url('{{ this.data.backgroundimage_link ? this.data.backgroundimage_link : '' }}');
+    }
+      .bg-a100c-1-splash {
+        background-image: var(--background-image);
+        background-color: var(--background-color);
+        background-size: cover;
+     }
+     .bg-a100c-1-button {
+        background: none;
+        background-color: rgba(242, 71, 38, 1);
+     }
+  </style>
+  <style v-else-if="!this.data.backgroundimage_link && this.data.background_color">
+    :root {
+      --background-color: {{ this.data.background_color ?  this.data.background_color : '' }};
+    }
+     .bg-a100c-1-splash {
+        background: var(--background-color);
+        background-color: none;
+        background-size: cover;
+     }
+     .bg-a100c-1-button {
+        background: none;
+        background-color: rgba(242, 71, 38, 1);
+     }
+      #map #map_map {
+         background-color: var(--background-color);
+      }
   </style>
 
   <div class="flex overflow-scroll items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
@@ -50,7 +82,7 @@
 
       <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-4 px-8 py-4 md:px-8 lg:px-8">
         <div class="lg:px-0" v-if="data.image_link">
-          <img v-bind:src="data.image_link" :alt="data.title" class="max-w-full sm:max-w-ws max-h-[34rem]">
+          <img v-bind:src="data.image_link" :alt="data.title" class="mx-auto max-w-full sm:max-w-ws max-h-[34rem]">
         </div>
         <h2 class="text-4xl mt-4">
           <span v-if="this.data.title">{{ this.data.title }}</span>

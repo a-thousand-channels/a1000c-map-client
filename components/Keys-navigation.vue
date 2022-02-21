@@ -4,7 +4,7 @@
 </style>
 
 <template>
-  <div class="static z-50 invisible md:visible">
+  <div class="static z-[9999] invisible md:visible">
     <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/3">
       <p class="text-color bg-red-100 px-2 py-0.5 rounded-sm text-sm items-center whitespace-nowrap">
         Navigate with arrow keys:
