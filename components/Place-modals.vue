@@ -36,14 +36,19 @@
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-8 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md">
+          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-2 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md">
             <div class="text-right px-0 py-0 w-8 float-right text-3xl">
               <button class="close-button" aria-label="close" @click="closeModal(place)">&times;</button>
             </div>
             <div v-if="place.images && place.images.length > 0" class="px-0 pb-4 sm:px-4">
               <div class="">
                 <span v-if="place.images[0]">
-                  <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-96">
+                  <span v-if="layer.id == 70">
+                    <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 md:max-w-[85vw] md:max-h-[95vh] lg:max-w-[85vw] lg:max-h-[95vh]">
+                  </span>
+                  <span v-else>
+                    <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-96">
+                  </span>
                 </span>
               </div>
             </div>
