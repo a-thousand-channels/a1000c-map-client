@@ -8,6 +8,7 @@ describe('Main > Map', () => {
   })
   describe('Call page and change page views', () => {
     before(() => {
+      cy.wait(1000)
       cy.visit('http://localhost:3000/main')
     })
     it('displays main > map page ', () => {
