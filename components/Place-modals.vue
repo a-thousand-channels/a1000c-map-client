@@ -31,20 +31,20 @@
 </style>
 
 <template>
-  <div class="places-list sm:relative z-50">
+  <div class="places-list relative sm:relative z-50">
     <div v-for='(layer,lindex) in layers' class="">
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content absolute inset-4 p-4 pt-2 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-2 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md">
-            <div class="text-right px-0 py-0 w-8 float-right text-3xl">
+          <div class="modal-content relative inset-4 p-4 pt-2 pb-6 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-2 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md md:max-w-[90vw]">
+            <div class="text-right pr-2 py-0 w-8 float-right text-4xl leading-none">
               <button class="close-button" aria-label="close" @click="closeModal(place)">&times;</button>
             </div>
             <div v-if="place.images && place.images.length > 0" class="px-0 pb-4 sm:px-4">
               <div class="">
                 <span v-if="place.images[0]">
                   <span v-if="layer.id == 70">
-                    <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 md:max-w-[85vw] md:max-h-[95vh] lg:max-w-[85vw] lg:max-h-[95vh]">
+                    <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-[28rem] sm:max-h-60 md:max-w-[80vw] md:max-h-[70vh] lg:max-w-[80vw] lg:max-h-[70vh]">
                   </span>
                   <span v-else>
                     <img v-bind:src="place.images[0].image_url" :alt="place.images[0].alt" class="max-w-full sm:max-w-md max-h-56 sm:max-h-60 lg:max-h-96">
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="modal-header pt-1 sm:pt-2 px-4">
-              <p class="text-sm sm:text-md my-0 sm:my-4"><span v-if="data.title != layer.title">{{data.title}} </span><span v-else><nuxt-link :to="{ path: '/'}">Start</nuxt-link></span> <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
+              <p class="text-sm sm:text-md my-0 sm:mb-4"><span v-if="data.title != layer.title">{{data.title}} </span><span v-else><nuxt-link :to="{ path: '/'}">Start</nuxt-link></span> <span v-if="data.layer[parseInt(lindex)]">— {{ data.layer[parseInt(lindex)].title}}</span></p>
               <h2 class="text-sm sm:text-md"><strong>{{place.title}}</strong> ({{place.id}})</h2>
             </div>
             <div class="modal-content">

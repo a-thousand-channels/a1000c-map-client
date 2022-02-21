@@ -365,7 +365,7 @@
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-color">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-color">...</p>
-      <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
+      <div v-else id="modals_wrapper" class="absolute top-4 right-4 sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data" :map="this.mapobj"></place-modals>
       </div>
 
@@ -568,8 +568,10 @@ export default {
       } else {
         console.log("afterFetch: NO fitBounds w/"+this.places.length)
       }
-      this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.places.map(m => { return [m.lat, m.lon] }))
-      console.log("afterFetch: set Mapzoom to "+this.mapzoom)
+      if ( this.mapzoom == 0 )  {
+        this.mapzoom = this.$refs.map.mapObject.getBoundsZoom(this.places.map(m => { return [m.lat, m.lon] }))
+        console.log("afterFetch: set Mapzoom to "+this.mapzoom)
+      }
       if ( this.data.layer ) {
         console.log("Check for data.layer w/"+this.data.layer.length+ " layer(s)")
         this.drawCurves();
