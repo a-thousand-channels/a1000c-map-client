@@ -11,6 +11,7 @@ describe('Main > Map', () => {
       cy.visit('http://localhost:3000/main')
     })
     it('displays main > map page ', () => {
+      cy.wait(1000)
       cy.get('#map_header_content').contains('Start —')
       cy.get('#map_header_content').contains(project_title)
     })
