@@ -366,7 +366,7 @@
       <p v-if="$fetchState.pending" class="text-sm text-color">...</p>
       <p v-else-if="$fetchState.error" class="text-sm text-color">...</p>
       <div v-else id="modals_wrapper" class="sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
-        <place-modals :layers="this.data.layer" :data="this.data"></place-modals>
+        <place-modals :layers="this.data.layer" :data="this.data" :map="this.mapobj"></place-modals>
       </div>
 
       <div class="nav flex flex-col  items-center content-center justify-center">

@@ -67,9 +67,12 @@
                 <div id="audio" class="player-wrapper px-4" v-if="place.audiolink" v-html="place.audiolink">
                 </div>
             </div>
-            <footer>
-              <p class="text-sm sm:text-md text-gray-500 px-4 py-1 sm:px-4 sm:py-4">
+            <footer class="flex">
+              <p class="flex-auto text-sm sm:text-md text-gray-500 px-4 py-1 sm:px-4 sm:py-4">
                 <button @click="showPlaceInList(place)" class="text-link">Show details</button>
+              </p>
+              <p class="flex-auto text-sm sm:text-md text-gray-500 px-4 py-1 sm:px-4 sm:py-4">
+                <button @click="openNextPopup(map,place,layer,index)" class="text-link">Next place</button>
               </p>
             </footer>
           </div>
@@ -93,6 +96,10 @@ export default {
     layers: {
       type: Array,
       required: true
+    },
+    map: {
+      type: Object,
+      required: false
     }
   },
   components: {
@@ -109,6 +116,20 @@ export default {
         place.state = !place.state;
         console.log("show place "+ place.id +" in list");
         this.$router.push({ name: 'main', hash: '#list', query: { place_id: "list-place-"+place.id }});
+      })
+    },
+    openNextPopup(map,place,layer,index) {
+      this.$nextTick(() => {
+        var next_index = index + 1
+        place.state = !place.state;
+        if ( layer.places[next_index] ) {
+          layer.places[next_index].state = !layer.places[next_index].state;
+        } else {
+          next_index = 0;
+          layer.places[next_index].state = !layer.places[next_index].state;
+        }
+        console.log("open next place "+ next_index +" in list");
+        map.flyTo([layer.places[next_index].lat,layer.places[next_index].lon],map.getZoom());
       })
     }
   },
