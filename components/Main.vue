@@ -80,6 +80,9 @@
     #info #info_inner img {
       max-height: 45vh;
     }
+    #info #info_inner p {
+      @apply mb-3
+    }
     #map {
       align-items: stretch;
     }
