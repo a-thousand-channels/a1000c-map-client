@@ -19,7 +19,10 @@
         <h3 v-if="data.subtitle" class="block font-semibold text-md px-4 py-1 lg:px-8">{{ data.subtitle }}</h3>
       </div>
       <div  class="block px-4 py-1 lg:px-8" v-html="data.text"></div>
-      <div v-if="data.credits" class="block text-sm text-grey-500  px-4 py-2 lg:px-8" v-html="data.credits"></div>
+      <div class="block text-sm text-grey-500  px-4 py-2 lg:px-8">
+        <p v-if="data.credits" v-html="data.credits"></p>
+        <p v-if="data.basemap_attribution" v-html="data.basemap_attribution"></p>
+      </div>
     </div>
   </div>
   <div class="block bg-a100c-white rounded shadow py-2 px-2 sm:px-10 lg:px-10 lg:py-8 mt-4">

@@ -9,6 +9,8 @@
       }
     }
 
+
+    #info_content p a,
     button.text-link,
     a.text-link {
       text-decoration: none;
@@ -177,6 +179,11 @@
     #map_map .leaflet-touch .leaflet-control-attribution {
       /* display: none */
       background: rgba(255, 255, 255, 0.5);
+    }
+    @media only screen and (max-width: 600px) {
+      #map_map .leaflet-touch .leaflet-control-attribution {
+        display: none;
+      }
     }
     #map_map .leaflet-control-zoom-in, .leaflet-control-zoom-out {
       background-color: transparent;
@@ -632,7 +639,7 @@ export default {
           var elements = controlelements[0].getElementsByClassName('leaflet-control-layers');
           controlelements[0].removeChild(elements[0]);
 
-          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Openstreemap + Contributors' })
+          var openstreetmap_layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Openstreemap Contributors' })
           var simple_basemap_layer = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightpink/{z}/{x}/{y}.png', {attribution: ''}).addTo(this.$refs.map.mapObject);
           var simple_basemap_dark = L.tileLayer('https://tiles.3plusx.io/world_populated_places/lightyellow/{z}/{x}/{y}.png', {attribution: ''})
           /*
