@@ -20,10 +20,12 @@
       background-position: 0 100%;
     }
 
-    body.main {
+    body.mainX {
       scroll-behavior: smooth;
-      overflow-y: hidden;
-      overflow-x: auto;
+      /* overflow-y: hidden;
+      overflow-x: auto; */
+      overflow-y: auto;
+      overflow-x: hidden;
     }
     #page {
 
