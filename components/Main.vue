@@ -20,7 +20,7 @@
       background-position: 0 100%;
     }
 
-    body {
+    body.main {
       scroll-behavior: smooth;
       overflow-y: hidden;
       overflow-x: auto;
@@ -430,6 +430,8 @@ export default {
   },
   mounted: function() {
     console.log("Mounted****")
+    document.body.classList.remove('splash')
+    document.body.classList.add('main')
     this.jumpToMap()
   },
   data() {

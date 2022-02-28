@@ -1,8 +1,8 @@
 <style>
 
-    body {
+    body.splash {
       scroll-behavior: smooth;
-      overflow-y: auto;
+      overflow-y: scroll;
       overflow-x: hidden;
     }
    .bg-white {
@@ -80,7 +80,7 @@
   <div class="flex items-top justify-center min-h-screen bg-a100c-1-splash sm:items-center sm:pt-0">
     <div class="max-w-4xl mx-auto px-6 py-3 lg:px-12 lg:py-6">
 
-      <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-4 px-8 py-4 md:px-8 lg:px-8">
+      <div class="bg-white shadow sm:rounded-lg mt-4 px-8 py-4 md:px-8 lg:px-8">
         <div class="lg:px-0" v-if="data.image_link">
           <img v-bind:src="data.image_link" :alt="data.title" class="mx-auto max-w-full sm:max-w-ws max-h-[34rem]">
         </div>
@@ -100,7 +100,7 @@
           <span v-else></span>
         </p>
       </div>
-      <div class="mt-4 overflow-hidden bg-white text-small shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
+      <div class="mt-4 bg-white text-small shadow sm:rounded-lg px-8 py-4 md:px-8 lg:px-8">
         <p class="mt-3 text-gray-600">
           This demo map is provided by A thousand channels
         <p class="mt-3 text-gray-600">
@@ -140,6 +140,8 @@ export default {
     '$route.query': '$fetch'
   },
   mounted: function() {
+    document.body.classList.remove('main')
+    document.body.classList.add('splash')
     console.log("Mounted****")
   },
   async fetch() {
