@@ -291,7 +291,6 @@
     <section ref="info" id="info" class="flex items-stretch min-h-screen max-h-screen bg-a100c-1 sm:pt-0 sm:pb-8"> <div class="content flex items-top overflow-x-auto">
         <div id="info_inner" class="bg-opacity-30 my-4 mx-5">
           <p v-if="$fetchState.pending" class="text-sm text-color">Loading...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-color">Please wait ...</p>
           <div v-else>
             <info :data="this.data"></info>
           </div>
@@ -375,7 +374,6 @@
         </div>
       </div>
       <p v-if="$fetchState.pending" class="text-sm text-color">...</p>
-      <p v-else-if="$fetchState.error" class="text-sm text-color">...</p>
       <div v-else id="modals_wrapper" class="absolute top-4 right-4 sm:absolute sm:top-4 sm:right-4" :class="{ 'is-active' : this.data.state }">
         <place-modals :layers="this.data.layer" :data="this.data" :map="this.mapobj"></place-modals>
       </div>
