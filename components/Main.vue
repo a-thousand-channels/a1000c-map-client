@@ -315,7 +315,6 @@
       <div class="content items-center justify-center">
         <div id="map_header" class="block">
           <p v-if="$fetchState.pending" class="text-sm text-color">Fetching places...</p>
-          <p v-else-if="$fetchState.error" class="text-sm text-color"></p>
           <div v-else>
             <p id="map_header_content" class="text-sm text-color">
               <nuxt-link :to="{ path: '/'}" class="text-color">Start</nuxt-link>
@@ -397,7 +396,6 @@
       <div id="list_content" class="content flex items-top overflow-x-auto pb-10">
           <div id="list_inner" class="bg-opacity-30 my-0 mx-0 mr-6 sm:my-4 sm:mx-5">
             <p v-if="$fetchState.pending">Fetching places...</p>
-            <p v-else-if="$fetchState.error"></p>
             <div v-else>
               <list :places="this.list_content" :layerindex="this.list_content_layer_index" :data="this.data" :map="this.mapobj"></list>
             </div>
