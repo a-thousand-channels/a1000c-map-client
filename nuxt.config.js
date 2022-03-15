@@ -9,7 +9,7 @@ export default {
 
   publicPath: process.env.PUBLIC_PATH || '/',
 
-  defaultDataUrl: 'https://orte.link/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers.json',
+  defaultDataUrl: 'https://orte-backend.a-thousand-channels.xyz/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers',
   localDataUrl: '/_content/data',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -22,22 +22,20 @@ export default {
       { hid: 'title', name: 'title', content: 'A 1000 Channels map prototype' },
       { hid: 'og:title', name: 'og:title', content: 'A 1000 Channels map prototype' },
       { hid: 'description', name: 'description', content: 'This is the demo version of a web map, that can easily be generated and published on the web.' },
-      { id: 'og:description', name: 'og:description', content: 'This is the demo version of a web map, that can easily be generated and published on the web.' },
-      { name: 'og:image', content: 'https://a-thousand-channels.github.io/a1000c-map-client/a-thousand-channels--logo-variant-a--short.png'
+      { hid: 'og:description', name: 'og:description', content: 'This is the demo version of a web map, that can easily be generated and published on the web.' },
+      { hid: 'og:description', name: 'og:image', content: 'https://a-thousand-channels.github.io/a1000c-map-client/a-thousand-channels--logo-variant-a--short.png'
       },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'theme-color', content: '#ffffff' },
       { name: 'msapplication-TileColor', content: '#ffffff' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', sizes: '120x120', href: '/apple-touch-icon.png' },
-      { rel: 'icon', type: 'image/png', sizes: "32x32", href: '/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: "16x16", href: '/favicon-16x16.png' },
+      { hid: 'icon', rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { hid: 'apple-touch-icon', rel: 'apple-touch-icon', sizes: '120x120', href: '/apple-touch-icon.png' },
+      { hid: 'icon-32', rel: 'icon', type: 'image/png', sizes: "32x32", href: '/favicon-32x32.png' },
+      { hid: 'icon-16', rel: 'icon', type: 'image/png', sizes: "16x16", href: '/favicon-16x16.png' },
       { rel: 'manifest', href: '/site.webmanifest' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: "#5bbad5" }
-
-
     ]
   },
 
