@@ -425,7 +425,7 @@ export default {
   },
   head() {
     return {
-      title: this.data.title || this.title,
+      title: this.data.title || null,
       meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -580,16 +580,6 @@ export default {
             this.$set(this.data.places[i], 'state', false)
           }
         }
-      }
-    }
-    if ( ( this.dataX ) && ( this.data.background_color ) ) {
-      // var m = document.getElementById("page_inner");
-      // m.style.background = this.data.background_color;
-      console.log("background_color")
-      var sections = document.getElementsByTagName("section");
-      var i;
-      for (i = 0; i < sections.length; i++) {
-        sections[i].style.background  = this.data.background_color;
       }
     }
     if ( (this.data) && (this.places) && (this.$refs.map) ) {
