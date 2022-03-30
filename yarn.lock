@@ -945,12 +945,13 @@
     "@cypress/mount-utils" "1.0.2"
     "@vue/test-utils" "^2.0.0-rc.10"
 
-"@cypress/webpack-dev-server@^1.8.2":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-1.8.2.tgz#a4949b6598952a12a5fc59ed233b6c27f445c1c2"
-  integrity sha512-CIYD3zmWzC7r5Vg2ACdfIhRyJ3Mn1+tOLrlk7imH1y1VpW61jiyfjY5oxYvJnRE7apD2eZ4NX8gc1q3ZFQ+3pA==
+"@cypress/webpack-dev-server@^1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-1.8.4.tgz#00c1d7510dccfcaef6ec69f70342d011bbdefc19"
+  integrity sha512-kDg57ozD4vzIwHa0FhT44IoMKqsgFy7WV5SbBjWLBPdoOhuCdf22gy8VukaxwYqh+MFKxqVJ7hqVLErmMgpAYA==
   dependencies:
     debug "^4.3.2"
+    lodash "^4.17.21"
     semver "^7.3.4"
     webpack-merge "^5.4.0"
 
