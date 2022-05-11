@@ -706,22 +706,21 @@ export default {
               if ( layer.places_with_relations ) {
                 layer.places_with_relations.forEach ((place, key) => {
 
-                  // console.log("places_with_relations: "+place.relations.length);
-
                   place.relations.forEach ((relation, kkey) => {
 
-                    // console.log("Relation_from ID:  "+relation.from.id);
                     var point1 = [Number(relation.from.lat), Number(relation.from.lon)];
                     var point2 = [Number(relation.to.lat), Number(relation.to.lon)];
-                    // console.log(point1);
-                    // console.log(point2);
-
 
                     var color = "hsl(" + Math.random() * 360 + ", 100%, 85%)";
                     // var color = clustercolor;
                     // if ( layer.color ) {
                     //  color = layer.color
                     // }
+                    if ( layer.relations_coloring == 'monochrome') {
+                      color = layer.color
+                    } else if ( layer.relations_coloring == 'black') {
+                      color = '#000000';
+                    }
                     var pathOptions = {
                             color: color,
                             weight: 5,
@@ -729,7 +728,7 @@ export default {
                             className: 'curve_normal curve_',
                             animate: false
                     }
-                    var controlpoint = this.calcControlPoint(point1,point2,5)
+                    var controlpoint = this.calcControlPoint(point1,point2,1,layer.relations_bending)
 
                     var curvedPath = L.curve(
                       [
@@ -767,8 +766,8 @@ export default {
             });
 
     },
-    calcControlPoint(point1,point2,distance_in_kms) {
-      var boost = 2.9;
+    calcControlPoint(point1,point2,distance_in_kms,bending) {
+      var boost = ( 2 * bending ) + 0.1;
       var d = 2;
       // if transcontinental
       if ( distance_in_kms > 5000 ) {
