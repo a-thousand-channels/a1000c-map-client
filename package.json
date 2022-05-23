@@ -24,13 +24,13 @@
     "vue-awesome-swiper": "^4.1.1",
     "vue-shortkey": "^3.1.7",
     "vue2-leaflet-markercluster": "^3.1.0",
-    "webpack-dev-server": "^4.8.1"
+    "webpack-dev-server": "^4.9.0"
   },
   "devDependencies": {
-    "@cypress/vue": "^3.1.1",
+    "@cypress/vue": "^3.1.2",
     "@cypress/webpack-dev-server": "^1.8.4",
     "cypress": "^9.3.1",
-    "cypress": "^9.6.0",
+    "cypress": "^9.6.1",
     "postcss": "^8.4.14"
   }
 }
