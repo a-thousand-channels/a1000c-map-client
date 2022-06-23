@@ -20,7 +20,7 @@
     "nuxt": "^2.15.7",
     "nuxt-leaflet": "^0.0.27",
     "push-dir": "^0.4.1",
-    "swiper": "^5.4.1",
+    "swiper": "^8.2.4",
     "vue-awesome-swiper": "^4.1.1",
     "vue-shortkey": "^3.1.7",
     "vue2-leaflet-markercluster": "^3.1.0",
