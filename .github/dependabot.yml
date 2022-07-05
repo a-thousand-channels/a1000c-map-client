@@ -15,3 +15,6 @@ updates:
     prefix: fix
     prefix-development: chore
     include: scope
+  ignore:
+    - dependency-name: "swiper"
+      update-types: ["version-update:semver-major"]    
