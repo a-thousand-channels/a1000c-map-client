@@ -16,7 +16,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/tailwindcss": "^4.2.0",
     "core-js": "^3.23.3",
-    "html-webpack-plugin": "5",
+    "html-webpack-plugin": "5.5",
     "nuxt": "^2.15.7",
     "nuxt-leaflet": "^0.0.27",
     "push-dir": "^0.4.1",
@@ -27,8 +27,8 @@
     "webpack-dev-server": "^4.9.3"
   },
   "devDependencies": {
-    "@cypress/vue": "^3.1.2",
-    "@cypress/webpack-dev-server": "^1.8.4",
+    "@cypress/vue": "^4.0.0",
+    "@cypress/webpack-dev-server": "^2.0.0",
     "cypress": "^9.3.1",
     "cypress": "^10.3.0",
     "postcss": "^8.4.14"
