@@ -9,10 +9,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       # install dependencies
       - name: Install cypress dependencies 📦
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # just perform install
           runTests: false
@@ -27,11 +27,12 @@ jobs:
         run: yarn start &
       # run test
       - name: Cypress run 🤖
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           install: false
           record: false
           wait-on: 'http://localhost:3000'
+          config-file: cypress.config.js
         env:
           DEBUG: '@cypress/github-action'
   deploy-run:
