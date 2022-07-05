@@ -53,6 +53,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - name: Print node-version
+        run: node -v
+
       - name: Install dependencies 📦
         run: yarn
 
