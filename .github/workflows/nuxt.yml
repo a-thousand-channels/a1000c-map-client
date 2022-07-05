@@ -32,7 +32,7 @@ jobs:
           install: false
           record: false
           wait-on: 'http://localhost:3000'
-          config-file: cypress.config.json
+          config-file: cypress.config.js
         env:
           DEBUG: '@cypress/github-action'
   deploy-run:
