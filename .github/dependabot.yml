@@ -17,6 +17,11 @@ updates:
     include: scope
   ignore:
     - dependency-name: "swiper"
+      # stick with ^5.4.1
       update-types: ["version-update:semver-major"]    
     - dependency-name: "@nuxt/content"
+      # stick with ^1.15.1
+      update-types: ["version-update:semver-major"]
+    - dependency-name: "@nuxtjs/tailwindcss"
+      # stick with ^4.2.0
       update-types: ["version-update:semver-major"]
