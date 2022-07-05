@@ -908,11 +908,6 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@cypress/mount-utils@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cypress/mount-utils/-/mount-utils-1.0.2.tgz#afbc4f8c350b7cd86edc5ad0db0cbe1e0181edc8"
-  integrity sha512-Fn3fdTiyayHoy8Ol0RSu4MlBH2maQ2ZEXeEVKl/zHHXEQpld5HX3vdNLhK5YLij8cLynA4DxOT/nO9iEnIiOXw==
-
 "@cypress/request@^2.88.10":
   version "2.88.10"
   resolved "https://registry.yarnpkg.com/@cypress/request/-/request-2.88.10.tgz#b66d76b07f860d3a4b8d7a0604d020c662752cce"
@@ -937,13 +932,12 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/vue@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-3.1.2.tgz#0950d20249daf5e4140a880d5230305a23cb2fea"
-  integrity sha512-CqIBupPW6EhXJ7lXE64MBKh3VfdShHnuC3HBV/euHBt9tsgSo7RZHBTZUsKc8aM745VzVnuNiax+JV4CplrtLQ==
+"@cypress/vue@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-4.0.0.tgz#e0689d34c16ffd0874911de92d674fa30d3a559e"
+  integrity sha512-IFskspGdC8O/Ukeog+TrnhfN+rL8kg4ue0dbLNXdGBWMHVMvZin1Y47KbZf++0kjogDmPmSqKIbrNUK3bs+RuQ==
   dependencies:
-    "@cypress/mount-utils" "1.0.2"
-    "@vue/test-utils" "^2.0.0-rc.10"
+    "@vue/test-utils" "2.0.0-rc.19"
 
 "@cypress/webpack-dev-server@^1.8.4":
   version "1.8.4"
@@ -2079,10 +2073,10 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/test-utils@^2.0.0-rc.10":
-  version "2.0.0-rc.17"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.17.tgz#e6dcf5b5bd3ae23595bdb154b9b578ebcdffd698"
-  integrity sha512-7LHZKsFRV/HqDoMVY+cJamFzgHgsrmQFalROHC5FMWrzPzd+utG5e11krj1tVsnxYufGA2ABShX4nlcHXED+zQ==
+"@vue/test-utils@2.0.0-rc.19":
+  version "2.0.0-rc.19"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.0.0-rc.19.tgz#cd10480b695027481981085c3f705081495a7ca0"
+  integrity sha512-vQ/34z9NH/pqJzl9YTWtTq/vrx5JzLbMojcBB0qydeb7FtGqxp11nLYCgVso+pa8ZOSn2j+OQfjc5aBnb32uzw==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
