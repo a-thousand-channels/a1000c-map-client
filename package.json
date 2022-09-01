@@ -27,7 +27,7 @@
     "webpack-dev-server": "^4.10.1"
   },
   "devDependencies": {
-    "@cypress/vue": "^4.1.0",
+    "@cypress/vue": "^4.2.0",
     "@cypress/webpack-dev-server": "^2.2.0",
     "cypress": "^9.3.1",
     "cypress": "^10.4.0",
