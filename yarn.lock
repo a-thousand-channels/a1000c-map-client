@@ -937,16 +937,15 @@
   resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-4.2.2.tgz#907d0e7bf490b2dc1340c626e440e979873a03c7"
   integrity sha512-M5u8w3OwEwvhYo43tBwduYn3hra5m5yIIAak8mFt+mt58yCmkW57q6mkNkZNZNtVei2eMHIcCfAWLoZmpqg4fg==
 
-"@cypress/webpack-dev-server@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-2.5.0.tgz#a4b5e51a3ff47765f5eee5abb73efe4f3e4f44ee"
-  integrity sha512-IWd6nFiGTMXh89Si6KC3Snq9FnV4raijLt4jDHYvRt4S7y6IoG8Uiw37UpFfzbUpwSFl8FVbWr8VosIotEj1Pw==
+"@cypress/webpack-dev-server@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-3.0.0.tgz#72cd8dc56a9615ebdb57407ed8e7afbd7835c15c"
+  integrity sha512-pZrrSuws9LX/KKlv87mHlOubFe4E81ZbHVVKFDxIqm/nbsj2RFriCLIbbU2W23wqMhFWqbCc0daJylqMVhVJTw==
   dependencies:
     find-up "6.3.0"
     fs-extra "9.1.0"
     html-webpack-plugin-4 "npm:html-webpack-plugin@^4"
     html-webpack-plugin-5 "npm:html-webpack-plugin@^5"
-    local-pkg "0.4.1"
     speed-measure-webpack-plugin "1.4.2"
     tslib "^2.3.1"
     webpack-dev-server "^4.7.4"
@@ -6734,11 +6733,6 @@ local-or-home-npmrc@^1.1.0:
   dependencies:
     pkg-dir "^2.0.0"
     user-home "^2.0.0"
-
-local-pkg@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.1.tgz#e7b0d7aa0b9c498a1110a5ac5b00ba66ef38cfff"
-  integrity sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw==
 
 locate-path@^2.0.0:
   version "2.0.0"
