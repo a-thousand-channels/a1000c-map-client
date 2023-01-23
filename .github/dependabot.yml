@@ -27,4 +27,7 @@ updates:
       update-types: ["version-update:semver-major"]
     - dependency-name: "nuxtjs"
       # stick with ^2.15.7
-      update-types: ["version-update:semver-major"]      
+      update-types: ["version-update:semver-major"]
+    - dependency-name: "cypress"
+      # stick with ^11.2
+      update-types: ["version-update:semver-major"]
