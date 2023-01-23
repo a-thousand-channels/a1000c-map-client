@@ -20,6 +20,7 @@
   height: auto;
   width: auto;
   min-width: none;
+  max-height: 97vh;
 }
 
 
@@ -36,7 +37,7 @@
       <div v-for='(place,index) in layer.places'>
         <div class="modal" :class="{ 'is-active' : place.state }" v-bind:id="'place-' + place.id">
           <div class="modal-background"></div>
-          <div class="modal-content relative inset-4 p-4 pt-2 pb-6 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-2 md:mr-18 bg-white bg-a100c-white overflow-hiddenX overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md md:max-w-[90vw]">
+          <div class="modal-content relative inset-4 p-4 pt-2 pb-6 m-1 z-50 sm:relative sm:inset-0 sm:mt-7 sm:mr-10 md:mt-2 md:mr-18 bg-white bg-a100c-white overflow-x-auto shadow min-w-none sm:min-w-min sm:max-w-md md:max-w-[90vw] max-h-[94vh]  overflow-scroll">
             <div class="text-right pr-2 py-0 w-8 float-right text-4xl leading-none">
               <button class="close-button" aria-label="close" @click="closeModal(place)">&times;</button>
             </div>
