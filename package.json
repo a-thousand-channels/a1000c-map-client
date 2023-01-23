@@ -29,7 +29,7 @@
   "devDependencies": {
     "@cypress/vue": "^5.0.3",
     "@cypress/webpack-dev-server": "^3.2.2",
-    "cypress": "11.2.0",
+    "cypress": "12.3.0",
     "postcss": "^8.4.21"
   }
 }
