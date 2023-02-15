@@ -17,7 +17,7 @@
     "@nuxtjs/tailwindcss": "^4.2.0",
     "core-js": "^3.28.0",
     "html-webpack-plugin": "5.5",
-    "nuxt": "^2.15.7",
+    "nuxt": "^2.16.1",
     "nuxt-leaflet": "^0.0.27",
     "push-dir": "^0.4.1",
     "swiper": "^5.4.1",
