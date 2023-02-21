@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@cypress/vue": "^5.0.4",
-    "@cypress/webpack-dev-server": "^3.2.3",
+    "@cypress/webpack-dev-server": "^3.2.4",
     "cypress": "11.2.0",
     "postcss": "^8.4.21"
   }

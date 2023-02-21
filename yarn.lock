@@ -937,10 +937,10 @@
   resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-5.0.4.tgz#d46c8a0ecf2f5e2fb0f0f8b0d0c350c3058aea73"
   integrity sha512-BZWzQQNDf8wanhkegQSb8cb3F5VK4oq43jOfYtnuJuDNUL5tcqoWmA1xe/YoQ9uLL26HdepOmyxTGoEgjAkpig==
 
-"@cypress/webpack-dev-server@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-3.2.3.tgz#c907982bfcea2884aef16ffaed4e119ce0b111d3"
-  integrity sha512-59+567BQRO7kXEVz64vzbEv/9I53Tp7K+CUBd492wYZNrhjY8iDtWNmG4l5LX0ibtHmeG46rBCbd8PTViLD8Fg==
+"@cypress/webpack-dev-server@^3.2.4":
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-dev-server/-/webpack-dev-server-3.2.4.tgz#2e4b6034171ff7e915ccf3b6bae369f05ac7c197"
+  integrity sha512-hV26QVOyY5QME4g4OdjEL0YK5je/fi62YpOAno1gQCmVo6Se2CH6pV9g3uQa87IriY4aHDEmzb2RsXOjg7zocw==
   dependencies:
     find-up "6.3.0"
     fs-extra "9.1.0"
