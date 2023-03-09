@@ -10,7 +10,7 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
-    "@elfalem/leaflet-curve": "^0.9.1",
+    "@elfalem/leaflet-curve": "^0.9.2",
     "@nuxt/content": "^1.15.1",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
