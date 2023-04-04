@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
       # install dependencies
       - name: Install cypress dependencies 📦
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           # just perform install
           runTests: false
@@ -27,7 +27,7 @@ jobs:
         run: yarn start &
       # run test
       - name: Cypress run 🤖
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: false
