@@ -337,7 +337,7 @@
         <div id="map_inner" class="h-full bg-red-0 bg-opacity-0 my-1 mx-1">
           <div id="map_map" class="h-full w-full border-solid border-2 shadow z-40">
            <client-only>
-                <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" :options="{attributionControl: false}" ref="map" @ready="onMapReady" class=" bg-map">
+                <l-map :zoom="this.mapzoom" :minZoom=2 :maxZoom=19 :center="this.mapcenter" :options="{attributionControl: false}" ref="map" @ready="onMapReady" @update:zoom="onMapZoom" class=" bg-map">
                   <l-control-layers position="topright"></l-control-layers>
                   <l-layer-group
                       v-for="(layer,lindex) in this.data.layer"
@@ -635,6 +635,12 @@ export default {
       console.log("onTileLayerVisible");
       console.log(basemap)
 
+    },
+    onMapZoom(zoomlevel) {
+      console.log('zoomed');
+      console.log(zoomlevel);
+      var m = document.getElementById("map_map");
+      m.setAttribute('data-zoom',zoomlevel);
     },
     onMapReady(mapObject) {
       this.$nextTick(() => {
