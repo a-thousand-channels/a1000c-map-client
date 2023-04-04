@@ -1,4 +1,4 @@
-describe('Leaflet map', () => {
+describe('Map', () => {
 
   before(() => {
     cy.visit('http://localhost:3000/');
@@ -22,10 +22,33 @@ describe('Leaflet map', () => {
     cy.get('.leaflet-tile-pane').should('exist');
     cy.get('.leaflet-tile-pane').should('not.be.empty');
   });
+
   it('should render markers', () => {
+
+    // Assert there a one or more markers (l-circle-marker as SVG)
     cy.get('.leaflet-marker-pane').should('not.be.empty');
     cy.get('.leaflet-marker-pane svg').should('have.length.greaterThan', 0);
-  }),
+  });
+
+  it('should render tooltips', () => {
+
+    // Assert there are one or more tooltips, which are visible without interaction
+    cy.get('.leaflet-tooltip-pane').should('not.be.empty');
+    cy.get('.leaflet-tooltip-pane div').should('have.length.greaterThan', 0);
+    cy.get('.leaflet-tooltip-pane div').first().should('be.visible');
+  });
+
+  it('should render and open a popup', () => {
+
+    // Assert there are one or more tooltips, which are visible without interaction
+    cy.get('.modal').first().should('exist');
+    cy.get('.modal').first().should('not.be.empty');
+    cy.get('.modal').first().should('not.be.visible');
+    cy.get('.leaflet-marker-pane svg g path').first().trigger('click');
+    cy.get('.modal').first().should('be.visible');
+
+  });
+
   it('should be zoomable', () => {
 
     // Assert that the zoom control element exists
