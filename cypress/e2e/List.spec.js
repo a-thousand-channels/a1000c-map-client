@@ -2,9 +2,7 @@ describe('List', () => {
 
   before(() => {
     cy.visit('http://localhost:3000/');
-    cy.wait(1000);
-    cy.visit('http://localhost:3000/main');
-    cy.wait(500);
+    cy.wait(1500);
     cy.visit('http://localhost:3000/main#list');
   })
 
