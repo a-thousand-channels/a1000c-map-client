@@ -8,7 +8,7 @@ describe('List', () => {
 
   it('should show list content (and not the map)', () => {
     cy.wait(1500)
-    cy.url().should('eq', 'http://localhost:3000/main#list')
+    cy.url().should('eq', 'http://localhost:3000/main/#list')
     cy.get('#list div div ul').should('not.be.empty');
     cy.get('#list div div ul li').should('have.length.greaterThan', 0);
 
