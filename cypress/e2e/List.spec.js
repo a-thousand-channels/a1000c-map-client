@@ -7,13 +7,14 @@ describe('List', () => {
   })
 
   it('should show list content (and not the map)', () => {
-
+    cy.wait(1500)
     cy.get('#list').should('be.visible');
     cy.get('#list div div ul').should('not.be.empty');
     cy.get('#list div div ul li').should('have.length.greaterThan', 0);
 
   });
   it('should focus on list section only', () => {
+    cy.wait(1500)
     cy.get('#list').should(($el) => {
       const bottom = Cypress.$(cy.state('window')).height();
       const rect = $el[0].getBoundingClientRect();
