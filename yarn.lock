@@ -7707,10 +7707,10 @@ node-res@^5.0.1:
     on-finished "^2.3.0"
     vary "^1.1.2"
 
-node@14:
-  version "14.21.3"
-  resolved "https://registry.yarnpkg.com/node/-/node-14.21.3.tgz#e6293e9079670bef8f6caf18a515efea1af94609"
-  integrity sha512-58OWd3tZhyABy+OwPGawVKmK5tvlM5Z0TATCSLsiVcIp7NFvMahhzABSkBlnvyiISGcxmainzEAv7L9YJI5EMw==
+node@22:
+  version "22.5.1"
+  resolved "https://registry.yarnpkg.com/node/-/node-22.5.1.tgz#c410be323d763e1e98ae9b0d8e4fdd08350d6304"
+  integrity sha512-qbks/cl+qtpShkYed3yU1HOtSFh3J7GBFAFpgHEHrJfEJaf6SoCEoPUl1IyBjm1MHUvnnHJvnO+rfW8PeYGWmA==
   dependencies:
     node-bin-setup "^1.0.0"
 
