@@ -10,7 +10,7 @@ export default {
   publicPath: process.env.PUBLIC_PATH || '/',
 
   defaultDataUrl: 'https://orte-backend.a-thousand-channels.xyz/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers',
-  localDataUrl: '/_content/data',
+  localDataUrl: '/public/maps/1/layers/1',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

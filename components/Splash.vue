@@ -137,7 +137,7 @@ export default {
       custom_data_url: '',
       data_url: '',
       // data_url is now predefined via nuxt.config.js
-      default_data_url: config.defaultDataUrl,
+      default_data_url: config.localDataUrl,
     }
   },
   head() {

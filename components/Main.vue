@@ -472,7 +472,7 @@ export default {
         list_content_layer_index: 0,
         data_url: '',
         // data_url is now predefined via nuxt.config.js
-        default_data_url: config.defaultDataUrl,
+        default_data_url: config.localDataUrl,
         // mapcenter could be definied via this.data or calculated by the extent of all places
         mapcenter: [0,0],
         mapzoom: 10,
@@ -508,7 +508,7 @@ export default {
     var dataobj_temp = await this.$content(this.localDataUrl).fetch().catch((err) => {
       console.log('Error')
     });
-    
+
     if(dataobj_temp.length > 0 ) {
       this.dataobj = dataobj_temp[0];
       console.log('Fetch LOCAL...')
@@ -529,7 +529,7 @@ export default {
         console.log('Layer title: "'+this.dataobj.layer.title+'"')
       }
     }
-      
+
     // check if its a map
     if ( this.dataobj.map ) {
       this.data = this.dataobj.map
