@@ -13,6 +13,9 @@ You can manually load any layer (that has the status "Published") into the clien
 
 (You have to replace the placeholder LAYER_JSON_URL with a real URL.)
 
+## Using a local backend
+
+In order to use this client for backend development on your local machine, you can change the value for `defaultDataUrl` value in nuxt.config.js to something like http://127.0.0.1:3000/public/maps/1/layers/1.json (alternatively to the ids, use your map's and layer's title).
 
 ---
 

@@ -9,6 +9,7 @@ export default {
 
   publicPath: process.env.PUBLIC_PATH || '/',
 
+  // Replace this URL for using a local backend
   defaultDataUrl: 'https://orte-backend.a-thousand-channels.xyz/public/maps/queer-poems-on-places-and-lovers/layers/queer-poems-on-places-and-lovers',
   localDataUrl: '/_content/data',
 
