@@ -7712,10 +7712,10 @@ node-res@^5.0.1:
     on-finished "^2.3.0"
     vary "^1.1.2"
 
-node@16:
-  version "16.20.2"
-  resolved "https://registry.yarnpkg.com/node/-/node-16.20.2.tgz#f952a7b055db4e0480606e13fbbfb37d75b3e857"
-  integrity sha512-B4PDiGwFfqDcx7qt1LpDgBfkRAIizDob4dJWAqGC3B1mLV84tHr3nU9MsbeRed7lbcylIb0UBKPVrNZ9PuJRnA==
+node@20:
+  version "20.19.1"
+  resolved "https://registry.yarnpkg.com/node/-/node-20.19.1.tgz#38bcb2e287555a6e2fb2fa16289155504b17a6cd"
+  integrity sha512-3yUH04Q4Fo+peHOnxY3V0ZohuDiLSQ2fPRiN2wNxnUDTb/woNLSQby18Y/bGSS76BDmL4f3Ss9BbVeGHXVqnJQ==
   dependencies:
     node-bin-setup "^1.0.0"
 
