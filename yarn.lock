@@ -932,10 +932,10 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/vue@^5.0.5":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-5.0.5.tgz#dabd4c8a4c2ade95d1be8a3289fdcd11793abee5"
-  integrity sha512-gjE0LKixK6XT4lPDFaEc8G6qNzm8YELgmbOiMVDxbVMuTtjYjorWQcIgzQ62uBX90/s7JrldXJ0W23gskoH4Ng==
+"@cypress/vue@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@cypress/vue/-/vue-6.0.3.tgz#577ea2547a86ea740431532569d2b5161354bc34"
+  integrity sha512-nJyjzvEaqD7i8NZ0mXudlwkth7+26OCM27x3SC9swFsN4NELe8+6yNch3z/Ja5Bq+tSwpP8LsF0O7zDHN2Q7zQ==
 
 "@cypress/webpack-dev-server@^3.10.1":
   version "3.10.1"
